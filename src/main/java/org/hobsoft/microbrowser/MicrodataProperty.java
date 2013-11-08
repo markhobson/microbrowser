@@ -19,4 +19,6 @@ package org.hobsoft.microbrowser;
 public interface MicrodataProperty
 {
 	String getValue();
+	
+	<T> T unwrap(Class<T> type);
 }
