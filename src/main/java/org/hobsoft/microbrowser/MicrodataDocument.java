@@ -20,5 +20,7 @@ import java.util.List;
  */
 public interface MicrodataDocument
 {
+	MicrodataItem getItem(String itemType);
+	
 	List<MicrodataItem> getItems(String itemType);
 }
