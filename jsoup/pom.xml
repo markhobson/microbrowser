@@ -37,6 +37,13 @@
 			<artifactId>microbrowser-api</artifactId>
 		</dependency>
 	
+		<!-- Guava -->
+		
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		
 		<!-- jsoup -->
 		
 		<dependency>
