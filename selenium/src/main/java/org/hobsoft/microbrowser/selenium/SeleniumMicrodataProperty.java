@@ -13,7 +13,7 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
-import org.hobsoft.microbrowser.MicrodataProperty;
+import org.hobsoft.microbrowser.AbstractMicrodataProperty;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItemValue} adapter to a Selenium {@code WebElement}.
  */
-public class SeleniumMicrodataProperty implements MicrodataProperty
+public class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -45,26 +45,6 @@ public class SeleniumMicrodataProperty implements MicrodataProperty
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getValue()
-	{
-		String tagName = element.getTagName();
-		String value;
-		
-		if ("link".equals(tagName) || "a".equals(tagName))
-		{
-			value = element.getAttribute("href");
-		}
-		else
-		{
-			value = element.getText();
-		}
-		
-		return value;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
 	public <T> T unwrap(Class<T> type)
 	{
 		T instance;
@@ -79,5 +59,36 @@ public class SeleniumMicrodataProperty implements MicrodataProperty
 		}
 		
 		return instance;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractMicrodataProperty methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getElementName()
+	{
+		return element.getTagName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getAttribute(String name)
+	{
+		return element.getAttribute(name);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getText()
+	{
+		return element.getText();
 	}
 }
