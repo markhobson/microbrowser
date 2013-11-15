@@ -97,6 +97,14 @@
 				<version>${project.version}</version>
 			</dependency>
 		
+			<!-- jsoup -->
+			
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>1.7.3</version>
+			</dependency>
+			
 			<!-- Selenium -->
 			
 			<dependency>
@@ -127,6 +135,7 @@
 
 	<modules>
 		<module>api</module>
+		<module>jsoup</module>
 		<module>selenium</module>
 	</modules>
 	
