@@ -28,4 +28,38 @@
 	<name>Microbrowser Selenium</name>
 	<description>Microbrowser implementation for Selenium.</description>
 	
+	<dependencies>
+	
+		<!-- Microbrowser -->
+	
+		<dependency>
+			<groupId>org.hobsoft.microbrowser</groupId>
+			<artifactId>microbrowser-api</artifactId>
+		</dependency>
+	
+		<!-- Selenium -->
+		
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+		</dependency>
+		
+		<!-- JUnit -->
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Mockito -->
+		
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+	
 </project>
