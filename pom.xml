@@ -87,6 +87,7 @@
 
 	<modules>
 		<module>api</module>
+		<module>selenium</module>
 	</modules>
 	
 </project>
