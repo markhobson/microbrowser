@@ -97,6 +97,12 @@
 				<version>${project.version}</version>
 			</dependency>
 		
+			<dependency>
+				<groupId>org.hobsoft.microbrowser</groupId>
+				<artifactId>microbrowser-tck</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		
 			<!-- Guava -->
 			
 			<dependency>
@@ -137,6 +143,14 @@
 				<version>1.9.5</version>
 			</dependency>
 		
+			<!-- MockWebServer -->
+			
+			<dependency>
+				<groupId>com.google.mockwebserver</groupId>
+				<artifactId>mockwebserver</artifactId>
+				<version>20130706</version>
+			</dependency>
+		
 		</dependencies>
 	
 	</dependencyManagement>
@@ -145,6 +159,7 @@
 		<module>api</module>
 		<module>jsoup</module>
 		<module>selenium</module>
+		<module>tck</module>
 	</modules>
 	
 </project>
