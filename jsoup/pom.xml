@@ -28,6 +28,28 @@
 	<name>Microbrowser jsoup</name>
 	<description>Microbrowser implementation for jsoup.</description>
 	
+	<build>
+	
+		<plugins>
+	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+	
+		</plugins>
+		
+	</build>
+	
 	<dependencies>
 	
 		<!-- Microbrowser -->
@@ -35,6 +57,12 @@
 		<dependency>
 			<groupId>org.hobsoft.microbrowser</groupId>
 			<artifactId>microbrowser-api</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.hobsoft.microbrowser</groupId>
+			<artifactId>microbrowser-tck</artifactId>
+			<scope>test</scope>
 		</dependency>
 	
 		<!-- Guava -->
