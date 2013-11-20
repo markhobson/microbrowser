@@ -63,7 +63,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getItemProperty() throws IOException, InterruptedException
+	public void itemPropertyValueWhenTextReturnsValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://a/'>"
