@@ -13,16 +13,12 @@
  */
 package org.hobsoft.microbrowser;
 
-import java.util.List;
-
 /**
- * Defines an HTML Microdata document.
+ * Defines an HTML form.
  */
-public interface MicrodataDocument
+public interface Form
 {
-	MicrodataItem getItem(String itemType);
-	
-	List<MicrodataItem> getItems(String itemType);
+	Form setParameter(String name, String value);
 
-	Form getForm(String name);
+	MicrodataDocument submit();
 }

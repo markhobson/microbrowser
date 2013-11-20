@@ -16,8 +16,10 @@ package org.hobsoft.microbrowser.selenium;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
+import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataItem;
-import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.google.common.base.Function;
@@ -26,7 +28,7 @@ import com.google.common.collect.Lists;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@code MicrodataDocument} adapter to a Selenium {@code SearchContext}.
+ * {@code MicrodataDocument} adapter to a Selenium {@code WebDriver}.
  */
 public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 {
@@ -34,15 +36,15 @@ public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final SearchContext context;
+	private final WebDriver driver;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumMicrodataDocument(SearchContext context)
+	public SeleniumMicrodataDocument(WebDriver driver)
 	{
-		this.context = checkNotNull(context, "context");
+		this.driver = checkNotNull(driver, "driver");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -54,7 +56,7 @@ public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public List<MicrodataItem> getItems(String itemType)
 	{
-		List<WebElement> elements = context.findElements(ByItem.type(itemType));
+		List<WebElement> elements = driver.findElements(ByItem.type(itemType));
 		
 		return Lists.transform(elements, new Function<WebElement, MicrodataItem>()
 		{
@@ -63,5 +65,24 @@ public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 				return new SeleniumMicrodataItem(element);
 			}
 		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Form getForm(String name)
+	{
+		WebElement element = driver.findElement(byForm(name));
+		
+		return new SeleniumForm(driver, element);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static By byForm(String name)
+	{
+		return By.cssSelector(String.format("form[name='%s']", name));
 	}
 }

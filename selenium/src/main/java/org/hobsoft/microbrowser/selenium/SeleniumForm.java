@@ -11,78 +11,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.jsoup;
+package org.hobsoft.microbrowser.selenium;
 
-import java.util.List;
-
-import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
-import org.hobsoft.microbrowser.MicrodataItem;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import org.hobsoft.microbrowser.MicrodataDocument;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@code MicrodataDocument} adapter to a jsoup {@code Document}.
+ * {@code Form} adapter to a Selenium {@code WebElement}.
  */
-public class JsoupMicrodataDocument extends AbstractMicrodataDocument
+public class SeleniumForm implements Form
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final Document document;
+	private final WebDriver driver;
+	
+	private final WebElement element;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupMicrodataDocument(Document document)
+	public SeleniumForm(WebDriver driver, WebElement element)
 	{
-		this.document = checkNotNull(document, "document");
+		this.driver = checkNotNull(driver, "driver");
+		this.element = checkNotNull(element, "element");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataDocument methods
+	// Form methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<MicrodataItem> getItems(String itemType)
+	public Form setParameter(String name, String value)
 	{
-		Elements elements = document.select(ByItem.type(itemType));
+		WebElement controlElement = element.findElement(byControl(name));
 		
-		return Lists.transform(elements, new Function<Element, MicrodataItem>()
-		{
-			public MicrodataItem apply(Element element)
-			{
-				return new JsoupMicrodataItem(element);
-			}
-		});
+		controlElement.sendKeys(value);
+		
+		return this;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public Form getForm(String name)
+	public MicrodataDocument submit()
 	{
-		Element element = document.select(byForm(name)).first();
+		WebElement submitElement = element.findElement(bySubmit());
 		
-		return new JsoupForm(element);
+		submitElement.click();
+		
+		return new SeleniumMicrodataDocument(driver);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static String byForm(String name)
+	private static By byControl(String name)
 	{
-		return String.format("form[name=%s]", name);
+		return By.cssSelector(String.format("input[name='%s']", name));
+	}
+
+	private static By bySubmit()
+	{
+		return By.cssSelector("input[type='submit']");
 	}
 }

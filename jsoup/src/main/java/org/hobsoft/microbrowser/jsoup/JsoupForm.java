@@ -13,76 +13,121 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
-import org.hobsoft.microbrowser.MicrodataItem;
+import org.hobsoft.microbrowser.MicrodataDocument;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.Connection.Method;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@code MicrodataDocument} adapter to a jsoup {@code Document}.
+ * {@code Form} adapter to a jsoup {@code Element}.
  */
-public class JsoupMicrodataDocument extends AbstractMicrodataDocument
+public class JsoupForm implements Form
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final Document document;
+	private final Element element;
+	
+	private final Map<String, String> parameterValuesByName;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupMicrodataDocument(Document document)
+	public JsoupForm(Element element)
 	{
-		this.document = checkNotNull(document, "document");
+		this.element = checkNotNull(element, "element");
+		
+		parameterValuesByName = new HashMap<String, String>();
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataDocument methods
+	// Form methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<MicrodataItem> getItems(String itemType)
+	public Form setParameter(String name, String value)
 	{
-		Elements elements = document.select(ByItem.type(itemType));
+		checkNotNull(name, "name");
+		checkNotNull(value, "value");
+		checkArgument(!element.select(byControl(name)).isEmpty(), "Cannot find form control: %s", name);
 		
-		return Lists.transform(elements, new Function<Element, MicrodataItem>()
+		parameterValuesByName.put(name, value);
+		
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public MicrodataDocument submit()
+	{
+		Document document;
+		
+		try
 		{
-			public MicrodataItem apply(Element element)
-			{
-				return new JsoupMicrodataItem(element);
-			}
-		});
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Form getForm(String name)
-	{
-		Element element = document.select(byForm(name)).first();
+			document = getConnection().execute().parse();
+		}
+		catch (IOException exception)
+		{
+			// TODO: decide on exception policy
+			throw new RuntimeException(exception);
+		}
 		
-		return new JsoupForm(element);
+		return new JsoupMicrodataDocument(document);
 	}
-	
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
-
-	private static String byForm(String name)
+	
+	private Connection getConnection()
 	{
-		return String.format("form[name=%s]", name);
+		Connection connection = Jsoup.connect(getAction());
+		
+		connection.method(getMethod());
+		
+		for (Entry<String, String> entry : parameterValuesByName.entrySet())
+		{
+			connection.data(entry.getKey(), entry.getValue());
+		}
+
+		return connection;
+	}
+	
+	private String getAction()
+	{
+		return element.absUrl("action");
+	}
+
+	private Method getMethod()
+	{
+		String value = element.attr("method").toUpperCase();
+		
+		if (value.isEmpty())
+		{
+			return Method.GET;
+		}
+		
+		return Method.valueOf(value);
+	}
+	
+	private static String byControl(String name)
+	{
+		return String.format("input[name=%s]", name);
 	}
 }

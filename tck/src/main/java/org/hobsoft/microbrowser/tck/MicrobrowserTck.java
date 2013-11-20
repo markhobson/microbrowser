@@ -18,12 +18,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hobsoft.microbrowser.Microbrowser;
+import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.mockwebserver.MockResponse;
 import com.google.mockwebserver.MockWebServer;
+import com.google.mockwebserver.RecordedRequest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -79,9 +81,55 @@ public abstract class MicrobrowserTck
 		assertEquals("item property value", "x", actual);
 	}
 
+	@Test
+	public void formSubmitPostsControlValue() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/b'>"
+			+ "<input type='text' name='p'/>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		MicrodataDocument document = newBrowser().get(server.getUrl("/").toString());
+		document.getForm("f")
+			.setParameter("p", "x")
+			.submit();
+		
+		server.takeRequest();
+		
+		RecordedRequest request = takeRequest(server);
+		assertEquals("request path", "/b", request.getPath());
+		assertEquals("request method", "POST", request.getMethod());
+		assertEquals("request body", "p=x", new String(request.getBody()));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	protected abstract Microbrowser newBrowser();
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Workaround MockWebServer issue #11.
+	 * 
+	 * @see https://code.google.com/p/mockwebserver/issues/detail?id=11
+	 */
+	private static RecordedRequest takeRequest(MockWebServer server) throws InterruptedException
+	{
+		RecordedRequest request = server.takeRequest();
+		
+		while ("GET /favicon.ico HTTP/1.1".equals(request.getRequestLine()))
+		{
+			request = server.takeRequest();
+		}
+		
+		return request;
+	}
 }
