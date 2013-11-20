@@ -63,6 +63,17 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
+	public void getRequestsPath() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(server.getUrl("/x").toString());
+		
+		assertEquals("request path", "/x", server.takeRequest().getPath());
+	}
+
+	@Test
 	public void itemPropertyValueWhenTextReturnsValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
@@ -77,7 +88,6 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertEquals("request path", "/", server.takeRequest().getPath());
 		assertEquals("item property value", "x", actual);
 	}
 
