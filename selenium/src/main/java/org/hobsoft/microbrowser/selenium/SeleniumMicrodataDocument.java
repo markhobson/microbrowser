@@ -56,7 +56,7 @@ public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public List<MicrodataItem> getItems(String itemType)
 	{
-		List<WebElement> elements = driver.findElements(ByItem.type(itemType));
+		List<WebElement> elements = driver.findElements(byItemType(itemType));
 		
 		return Lists.transform(elements, new Function<WebElement, MicrodataItem>()
 		{
@@ -81,6 +81,11 @@ public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private static By byItemType(String itemType)
+	{
+		return By.cssSelector(String.format("[itemscope][itemtype='%s']", itemType));
+	}
+	
 	private static By byForm(String name)
 	{
 		return By.cssSelector(String.format("form[name='%s']", name));

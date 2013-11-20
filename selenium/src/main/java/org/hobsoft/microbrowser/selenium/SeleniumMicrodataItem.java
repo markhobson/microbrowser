@@ -52,7 +52,7 @@ public class SeleniumMicrodataItem implements MicrodataItem
 	 */
 	public MicrodataProperty getProperty(String propertyName)
 	{
-		WebElement element = quietFindElementBy(context, ByItem.prop(propertyName));
+		WebElement element = quietFindElementBy(context, byItemProp(propertyName));
 		
 		if (element == null)
 		{
@@ -71,5 +71,10 @@ public class SeleniumMicrodataItem implements MicrodataItem
 		List<WebElement> elements = context.findElements(by);
 		
 		return elements.isEmpty() ? null : elements.iterator().next();
+	}
+
+	private static By byItemProp(String itemProp)
+	{
+		return By.cssSelector(String.format("[itemprop='%s']", itemProp));
 	}
 }
