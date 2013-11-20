@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +34,12 @@ import static org.junit.Assert.assertEquals;
  */
 public abstract class MicrobrowserTck
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static final Charset UTF8 = Charset.forName("UTF-8");
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
@@ -112,7 +119,7 @@ public abstract class MicrobrowserTck
 		RecordedRequest request = takeRequest(server);
 		assertEquals("request path", "/a", request.getPath());
 		assertEquals("request method", "POST", request.getMethod());
-		assertEquals("request body", "p=x", new String(request.getBody()));
+		assertEquals("request body", "p=x", new String(request.getBody(), UTF8));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
