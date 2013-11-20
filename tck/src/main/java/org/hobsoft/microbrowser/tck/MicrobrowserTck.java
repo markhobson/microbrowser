@@ -35,12 +35,6 @@ import static org.junit.Assert.assertEquals;
 public abstract class MicrobrowserTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// constants
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private static final Charset UTF8 = Charset.forName("UTF-8");
-
-	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -115,11 +109,7 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		
-		RecordedRequest request = takeRequest(server);
-		assertEquals("request path", "/a?p=x", request.getPath());
-		assertEquals("request method", "GET", request.getMethod());
-		assertEquals("request body", "", new String(request.getBody(), UTF8));
+		assertGetRequest("/a?p=x", takeRequest(server));
 	}
 
 	@Test
@@ -140,11 +130,7 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		
-		RecordedRequest request = takeRequest(server);
-		assertEquals("request path", "/a", request.getPath());
-		assertEquals("request method", "POST", request.getMethod());
-		assertEquals("request body", "p=x", new String(request.getBody(), UTF8));
+		assertPostRequest("/a", "p=x", takeRequest(server));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -172,5 +158,23 @@ public abstract class MicrobrowserTck
 		}
 		
 		return request;
+	}
+	
+	private static void assertGetRequest(String expectedPath, RecordedRequest actual)
+	{
+		assertRequest("GET", expectedPath, "", actual);
+	}
+	
+	private static void assertPostRequest(String expectedPath, String expectedBody, RecordedRequest actual)
+	{
+		assertRequest("POST", expectedPath, expectedBody, actual);
+	}
+	
+	private static void assertRequest(String expectedMethod, String expectedPath, String expectedBody,
+		RecordedRequest actual)
+	{
+		assertEquals("request method", expectedMethod, actual.getMethod());
+		assertEquals("request path", expectedPath, actual.getPath());
+		assertEquals("request body", expectedBody, new String(actual.getBody(), Charset.forName("UTF-8")));
 	}
 }
