@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,14 +76,14 @@ public abstract class MicrobrowserTck
 	public void itemPropertyValueWhenTextReturnsValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='http://a/'>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
 		server.play();
 		
 		String actual = newBrowser().get(server.getUrl("/").toString())
-			.getItem("http://a/")
+			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
@@ -95,7 +94,7 @@ public abstract class MicrobrowserTck
 	public void formSubmitPostsControlValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='post' action='/b'>"
+			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='text' name='p'/>"
 			+ "<input type='submit'>"
 			+ "</form>"
@@ -103,15 +102,15 @@ public abstract class MicrobrowserTck
 		server.enqueue(new MockResponse());
 		server.play();
 		
-		MicrodataDocument document = newBrowser().get(server.getUrl("/").toString());
-		document.getForm("f")
+		newBrowser().get(server.getUrl("/").toString())
+			.getForm("f")
 			.setParameter("p", "x")
 			.submit();
 		
 		server.takeRequest();
 		
 		RecordedRequest request = takeRequest(server);
-		assertEquals("request path", "/b", request.getPath());
+		assertEquals("request path", "/a", request.getPath());
 		assertEquals("request method", "POST", request.getMethod());
 		assertEquals("request body", "p=x", new String(request.getBody()));
 	}
