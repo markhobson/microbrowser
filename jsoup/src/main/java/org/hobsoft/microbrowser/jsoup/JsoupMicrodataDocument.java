@@ -56,7 +56,7 @@ public class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public List<MicrodataItem> getItems(String itemType)
 	{
-		Elements elements = document.select(ByItem.type(itemType));
+		Elements elements = document.select(byItemType(itemType));
 		
 		return Lists.transform(elements, new Function<Element, MicrodataItem>()
 		{
@@ -80,6 +80,11 @@ public class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
+
+	private static String byItemType(String itemType)
+	{
+		return String.format("[itemscope][itemtype=%s]", itemType);
+	}
 
 	private static String byForm(String name)
 	{

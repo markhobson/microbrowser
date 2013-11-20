@@ -48,7 +48,7 @@ public class JsoupMicrodataItem implements MicrodataItem
 	 */
 	public MicrodataProperty getProperty(String propertyName)
 	{
-		Element propertyElement = element.select(ByItem.prop(propertyName)).first();
+		Element propertyElement = element.select(byItemProp(propertyName)).first();
 		
 		if (propertyElement == null)
 		{
@@ -56,5 +56,14 @@ public class JsoupMicrodataItem implements MicrodataItem
 		}
 		
 		return new JsoupMicrodataProperty(propertyElement);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static String byItemProp(String itemProp)
+	{
+		return String.format("[itemprop=%s]", itemProp);
 	}
 }
