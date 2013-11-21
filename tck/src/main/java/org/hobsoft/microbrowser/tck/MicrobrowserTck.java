@@ -92,6 +92,27 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
+	public void formSubmitWhenNoMethodSubmitsGetRequest() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' action='/a'>"
+			+ "<input type='text' name='p'/>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(server.getUrl("/").toString())
+			.getForm("f")
+			.setParameter("p", "x")
+			.submit();
+		
+		server.takeRequest();
+		assertGetRequest("/a?p=x", takeRequest(server));
+	}
+
+	@Test
 	public void formSubmitWhenGetSubmitsControlValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
