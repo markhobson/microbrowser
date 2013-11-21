@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItem} adapter to a jsoup {@code Element}.
  */
-public class JsoupMicrodataItem implements MicrodataItem
+class JsoupMicrodataItem implements MicrodataItem
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

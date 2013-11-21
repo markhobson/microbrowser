@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code Form} adapter to a jsoup {@code Element}.
  */
-public class JsoupForm implements Form
+class JsoupForm implements Form
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

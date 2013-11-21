@@ -30,7 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataDocument} adapter to a jsoup {@code Document}.
  */
-public class JsoupMicrodataDocument extends AbstractMicrodataDocument
+class JsoupMicrodataDocument extends AbstractMicrodataDocument
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

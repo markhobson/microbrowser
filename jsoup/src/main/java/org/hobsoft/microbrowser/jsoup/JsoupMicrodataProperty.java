@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItemValue} adapter to a jsoup {@code Element}.
  */
-public class JsoupMicrodataProperty extends AbstractMicrodataProperty
+class JsoupMicrodataProperty extends AbstractMicrodataProperty
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
