@@ -26,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItem} adapter to a Selenium {@code SearchContext}.
  */
-public class SeleniumMicrodataItem implements MicrodataItem
+class SeleniumMicrodataItem implements MicrodataItem
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

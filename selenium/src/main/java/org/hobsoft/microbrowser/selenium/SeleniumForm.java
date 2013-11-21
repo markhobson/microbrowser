@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code Form} adapter to a Selenium {@code WebElement}.
  */
-public class SeleniumForm implements Form
+class SeleniumForm implements Form
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

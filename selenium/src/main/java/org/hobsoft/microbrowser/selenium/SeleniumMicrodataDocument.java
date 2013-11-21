@@ -30,7 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataDocument} adapter to a Selenium {@code WebDriver}.
  */
-public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
+class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItemValue} adapter to a Selenium {@code WebElement}.
  */
-public class SeleniumMicrodataProperty extends AbstractMicrodataProperty
+class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
