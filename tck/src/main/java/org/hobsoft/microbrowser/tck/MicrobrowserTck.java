@@ -31,7 +31,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.get;
 import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.post;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -173,6 +172,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
+	public void formSubmitWhenPostSubmitsPostRequest() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getForm("f")
+			.submit();
+		
+		server.takeRequest();
+		assertThat("request", takeRequest(server), is(post("/a")));
+	}
+
+	@Test
 	public void formSubmitWhenPostSubmitsControlValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
@@ -190,9 +208,7 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		RecordedRequest actual = takeRequest(server);
-		assertThat("request", actual, is(post("/a")));
-		assertEquals("request body", "p=x", new String(actual.getBody(), Charset.forName("UTF-8")));
+		assertThat("request body", body(takeRequest(server)), is("p=x"));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -225,5 +241,10 @@ public abstract class MicrobrowserTck
 		}
 		
 		return request;
+	}
+	
+	private static String body(RecordedRequest request)
+	{
+		return new String(request.getBody(), Charset.forName("UTF-8"));
 	}
 }
