@@ -264,6 +264,6 @@ public abstract class MicrobrowserTck
 	
 	private static String body(RecordedRequest request)
 	{
-		return new String(request.getBody(), Charset.forName("UTF-8"));
+		return new String(request.getBody(), Charset.forName("ISO-8859-1"));
 	}
 }
