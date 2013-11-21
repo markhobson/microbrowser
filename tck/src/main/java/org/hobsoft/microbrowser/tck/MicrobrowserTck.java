@@ -83,7 +83,7 @@ public abstract class MicrobrowserTck
 			+ "</body></html>"));
 		server.play();
 		
-		String actual = newBrowser().get(server.getUrl("/").toString())
+		String actual = newBrowser().get(url(server))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -102,7 +102,7 @@ public abstract class MicrobrowserTck
 		server.enqueue(new MockResponse());
 		server.play();
 		
-		newBrowser().get(server.getUrl("/").toString())
+		newBrowser().get(url(server))
 			.getForm("f")
 			.submit();
 		
@@ -122,7 +122,7 @@ public abstract class MicrobrowserTck
 		server.enqueue(new MockResponse());
 		server.play();
 		
-		newBrowser().get(server.getUrl("/").toString())
+		newBrowser().get(url(server))
 			.getForm("f")
 			.setParameter("p", "x")
 			.submit();
@@ -143,7 +143,7 @@ public abstract class MicrobrowserTck
 		server.enqueue(new MockResponse());
 		server.play();
 		
-		newBrowser().get(server.getUrl("/").toString())
+		newBrowser().get(url(server))
 			.getForm("f")
 			.setParameter("p", "x")
 			.submit();
@@ -162,6 +162,11 @@ public abstract class MicrobrowserTck
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private static String url(MockWebServer server)
+	{
+		return server.getUrl("/").toString();
+	}
+	
 	/**
 	 * Workaround MockWebServer issue #11.
 	 * 
