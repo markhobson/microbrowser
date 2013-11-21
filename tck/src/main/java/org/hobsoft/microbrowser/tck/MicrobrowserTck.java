@@ -170,7 +170,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void formSubmitWhenGetSubmitsControlValue() throws IOException, InterruptedException
+	public void formSubmitWhenGetSubmitsTextControlValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -210,7 +210,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void formSubmitWhenPostSubmitsControlValue() throws IOException, InterruptedException
+	public void formSubmitWhenPostSubmitsTextControlValue() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
