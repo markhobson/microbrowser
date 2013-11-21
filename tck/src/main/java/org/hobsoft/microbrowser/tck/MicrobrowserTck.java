@@ -96,7 +96,6 @@ public abstract class MicrobrowserTck
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/a'>"
-			+ "<input type='text' name='p'/>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -105,11 +104,10 @@ public abstract class MicrobrowserTck
 		
 		newBrowser().get(server.getUrl("/").toString())
 			.getForm("f")
-			.setParameter("p", "x")
 			.submit();
 		
 		server.takeRequest();
-		assertGetRequest("/a?p=x", takeRequest(server));
+		assertGetRequest("/a", takeRequest(server));
 	}
 
 	@Test
