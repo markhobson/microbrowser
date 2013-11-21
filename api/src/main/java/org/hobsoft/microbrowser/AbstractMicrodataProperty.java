@@ -32,7 +32,7 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		
 		if ("link".equals(elementName) || "a".equals(elementName))
 		{
-			value = getAttribute("href");
+			value = getAbsoluteUrlAttribute("href");
 		}
 		else
 		{
@@ -49,6 +49,11 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 	protected abstract String getElementName();
 	
 	protected abstract String getAttribute(String name);
+	
+	protected String getAbsoluteUrlAttribute(String name)
+	{
+		return getAttribute(name);
+	}
 	
 	protected abstract String getText();
 }

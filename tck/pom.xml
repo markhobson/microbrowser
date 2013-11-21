@@ -44,6 +44,13 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		
+		<!-- Hamcrest -->
+		
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+		</dependency>
+		
 		<!-- MockWebServer -->
 		
 		<dependency>

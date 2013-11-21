@@ -82,6 +82,15 @@ public class JsoupMicrodataProperty extends AbstractMicrodataProperty
 	{
 		return element.attr(name);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getAbsoluteUrlAttribute(String name)
+	{
+		return element.absUrl(name);
+	}
 
 	/**
 	 * {@inheritDoc}
