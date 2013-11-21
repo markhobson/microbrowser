@@ -27,7 +27,10 @@ import com.google.mockwebserver.MockResponse;
 import com.google.mockwebserver.MockWebServer;
 import com.google.mockwebserver.RecordedRequest;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.get;
+import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.post;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -72,7 +75,7 @@ public abstract class MicrobrowserTck
 		
 		newBrowser().get(server.getUrl("/x").toString());
 		
-		assertEquals("request path", "/x", server.takeRequest().getPath());
+		assertThat("request path", server.takeRequest().getPath(), is("/x"));
 	}
 
 	@Test
@@ -126,7 +129,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertEquals("item property value", "x", actual);
+		assertThat("item property value", actual, is("x"));
 	}
 
 	@Test
@@ -145,7 +148,7 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		assertGetRequest("/a", takeRequest(server));
+		assertThat("request", takeRequest(server), is(get("/a")));
 	}
 
 	@Test
@@ -166,7 +169,7 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		assertGetRequest("/a?p=x", takeRequest(server));
+		assertThat("request", takeRequest(server), is(get("/a?p=x")));
 	}
 
 	@Test
@@ -187,7 +190,9 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		assertPostRequest("/a", "p=x", takeRequest(server));
+		RecordedRequest actual = takeRequest(server);
+		assertThat("request", actual, is(post("/a")));
+		assertEquals("request body", "p=x", new String(actual.getBody(), Charset.forName("UTF-8")));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -220,23 +225,5 @@ public abstract class MicrobrowserTck
 		}
 		
 		return request;
-	}
-	
-	private static void assertGetRequest(String expectedPath, RecordedRequest actual)
-	{
-		assertRequest("GET", expectedPath, "", actual);
-	}
-	
-	private static void assertPostRequest(String expectedPath, String expectedBody, RecordedRequest actual)
-	{
-		assertRequest("POST", expectedPath, expectedBody, actual);
-	}
-	
-	private static void assertRequest(String expectedMethod, String expectedPath, String expectedBody,
-		RecordedRequest actual)
-	{
-		assertEquals("request method", expectedMethod, actual.getMethod());
-		assertEquals("request path", expectedPath, actual.getPath());
-		assertEquals("request body", expectedBody, new String(actual.getBody(), Charset.forName("UTF-8")));
 	}
 }
