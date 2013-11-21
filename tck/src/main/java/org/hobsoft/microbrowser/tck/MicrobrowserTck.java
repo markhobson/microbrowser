@@ -135,7 +135,7 @@ public abstract class MicrobrowserTck
 	public void formSubmitWhenNoMethodSubmitsGetRequest() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' action='/a'>"
+			+ "<form name='f' action='/x'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -147,7 +147,26 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		assertThat("request", takeRequest(server), is(get("/a")));
+		assertThat("request", takeRequest(server), is(get("/x")));
+	}
+
+	@Test
+	public void formSubmitWhenGetSubmitsGetRequest() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/x'>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getForm("f")
+			.submit();
+		
+		server.takeRequest();
+		assertThat("request", takeRequest(server), is(get("/x")));
 	}
 
 	@Test
@@ -175,7 +194,7 @@ public abstract class MicrobrowserTck
 	public void formSubmitWhenPostSubmitsPostRequest() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='post' action='/a'>"
+			+ "<form name='f' method='post' action='/x'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -187,7 +206,7 @@ public abstract class MicrobrowserTck
 			.submit();
 		
 		server.takeRequest();
-		assertThat("request", takeRequest(server), is(post("/a")));
+		assertThat("request", takeRequest(server), is(post("/x")));
 	}
 
 	@Test
