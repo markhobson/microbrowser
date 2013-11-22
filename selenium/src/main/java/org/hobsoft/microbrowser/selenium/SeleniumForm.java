@@ -92,17 +92,17 @@ class SeleniumForm implements Form
 		return controlElements.iterator().next();
 	}
 	
+	private static By byControl(String name)
+	{
+		return By.cssSelector(String.format("input[name='%s']", name));
+	}
+
 	private WebElement getSubmit()
 	{
 		List<WebElement> submitElements = element.findElements(bySubmit());
 		checkState(!submitElements.isEmpty(), "Missing form submit button");
 		
 		return submitElements.iterator().next();
-	}
-
-	private static By byControl(String name)
-	{
-		return By.cssSelector(String.format("input[name='%s']", name));
 	}
 
 	private static By bySubmit()

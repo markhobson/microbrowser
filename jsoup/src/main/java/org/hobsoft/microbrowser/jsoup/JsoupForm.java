@@ -149,6 +149,11 @@ class JsoupForm implements Form
 		return controlElements.first();
 	}
 	
+	private static String byControl(String name)
+	{
+		return String.format("input[name=%s]", name);
+	}
+
 	private Element getSubmit()
 	{
 		Elements submitElements = element.select(bySubmit());
@@ -157,11 +162,6 @@ class JsoupForm implements Form
 		return submitElements.first();
 	}
 	
-	private static String byControl(String name)
-	{
-		return String.format("input[name=%s]", name);
-	}
-
 	private static String bySubmit()
 	{
 		return "input[type=submit], button[type=submit], button:not([type])";
