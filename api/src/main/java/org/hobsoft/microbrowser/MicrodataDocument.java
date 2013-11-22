@@ -21,10 +21,19 @@ import java.util.List;
 public interface MicrodataDocument
 {
 	MicrodataItem getItem(String itemType);
-	
+
 	List<MicrodataItem> getItems(String itemType);
-	
+
 	Link getLink(String rel);
 
+	/**
+	 * Gets the named form.
+	 * 
+	 * @param name
+	 *            the name of the form
+	 * @return the form
+	 * @throws IllegalArgumentException
+	 *             if the form cannot be found
+	 */
 	Form getForm(String name);
 }

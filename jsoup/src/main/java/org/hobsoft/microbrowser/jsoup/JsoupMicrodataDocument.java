@@ -85,14 +85,10 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public Form getForm(String name)
 	{
-		Element element = document.select(byForm(name)).first();
+		Elements elements = document.select(byForm(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
 		
-		if (element == null)
-		{
-			return null;
-		}
-		
-		return new JsoupForm(element);
+		return new JsoupForm(elements.first());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

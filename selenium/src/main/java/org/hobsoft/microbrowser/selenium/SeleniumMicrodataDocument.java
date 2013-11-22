@@ -28,7 +28,6 @@ import com.google.common.collect.Lists;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Iterables.getFirst;
 
 /**
  * {@code MicrodataDocument} adapter to a Selenium {@code WebDriver}.
@@ -86,14 +85,10 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public Form getForm(String name)
 	{
-		WebElement element = getFirst(driver.findElements(byForm(name)), null);
+		List<WebElement> elements = driver.findElements(byForm(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
 		
-		if (element == null)
-		{
-			return null;
-		}
-		
-		return new SeleniumForm(driver, element);
+		return new SeleniumForm(driver, elements.iterator().next());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

@@ -32,7 +32,6 @@ import com.google.mockwebserver.RecordedRequest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.get;
 import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.post;
@@ -186,16 +185,14 @@ public abstract class MicrobrowserTck
 		assertThat("form", actual, is(notNullValue()));
 	}
 
-	@Test
-	public void getFormWhenNotFoundReturnsNull() throws IOException, InterruptedException
+	@Test(expected = IllegalArgumentException.class)
+	public void getFormWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server.play();
 		
-		Form actual = newBrowser().get(url(server))
+		newBrowser().get(url(server))
 			.getForm("f");
-		
-		assertThat("form", actual, is(nullValue()));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
