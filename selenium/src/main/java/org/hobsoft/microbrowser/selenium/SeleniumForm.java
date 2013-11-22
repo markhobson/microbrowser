@@ -55,7 +55,7 @@ class SeleniumForm implements Form
 	 */
 	public String getParameter(String name)
 	{
-		WebElement controlElement = element.findElement(byControl(name));
+		WebElement controlElement = getControl(name);
 		
 		return controlElement.getAttribute("value");
 	}
@@ -65,7 +65,7 @@ class SeleniumForm implements Form
 	 */
 	public Form setParameter(String name, String value)
 	{
-		WebElement controlElement = element.findElement(byControl(name));
+		WebElement controlElement = getControl(name);
 		
 		controlElement.sendKeys(value);
 		
@@ -77,7 +77,7 @@ class SeleniumForm implements Form
 	 */
 	public MicrodataDocument submit()
 	{
-		WebElement submitElement = getFirst(element.findElements(bySubmit()), null);
+		WebElement submitElement = getSubmit();
 		
 		if (submitElement == null)
 		{
@@ -92,6 +92,16 @@ class SeleniumForm implements Form
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	private WebElement getControl(String name)
+	{
+		return element.findElement(byControl(name));
+	}
+	
+	private WebElement getSubmit()
+	{
+		return getFirst(element.findElements(bySubmit()), null);
+	}
 
 	private static By byControl(String name)
 	{

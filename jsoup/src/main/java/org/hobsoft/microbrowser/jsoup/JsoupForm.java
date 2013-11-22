@@ -75,7 +75,7 @@ class JsoupForm implements Form
 	{
 		checkNotNull(name, "name");
 		checkNotNull(value, "value");
-		checkArgument(!element.select(byControl(name)).isEmpty(), "Cannot find form control: %s", name);
+		checkArgument(getControl(name) != null, "Cannot find form control: %s", name);
 		
 		parameterValuesByName.put(name, value);
 		
@@ -87,7 +87,7 @@ class JsoupForm implements Form
 	 */
 	public MicrodataDocument submit()
 	{
-		if (element.select(bySubmit()).isEmpty())
+		if (getSubmit() == null)
 		{
 			throw new MicrobrowserException("Missing form submit button");
 		}
@@ -139,6 +139,16 @@ class JsoupForm implements Form
 		}
 		
 		return Method.valueOf(value);
+	}
+	
+	private Element getControl(String name)
+	{
+		return element.select(byControl(name)).first();
+	}
+	
+	private Element getSubmit()
+	{
+		return element.select(bySubmit()).first();
 	}
 	
 	private static String byControl(String name)
