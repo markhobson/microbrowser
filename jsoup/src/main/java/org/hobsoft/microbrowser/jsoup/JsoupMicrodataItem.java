@@ -16,7 +16,9 @@ package org.hobsoft.microbrowser.jsoup;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -48,14 +50,10 @@ class JsoupMicrodataItem implements MicrodataItem
 	 */
 	public MicrodataProperty getProperty(String propertyName)
 	{
-		Element propertyElement = element.select(byItemProp(propertyName)).first();
+		Elements elements = element.select(byItemProp(propertyName));
+		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", propertyName);
 		
-		if (propertyElement == null)
-		{
-			return null;
-		}
-		
-		return new JsoupMicrodataProperty(propertyElement);
+		return new JsoupMicrodataProperty(elements.first());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

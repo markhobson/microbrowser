@@ -22,6 +22,7 @@ import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,6 +80,40 @@ public abstract class MicrobrowserTck
 		newBrowser().get(server.getUrl("/x").toString());
 		
 		assertThat("request path", server.takeRequest().getPath(), is("/x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataProperty.getProperty tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void itemPropertyReturnsProperty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		MicrodataProperty actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p");
+		
+		assertThat("item property", actual, is(notNullValue()));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void itemPropertyWhenNotFoundThrowsException() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------

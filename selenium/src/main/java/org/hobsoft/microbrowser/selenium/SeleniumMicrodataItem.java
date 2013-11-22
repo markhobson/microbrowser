@@ -13,14 +13,16 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import java.util.List;
+
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Iterables.getFirst;
 
 /**
  * {@code MicrodataItem} adapter to a Selenium {@code SearchContext}.
@@ -51,14 +53,10 @@ class SeleniumMicrodataItem implements MicrodataItem
 	 */
 	public MicrodataProperty getProperty(String propertyName)
 	{
-		WebElement element = getFirst(context.findElements(byItemProp(propertyName)), null);
+		List<WebElement> elements = context.findElements(byItemProp(propertyName));
+		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", propertyName);
 		
-		if (element == null)
-		{
-			return null;
-		}
-		
-		return new SeleniumMicrodataProperty(element);
+		return new SeleniumMicrodataProperty(elements.iterator().next());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
