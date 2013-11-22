@@ -64,6 +64,7 @@ class JsoupForm implements Form
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");
+		checkArgument(getControl(name) != null, "Cannot find form control: %s", name);
 		
 		return parameterValuesByName.get(name);
 	}

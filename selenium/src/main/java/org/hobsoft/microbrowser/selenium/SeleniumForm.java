@@ -57,6 +57,7 @@ class SeleniumForm implements Form
 	public String getParameter(String name)
 	{
 		WebElement controlElement = getControl(name);
+		checkArgument(controlElement != null, "Cannot find form control: %s", name);
 		
 		return controlElement.getAttribute("value");
 	}
