@@ -83,6 +83,6 @@ class SeleniumForm implements Form
 
 	private static By bySubmit()
 	{
-		return By.cssSelector("input[type='submit']");
+		return By.cssSelector("input[type='submit'], button[type='submit']");
 	}
 }
