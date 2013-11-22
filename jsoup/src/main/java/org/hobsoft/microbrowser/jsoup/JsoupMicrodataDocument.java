@@ -74,6 +74,11 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	{
 		Element element = document.select(byForm(name)).first();
 		
+		if (element == null)
+		{
+			return null;
+		}
+		
 		return new JsoupForm(element);
 	}
 	

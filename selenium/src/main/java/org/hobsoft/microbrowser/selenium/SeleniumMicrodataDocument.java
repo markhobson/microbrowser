@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
@@ -72,7 +73,12 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public Form getForm(String name)
 	{
-		WebElement element = driver.findElement(byForm(name));
+		WebElement element = first(driver.findElements(byForm(name)));
+		
+		if (element == null)
+		{
+			return null;
+		}
 		
 		return new SeleniumForm(driver, element);
 	}
@@ -89,5 +95,12 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	private static By byForm(String name)
 	{
 		return By.cssSelector(String.format("form[name='%s']", name));
+	}
+	
+	private static <E> E first(Iterable<E> iterable)
+	{
+		Iterator<E> iterator = iterable.iterator();
+		
+		return iterator.hasNext() ? iterator.next() : null;
 	}
 }
