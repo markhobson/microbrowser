@@ -47,6 +47,16 @@ class SeleniumForm implements Form
 	// ----------------------------------------------------------------------------------------------------------------
 	// Form methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getParameter(String name)
+	{
+		WebElement controlElement = element.findElement(byControl(name));
+		
+		return controlElement.getAttribute("value");
+	}
 
 	/**
 	 * {@inheritDoc}

@@ -18,6 +18,8 @@ package org.hobsoft.microbrowser;
  */
 public interface Form
 {
+	String getParameter(String name);
+	
 	Form setParameter(String name, String value);
 
 	/**

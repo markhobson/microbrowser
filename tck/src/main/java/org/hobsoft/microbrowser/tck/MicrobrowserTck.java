@@ -162,6 +162,23 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
+	public void formSetParameterSetsValue() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='p'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server.play();
+		
+		Form form = newBrowser().get(url(server))
+			.getForm("f");
+		form.setParameter("p", "x");
+		
+		assertThat("form parameter value", form.getParameter("p"), is("x"));
+	}
+
+	@Test
 	public void formSubmitWhenSubmitInputSubmitsRequest() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
