@@ -13,8 +13,6 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
-import java.util.List;
-
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.openqa.selenium.By;
@@ -22,6 +20,7 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Iterables.getFirst;
 
 /**
  * {@code MicrodataItem} adapter to a Selenium {@code SearchContext}.
@@ -52,7 +51,7 @@ class SeleniumMicrodataItem implements MicrodataItem
 	 */
 	public MicrodataProperty getProperty(String propertyName)
 	{
-		WebElement element = quietFindElementBy(context, byItemProp(propertyName));
+		WebElement element = getFirst(context.findElements(byItemProp(propertyName)), null);
 		
 		if (element == null)
 		{
@@ -65,13 +64,6 @@ class SeleniumMicrodataItem implements MicrodataItem
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
-
-	private static WebElement quietFindElementBy(SearchContext context, By by)
-	{
-		List<WebElement> elements = context.findElements(by);
-		
-		return elements.isEmpty() ? null : elements.iterator().next();
-	}
 
 	private static By byItemProp(String itemProp)
 	{

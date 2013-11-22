@@ -13,7 +13,6 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
@@ -27,6 +26,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Iterables.getFirst;
 
 /**
  * {@code MicrodataDocument} adapter to a Selenium {@code WebDriver}.
@@ -73,7 +73,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public Form getForm(String name)
 	{
-		WebElement element = first(driver.findElements(byForm(name)));
+		WebElement element = getFirst(driver.findElements(byForm(name)), null);
 		
 		if (element == null)
 		{
@@ -95,12 +95,5 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	private static By byForm(String name)
 	{
 		return By.cssSelector(String.format("form[name='%s']", name));
-	}
-	
-	private static <E> E first(Iterable<E> iterable)
-	{
-		Iterator<E> iterator = iterable.iterator();
-		
-		return iterator.hasNext() ? iterator.next() : null;
 	}
 }
