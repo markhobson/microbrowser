@@ -90,7 +90,7 @@ class JsoupForm implements Form
 	 */
 	public MicrodataDocument submit()
 	{
-		checkState(getSubmit() != null, "Missing form submit button");
+		getSubmit();
 		
 		Document document;
 		
@@ -151,7 +151,10 @@ class JsoupForm implements Form
 	
 	private Element getSubmit()
 	{
-		return element.select(bySubmit()).first();
+		Elements submitElements = element.select(bySubmit());
+		checkState(!submitElements.isEmpty(), "Missing form submit button");
+		
+		return submitElements.first();
 	}
 	
 	private static String byControl(String name)

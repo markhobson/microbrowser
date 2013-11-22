@@ -24,7 +24,6 @@ import org.openqa.selenium.WebElement;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static com.google.common.collect.Iterables.getFirst;
 
 /**
  * {@code Form} adapter to a Selenium {@code WebElement}.
@@ -76,10 +75,7 @@ class SeleniumForm implements Form
 	 */
 	public MicrodataDocument submit()
 	{
-		WebElement submitElement = getSubmit();
-		checkState(submitElement != null, "Missing form submit button");
-		
-		submitElement.click();
+		getSubmit().click();
 		
 		return new SeleniumMicrodataDocument(driver);
 	}
@@ -98,7 +94,10 @@ class SeleniumForm implements Form
 	
 	private WebElement getSubmit()
 	{
-		return getFirst(element.findElements(bySubmit()), null);
+		List<WebElement> submitElements = element.findElements(bySubmit());
+		checkState(!submitElements.isEmpty(), "Missing form submit button");
+		
+		return submitElements.iterator().next();
 	}
 
 	private static By byControl(String name)
