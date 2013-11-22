@@ -87,6 +87,11 @@ class JsoupForm implements Form
 	 */
 	public MicrodataDocument submit()
 	{
+		if (element.select(bySubmit()).isEmpty())
+		{
+			throw new MicrobrowserException("Missing form submit button");
+		}
+		
 		Document document;
 		
 		try
@@ -139,5 +144,10 @@ class JsoupForm implements Form
 	private static String byControl(String name)
 	{
 		return String.format("input[name=%s]", name);
+	}
+
+	private static String bySubmit()
+	{
+		return "input[type=submit], button[type=submit], button:not([type])";
 	}
 }
