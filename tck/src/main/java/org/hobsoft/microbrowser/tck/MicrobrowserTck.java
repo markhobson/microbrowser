@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hobsoft.microbrowser.Microbrowser;
+import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -191,6 +192,28 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
+	public void formSubmitWhenGetReturnsResponse() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		MicrodataDocument actual = newBrowser().get(url(server))
+			.getForm("f")
+			.submit();
+		
+		assertThat("response", actual.getItem("i").getProperty("p").getValue(), is("x"));
+	}
+
+	@Test
 	public void formSubmitWhenPostSubmitsPostRequest() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
@@ -228,6 +251,28 @@ public abstract class MicrobrowserTck
 		
 		server.takeRequest();
 		assertThat("request body", body(takeRequest(server)), is("p=x"));
+	}
+
+	@Test
+	public void formSubmitWhenPostReturnsResponse() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		MicrodataDocument actual = newBrowser().get(url(server))
+			.getForm("f")
+			.submit();
+		
+		assertThat("response", actual.getItem("i").getProperty("p").getValue(), is("x"));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
