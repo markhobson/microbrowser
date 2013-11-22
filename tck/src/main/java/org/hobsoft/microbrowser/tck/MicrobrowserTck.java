@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.After;
 import org.junit.Before;
@@ -282,7 +281,7 @@ public abstract class MicrobrowserTck
 		assertThat("request", takeRequest(server).getPath(), is("/x"));
 	}
 
-	@Test(expected = MicrobrowserException.class)
+	@Test(expected = IllegalStateException.class)
 	public void formSubmitWhenNoSubmitButtonThrowsException() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"

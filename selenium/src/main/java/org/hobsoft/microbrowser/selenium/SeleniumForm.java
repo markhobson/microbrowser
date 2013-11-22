@@ -16,7 +16,6 @@ package org.hobsoft.microbrowser.selenium;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
-import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,6 +23,7 @@ import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.Iterables.getFirst;
 
 /**
@@ -77,11 +77,7 @@ class SeleniumForm implements Form
 	public MicrodataDocument submit()
 	{
 		WebElement submitElement = getSubmit();
-		
-		if (submitElement == null)
-		{
-			throw new MicrobrowserException("Missing form submit button");
-		}
+		checkState(submitElement != null, "Missing form submit button");
 		
 		submitElement.click();
 		

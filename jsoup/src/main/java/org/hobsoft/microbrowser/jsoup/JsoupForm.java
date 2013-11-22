@@ -30,6 +30,7 @@ import org.jsoup.select.Elements;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * {@code Form} adapter to a jsoup {@code Element}.
@@ -89,10 +90,7 @@ class JsoupForm implements Form
 	 */
 	public MicrodataDocument submit()
 	{
-		if (getSubmit() == null)
-		{
-			throw new MicrobrowserException("Missing form submit button");
-		}
+		checkState(getSubmit() != null, "Missing form submit button");
 		
 		Document document;
 		
