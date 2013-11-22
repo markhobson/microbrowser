@@ -87,7 +87,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void itemPropertyReturnsProperty() throws IOException, InterruptedException
+	public void itemGetPropertyReturnsProperty() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -104,7 +104,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void itemPropertyWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void itemGetPropertyWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'/>"
@@ -121,7 +121,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void itemPropertyValueWhenAnchorReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void itemPropertyGetValueWhenAnchorReturnsAbsoluteHref() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -139,7 +139,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void itemPropertyValueWhenLinkReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void itemPropertyGetValueWhenLinkReturnsAbsoluteHref() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -157,7 +157,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void itemPropertyValueWhenUnknownReturnsText() throws IOException, InterruptedException
+	public void itemPropertyGetValueWhenUnknownReturnsText() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
