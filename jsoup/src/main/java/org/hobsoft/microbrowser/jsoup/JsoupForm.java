@@ -26,6 +26,7 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -64,7 +65,7 @@ class JsoupForm implements Form
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");
-		checkArgument(getControl(name) != null, "Cannot find form control: %s", name);
+		getControl(name);
 		
 		return parameterValuesByName.get(name);
 	}
@@ -76,7 +77,7 @@ class JsoupForm implements Form
 	{
 		checkNotNull(name, "name");
 		checkNotNull(value, "value");
-		checkArgument(getControl(name) != null, "Cannot find form control: %s", name);
+		getControl(name);
 		
 		parameterValuesByName.put(name, value);
 		
@@ -144,7 +145,10 @@ class JsoupForm implements Form
 	
 	private Element getControl(String name)
 	{
-		return element.select(byControl(name)).first();
+		Elements controlElements = element.select(byControl(name));
+		checkArgument(!controlElements.isEmpty(), "Cannot find form control: %s", name);
+		
+		return controlElements.first();
 	}
 	
 	private Element getSubmit()

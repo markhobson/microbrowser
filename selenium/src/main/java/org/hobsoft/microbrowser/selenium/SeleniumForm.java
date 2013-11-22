@@ -13,6 +13,8 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import java.util.List;
+
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
@@ -56,10 +58,7 @@ class SeleniumForm implements Form
 	 */
 	public String getParameter(String name)
 	{
-		WebElement controlElement = getControl(name);
-		checkArgument(controlElement != null, "Cannot find form control: %s", name);
-		
-		return controlElement.getAttribute("value");
+		return getControl(name).getAttribute("value");
 	}
 
 	/**
@@ -67,10 +66,7 @@ class SeleniumForm implements Form
 	 */
 	public Form setParameter(String name, String value)
 	{
-		WebElement controlElement = getControl(name);
-		checkArgument(controlElement != null, "Cannot find form control: %s", name);
-		
-		controlElement.sendKeys(value);
+		getControl(name).sendKeys(value);
 		
 		return this;
 	}
@@ -98,7 +94,10 @@ class SeleniumForm implements Form
 	
 	private WebElement getControl(String name)
 	{
-		return getFirst(element.findElements(byControl(name)), null);
+		List<WebElement> controlElements = element.findElements(byControl(name));
+		checkArgument(!controlElements.isEmpty(), "Cannot find form control: %s", name);
+		
+		return controlElements.iterator().next();
 	}
 	
 	private WebElement getSubmit()
