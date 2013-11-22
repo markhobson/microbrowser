@@ -68,7 +68,7 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// tests
+	// Microbrowser.get tests
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
@@ -81,6 +81,10 @@ public abstract class MicrobrowserTck
 		
 		assertThat("request path", server.takeRequest().getPath(), is("/x"));
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataProperty.getValue tests
+	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
 	public void itemPropertyValueWhenAnchorReturnsAbsoluteHref() throws IOException, InterruptedException
@@ -136,6 +140,10 @@ public abstract class MicrobrowserTck
 		assertThat("item property value", actual, is("x"));
 	}
 
+	// ----------------------------------------------------------------------------------------------------------------
+	// Microbrowser.getForm tests
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Test
 	public void getFormReturnsForm() throws IOException, InterruptedException
 	{
@@ -162,6 +170,10 @@ public abstract class MicrobrowserTck
 		assertThat("form", actual, is(nullValue()));
 	}
 
+	// ----------------------------------------------------------------------------------------------------------------
+	// Form.setParameter tests
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Test
 	public void formSetParameterSetsValue() throws IOException, InterruptedException
 	{
@@ -178,6 +190,10 @@ public abstract class MicrobrowserTck
 		
 		assertThat("form parameter value", form.getParameter("p"), is("x"));
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// Form.submit tests
+	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
 	public void formSubmitWhenSubmitInputSubmitsRequest() throws IOException, InterruptedException
