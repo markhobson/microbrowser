@@ -30,6 +30,7 @@ import com.google.mockwebserver.MockWebServer;
 import com.google.mockwebserver.RecordedRequest;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.get;
@@ -132,6 +133,20 @@ public abstract class MicrobrowserTck
 			.getValue();
 		
 		assertThat("item property value", actual, is("x"));
+	}
+
+	@Test
+	public void getFormReturnsForm() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		Form actual = newBrowser().get(url(server))
+			.getForm("f");
+		
+		assertThat("form", actual, is(notNullValue()));
 	}
 
 	@Test
