@@ -18,5 +18,14 @@ package org.hobsoft.microbrowser;
  */
 public interface Microbrowser
 {
+	/**
+	 * Fetches the specified page as a Microdata document.
+	 * 
+	 * @param url
+	 *            the URL of the page to fetch
+	 * @return the page as a Microdata document
+	 * @throws MicrobrowserException
+	 *             if an error occurs
+	 */
 	MicrodataDocument get(String url);
 }

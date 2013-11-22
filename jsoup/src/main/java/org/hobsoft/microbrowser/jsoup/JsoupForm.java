@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
@@ -84,8 +85,7 @@ class JsoupForm implements Form
 		}
 		catch (IOException exception)
 		{
-			// TODO: decide on exception policy
-			throw new RuntimeException(exception);
+			throw new MicrobrowserException("Error submitting form", exception);
 		}
 		
 		return new JsoupMicrodataDocument(document);

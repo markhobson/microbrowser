@@ -11,41 +11,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.jsoup;
-
-import java.io.IOException;
-
-import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.MicrobrowserException;
-import org.hobsoft.microbrowser.MicrodataDocument;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+package org.hobsoft.microbrowser;
 
 /**
- * {@code Microbrowser} implementation that uses jsoup.
+ * Base class for Microbrowser exceptions.
  */
-public class JsoupMicrobrowser implements Microbrowser
+public final class MicrobrowserException extends RuntimeException
 {
+	// TODO: make abstract and introduce subtypes once exception policy thought through
+	
 	// ----------------------------------------------------------------------------------------------------------------
-	// Microbrowser methods
+	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public MicrodataDocument get(String url)
+	public MicrobrowserException(String message)
 	{
-		Document document;
-		
-		try
-		{
-			document = Jsoup.connect(url).get();
-		}
-		catch (IOException exception)
-		{
-			throw new MicrobrowserException("Error fetching page: " + url, exception);
-		}
-		
-		return new JsoupMicrodataDocument(document);
+		super(message);
+	}
+	
+	public MicrobrowserException(String message, Throwable cause)
+	{
+		super(message, cause);
 	}
 }

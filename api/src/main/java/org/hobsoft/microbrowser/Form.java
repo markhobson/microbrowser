@@ -20,5 +20,12 @@ public interface Form
 {
 	Form setParameter(String name, String value);
 
+	/**
+	 * Submits this form.
+	 * 
+	 * @return the response as a Microdata document
+	 * @throws MicrobrowserException
+	 *             if an error occurs
+	 */
 	MicrodataDocument submit();
 }
