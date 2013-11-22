@@ -143,10 +143,10 @@ class JsoupForm implements Form
 	
 	private Element getControl(String name)
 	{
-		Elements controlElements = element.select(byControl(name));
-		checkArgument(!controlElements.isEmpty(), "Cannot find form control: %s", name);
+		Elements elements = element.select(byControl(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form control: %s", name);
 		
-		return controlElements.first();
+		return elements.first();
 	}
 	
 	private static String byControl(String name)
@@ -156,10 +156,10 @@ class JsoupForm implements Form
 
 	private Element getSubmit()
 	{
-		Elements submitElements = element.select(bySubmit());
-		checkState(!submitElements.isEmpty(), "Missing form submit button");
+		Elements elements = element.select(bySubmit());
+		checkState(!elements.isEmpty(), "Missing form submit button");
 		
-		return submitElements.first();
+		return elements.first();
 	}
 	
 	private static String bySubmit()

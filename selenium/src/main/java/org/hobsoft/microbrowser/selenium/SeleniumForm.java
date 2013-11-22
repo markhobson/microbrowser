@@ -86,10 +86,10 @@ class SeleniumForm implements Form
 	
 	private WebElement getControl(String name)
 	{
-		List<WebElement> controlElements = element.findElements(byControl(name));
-		checkArgument(!controlElements.isEmpty(), "Cannot find form control: %s", name);
+		List<WebElement> elements = element.findElements(byControl(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form control: %s", name);
 		
-		return controlElements.iterator().next();
+		return elements.iterator().next();
 	}
 	
 	private static By byControl(String name)
@@ -99,10 +99,10 @@ class SeleniumForm implements Form
 
 	private WebElement getSubmit()
 	{
-		List<WebElement> submitElements = element.findElements(bySubmit());
-		checkState(!submitElements.isEmpty(), "Missing form submit button");
+		List<WebElement> elements = element.findElements(bySubmit());
+		checkState(!elements.isEmpty(), "Missing form submit button");
 		
-		return submitElements.iterator().next();
+		return elements.iterator().next();
 	}
 
 	private static By bySubmit()
