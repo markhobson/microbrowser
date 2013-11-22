@@ -191,6 +191,19 @@ public abstract class MicrobrowserTck
 		assertThat("form parameter value", form.getParameter("p"), is("x"));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void formSetParameterWhenNotFoundThrowsException() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getForm("f")
+			.setParameter("p", "x");
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// Form.submit tests
 	// ----------------------------------------------------------------------------------------------------------------

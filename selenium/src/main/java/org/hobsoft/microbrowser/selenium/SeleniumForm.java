@@ -20,6 +20,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.getFirst;
 
@@ -66,6 +67,7 @@ class SeleniumForm implements Form
 	public Form setParameter(String name, String value)
 	{
 		WebElement controlElement = getControl(name);
+		checkArgument(controlElement != null, "Cannot find form control: %s", name);
 		
 		controlElement.sendKeys(value);
 		
@@ -95,7 +97,7 @@ class SeleniumForm implements Form
 	
 	private WebElement getControl(String name)
 	{
-		return element.findElement(byControl(name));
+		return getFirst(element.findElements(byControl(name)), null);
 	}
 	
 	private WebElement getSubmit()

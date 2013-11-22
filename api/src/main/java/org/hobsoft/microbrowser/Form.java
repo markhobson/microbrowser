@@ -19,7 +19,18 @@ package org.hobsoft.microbrowser;
 public interface Form
 {
 	String getParameter(String name);
-	
+
+	/**
+	 * Sets the value of the specified parameter.
+	 * 
+	 * @param name
+	 *            the name of the parameter to set
+	 * @param value
+	 *            the value to set
+	 * @return this form
+	 * @throws IllegalArgumentException
+	 *             if the parameter cannot be found
+	 */
 	Form setParameter(String name, String value);
 
 	/**
