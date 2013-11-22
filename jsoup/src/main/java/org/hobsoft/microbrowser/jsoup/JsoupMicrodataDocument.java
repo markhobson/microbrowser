@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,6 +26,7 @@ import org.jsoup.select.Elements;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -70,6 +72,17 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
+	public Link getLink(String rel)
+	{
+		Elements elements = document.select(byLink(rel));
+		checkArgument(!elements.isEmpty(), "Cannot find link: %s", rel);
+		
+		return new JsoupLink(elements.first());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Form getForm(String name)
 	{
 		Element element = document.select(byForm(name)).first();
@@ -91,6 +104,11 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 		return String.format("[itemscope][itemtype=%s]", itemType);
 	}
 
+	private static String byLink(String rel)
+	{
+		return String.format("a[rel=%s]", rel);
+	}
+	
 	private static String byForm(String name)
 	{
 		return String.format("form[name=%s]", name);

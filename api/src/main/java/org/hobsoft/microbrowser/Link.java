@@ -13,18 +13,9 @@
  */
 package org.hobsoft.microbrowser;
 
-import java.util.List;
-
 /**
- * Defines an HTML Microdata document.
+ * Defines an HTML link.
  */
-public interface MicrodataDocument
+public interface Link
 {
-	MicrodataItem getItem(String itemType);
-	
-	List<MicrodataItem> getItems(String itemType);
-	
-	Link getLink(String rel);
-
-	Form getForm(String name);
 }

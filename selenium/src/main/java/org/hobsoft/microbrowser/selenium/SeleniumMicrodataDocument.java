@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,6 +26,7 @@ import org.openqa.selenium.WebElement;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.getFirst;
 
@@ -71,6 +73,17 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
+	public Link getLink(String rel)
+	{
+		List<WebElement> elements = driver.findElements(byLink(rel));
+		checkArgument(!elements.isEmpty(), "Cannot find link: %s", rel);
+		
+		return new SeleniumLink(elements.iterator().next());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Form getForm(String name)
 	{
 		WebElement element = getFirst(driver.findElements(byForm(name)), null);
@@ -90,6 +103,11 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	private static By byItemType(String itemType)
 	{
 		return By.cssSelector(String.format("[itemscope][itemtype='%s']", itemType));
+	}
+	
+	private static By byLink(String rel)
+	{
+		return By.cssSelector(String.format("a[rel='%s']", rel));
 	}
 	
 	private static By byForm(String name)

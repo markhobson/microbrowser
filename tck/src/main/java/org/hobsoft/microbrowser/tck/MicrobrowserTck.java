@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.After;
@@ -137,6 +138,34 @@ public abstract class MicrobrowserTck
 			.getValue();
 		
 		assertThat("item property value", actual, is("x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// Microbrowser.getLink tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getLinkReturnsLink() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		Link actual = newBrowser().get(url(server))
+			.getLink("r");
+		
+		assertThat("link", actual, is(notNullValue()));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getLinkWhenNotFoundThrowsException() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getLink("r");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
