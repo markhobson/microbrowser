@@ -47,6 +47,11 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 			value = getText();
 		}
 		
+		if (value == null)
+		{
+			value = "";
+		}
+		
 		return value;
 	}
 	

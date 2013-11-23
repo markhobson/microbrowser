@@ -35,6 +35,7 @@ import com.google.mockwebserver.RecordedRequest;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.get;
 import static org.hobsoft.microbrowser.tck.RecordedRequestMatcher.post;
 import static org.junit.Assert.assertThat;
@@ -191,7 +192,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void propertyGetValueWhenAnchorReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void propertyGetValueWhenAnchorReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -209,7 +210,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void propertyGetValueWhenAnchorAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<a itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, isEmptyString());
+	}
+
+	@Test
+	public void propertyGetValueWhenAreaReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -227,7 +246,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void propertyGetValueWhenAreaAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<area itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, isEmptyString());
+	}
+
+	@Test
+	public void propertyGetValueWhenLinkReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -242,6 +279,24 @@ public abstract class MicrobrowserTck
 			.getValue();
 		
 		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+	}
+
+	@Test
+	public void propertyGetValueWhenLinkAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<link itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, isEmptyString());
 	}
 
 	@Test
