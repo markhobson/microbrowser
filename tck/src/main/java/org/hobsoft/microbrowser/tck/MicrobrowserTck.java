@@ -91,14 +91,14 @@ public abstract class MicrobrowserTck
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
-			+ "<p itemprop='p'/>"
+			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
 		server.play();
 		
 		MicrodataProperty actual = newBrowser().get(url(server))
 			.getItem("i")
-			.getProperty("p");
+			.getProperty("x");
 		
 		assertThat("item property", actual, is(notNullValue()));
 	}
@@ -113,7 +113,7 @@ public abstract class MicrobrowserTck
 		
 		newBrowser().get(url(server))
 			.getItem("i")
-			.getProperty("p");
+			.getProperty("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -182,12 +182,12 @@ public abstract class MicrobrowserTck
 	public void getLinkWhenAnchorReturnsLink() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
-			+ "<a rel='r'/>"
+			+ "<a rel='x'/>"
 			+ "</body></html>"));
 		server.play();
 		
 		Link actual = newBrowser().get(url(server))
-			.getLink("r");
+			.getLink("x");
 		
 		assertThat("link", actual, is(notNullValue()));
 	}
@@ -196,12 +196,12 @@ public abstract class MicrobrowserTck
 	public void getLinkWhenLinkReturnsLink() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
-			+ "<link rel='r'/>"
+			+ "<link rel='x'/>"
 			+ "</body></html>"));
 		server.play();
 		
 		Link actual = newBrowser().get(url(server))
-			.getLink("r");
+			.getLink("x");
 		
 		assertThat("link", actual, is(notNullValue()));
 	}
@@ -213,7 +213,7 @@ public abstract class MicrobrowserTck
 		server.play();
 		
 		newBrowser().get(url(server))
-			.getLink("r");
+			.getLink("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -300,12 +300,12 @@ public abstract class MicrobrowserTck
 	public void getFormReturnsForm() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f'/>"
+			+ "<form name='x'/>"
 			+ "</body></html>"));
 		server.play();
 		
 		Form actual = newBrowser().get(url(server))
-			.getForm("f");
+			.getForm("x");
 		
 		assertThat("form", actual, is(notNullValue()));
 	}
@@ -317,7 +317,7 @@ public abstract class MicrobrowserTck
 		server.play();
 		
 		newBrowser().get(url(server))
-			.getForm("f");
+			.getForm("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -352,7 +352,7 @@ public abstract class MicrobrowserTck
 		
 		newBrowser().get(url(server))
 			.getForm("f")
-			.getParameter("p");
+			.getParameter("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
