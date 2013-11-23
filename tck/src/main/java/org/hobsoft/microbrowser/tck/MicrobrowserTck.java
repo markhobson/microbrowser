@@ -117,6 +117,28 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataProperty.getName tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void itemPropertyGetNameReturnsName() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("x")
+			.getName();
+		
+		assertThat("item property name", actual, is("x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataProperty.getValue tests
 	// ----------------------------------------------------------------------------------------------------------------
 

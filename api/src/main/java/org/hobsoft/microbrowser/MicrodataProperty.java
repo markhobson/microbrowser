@@ -18,7 +18,14 @@ package org.hobsoft.microbrowser;
  */
 public interface MicrodataProperty
 {
+	/**
+	 * Gets the name of this item property.
+	 * 
+	 * @return the item property name
+	 */
+	String getName();
+
 	String getValue();
-	
+
 	<T> T unwrap(Class<T> type);
 }

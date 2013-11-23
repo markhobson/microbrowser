@@ -21,6 +21,14 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataItemValue methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final String getName()
+	{
+		return getAttribute("itemprop");
+	}
 
 	/**
 	 * {@inheritDoc}
