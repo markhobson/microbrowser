@@ -179,7 +179,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getLinkReturnsLink() throws IOException, InterruptedException
+	public void getLinkWhenAnchorReturnsLink() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r'/>"
@@ -207,7 +207,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void linkFollowSubmitsRequest() throws IOException, InterruptedException
+	public void linkFollowWhenAnchorSubmitsRequest() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/x'>a</a>"
@@ -224,7 +224,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void linkFollowReturnsResponse() throws IOException, InterruptedException
+	public void linkFollowWhenAnchorReturnsResponse() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
