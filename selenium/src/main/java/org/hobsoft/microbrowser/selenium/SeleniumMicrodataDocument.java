@@ -102,7 +102,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	
 	private static By byLink(String rel)
 	{
-		return By.cssSelector(String.format("a[rel='%s']", rel));
+		return By.cssSelector(String.format("a[rel='%1$s'], link[rel='%1$s']", rel));
 	}
 	
 	private static By byForm(String name)

@@ -192,6 +192,20 @@ public abstract class MicrobrowserTck
 		assertThat("link", actual, is(notNullValue()));
 	}
 
+	@Test
+	public void getLinkWhenLinkReturnsLink() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<link rel='r'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		Link actual = newBrowser().get(url(server))
+			.getLink("r");
+		
+		assertThat("link", actual, is(notNullValue()));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void getLinkWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{

@@ -102,7 +102,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 
 	private static String byLink(String rel)
 	{
-		return String.format("a[rel=%s]", rel);
+		return String.format("a[rel=%1$s], link[rel=%1$s]", rel);
 	}
 	
 	private static String byForm(String name)
