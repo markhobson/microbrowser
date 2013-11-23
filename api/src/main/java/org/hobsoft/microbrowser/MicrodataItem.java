@@ -19,6 +19,13 @@ package org.hobsoft.microbrowser;
 public interface MicrodataItem
 {
 	/**
+	 * Gets the type of this item.
+	 * 
+	 * @return the item type
+	 */
+	String getType();
+	
+	/**
 	 * Gets the item property with the specified name.
 	 * 
 	 * @param name

@@ -83,6 +83,25 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataItem.getType tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void itemGetTypeReturnsType() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("x")
+			.getType();
+		
+		assertThat("item type", actual, is("x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataItem.getProperty tests
 	// ----------------------------------------------------------------------------------------------------------------
 

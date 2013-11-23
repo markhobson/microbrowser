@@ -18,14 +18,13 @@ import java.util.List;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@code MicrodataItem} adapter to a Selenium {@code SearchContext}.
+ * {@code MicrodataItem} adapter to a Selenium {@code WebElement}.
  */
 class SeleniumMicrodataItem implements MicrodataItem
 {
@@ -33,27 +32,35 @@ class SeleniumMicrodataItem implements MicrodataItem
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final SearchContext context;
+	private final WebElement element;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumMicrodataItem(SearchContext context)
+	public SeleniumMicrodataItem(WebElement element)
 	{
-		this.context = checkNotNull(context, "context");
+		this.element = checkNotNull(element, "element");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataItem methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getType()
+	{
+		return element.getAttribute("itemtype");
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public MicrodataProperty getProperty(String name)
 	{
-		List<WebElement> elements = context.findElements(byItemProp(name));
+		List<WebElement> elements = element.findElements(byItemProp(name));
 		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", name);
 		
 		return new SeleniumMicrodataProperty(elements.iterator().next());

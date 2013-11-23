@@ -44,6 +44,14 @@ class JsoupMicrodataItem implements MicrodataItem
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataItem methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getType()
+	{
+		return element.attr("itemtype");
+	}
 
 	/**
 	 * {@inheritDoc}
