@@ -217,6 +217,40 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// Link.getRel tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void linkGetRelWhenAnchorReturnsRelationship() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("x")
+			.getRel();
+		
+		assertThat("link rel", actual, is("x"));
+	}
+
+	@Test
+	public void linkGetRelWhenLinkReturnsRelationship() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<link rel='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("x")
+			.getRel();
+		
+		assertThat("link rel", actual, is("x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// Link.follow tests
 	// ----------------------------------------------------------------------------------------------------------------
 

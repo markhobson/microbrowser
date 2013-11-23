@@ -51,6 +51,14 @@ class JsoupLink implements Link
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getRel()
+	{
+		return element.attr("rel");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public MicrodataDocument follow()
 	{
 		String url = element.absUrl("href");

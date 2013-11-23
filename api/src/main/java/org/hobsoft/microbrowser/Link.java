@@ -18,5 +18,7 @@ package org.hobsoft.microbrowser;
  */
 public interface Link
 {
+	String getRel();
+	
 	MicrodataDocument follow();
 }
