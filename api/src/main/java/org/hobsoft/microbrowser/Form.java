@@ -18,18 +18,27 @@ package org.hobsoft.microbrowser;
  */
 public interface Form
 {
+	/**
+	 * Gets the value of the specified form control.
+	 * 
+	 * @param name
+	 *            the name of the form control whose value to get
+	 * @return the form control value
+	 * @throws IllegalArgumentException
+	 *             if the form control cannot be found
+	 */
 	String getParameter(String name);
 
 	/**
-	 * Sets the value of the specified parameter.
+	 * Sets the value of the specified form control.
 	 * 
 	 * @param name
-	 *            the name of the parameter to set
+	 *            the name of the form control to set
 	 * @param value
-	 *            the value to set
+	 *            the form control value to set
 	 * @return this form
 	 * @throws IllegalArgumentException
-	 *             if the parameter cannot be found
+	 *             if the form control cannot be found
 	 */
 	Form setParameter(String name, String value);
 
@@ -39,6 +48,8 @@ public interface Form
 	 * @return the response as a Microdata document
 	 * @throws MicrobrowserException
 	 *             if an error occurs
+	 * @throws IllegalStateException
+	 *             if the form is missing a submit button
 	 */
 	MicrodataDocument submit();
 }

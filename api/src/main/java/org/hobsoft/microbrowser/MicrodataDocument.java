@@ -24,13 +24,22 @@ public interface MicrodataDocument
 
 	List<MicrodataItem> getItems(String itemType);
 
+	/**
+	 * Gets the link with the specified relationship.
+	 * 
+	 * @param rel
+	 *            the relationship of the link to get
+	 * @return the link
+	 * @throws IllegalArgumentException
+	 *             if the link cannot be found
+	 */
 	Link getLink(String rel);
 
 	/**
-	 * Gets the named form.
+	 * Gets the form with the specified name.
 	 * 
 	 * @param name
-	 *            the name of the form
+	 *            the name of the form to get
 	 * @return the form
 	 * @throws IllegalArgumentException
 	 *             if the form cannot be found
