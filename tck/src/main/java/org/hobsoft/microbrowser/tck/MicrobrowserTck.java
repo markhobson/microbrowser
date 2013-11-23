@@ -88,7 +88,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getItemReturnsItem() throws IOException, InterruptedException
+	public void documentGetItemReturnsItem() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='x'/>"
@@ -102,7 +102,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getItemWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void documentGetItemWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server.play();
@@ -169,7 +169,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void itemPropertyGetNameReturnsName() throws IOException, InterruptedException
+	public void propertyGetNameReturnsName() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -191,7 +191,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void itemPropertyGetValueWhenAnchorReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void propertyGetValueWhenAnchorReturnsAbsoluteHref() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -209,7 +209,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void itemPropertyGetValueWhenLinkReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void propertyGetValueWhenLinkReturnsAbsoluteHref() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -227,7 +227,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void itemPropertyGetValueWhenUnknownReturnsText() throws IOException, InterruptedException
+	public void propertyGetValueWhenUnknownReturnsText() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -249,7 +249,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getLinkWhenAnchorReturnsLink() throws IOException, InterruptedException
+	public void documentGetLinkWhenAnchorReturnsLink() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
@@ -263,7 +263,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void getLinkWhenLinkReturnsLink() throws IOException, InterruptedException
+	public void documentGetLinkWhenLinkReturnsLink() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
@@ -277,7 +277,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getLinkWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void documentGetLinkWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server.play();
@@ -367,7 +367,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getFormReturnsForm() throws IOException, InterruptedException
+	public void documentGetFormReturnsForm() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
@@ -381,7 +381,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getFormWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void documentGetFormWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server.play();
