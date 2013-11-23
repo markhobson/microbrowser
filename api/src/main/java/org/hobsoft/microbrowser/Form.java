@@ -45,7 +45,7 @@ public interface Form
 	/**
 	 * Submits this form.
 	 * 
-	 * @return the response as a Microdata document
+	 * @return the response as a microdata document
 	 * @throws MicrobrowserException
 	 *             if an error occurs
 	 * @throws IllegalStateException

@@ -16,7 +16,7 @@ package org.hobsoft.microbrowser;
 import java.util.List;
 
 /**
- * Defines an HTML Microdata document.
+ * Defines an HTML microdata document.
  */
 public interface MicrodataDocument
 {

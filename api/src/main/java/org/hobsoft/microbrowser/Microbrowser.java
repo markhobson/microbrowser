@@ -14,16 +14,16 @@
 package org.hobsoft.microbrowser;
 
 /**
- * Defines a programmatic web browser for HTML Microdata.
+ * Defines a programmatic web browser for HTML microdata.
  */
 public interface Microbrowser
 {
 	/**
-	 * Fetches the specified page as a Microdata document.
+	 * Fetches the specified page as a microdata document.
 	 * 
 	 * @param url
 	 *            the URL of the page to fetch
-	 * @return the page as a Microdata document
+	 * @return the page as a microdata document
 	 * @throws MicrobrowserException
 	 *             if an error occurs
 	 */

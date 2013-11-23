@@ -14,7 +14,7 @@
 package org.hobsoft.microbrowser;
 
 /**
- * Defines an HTML Microdata property.
+ * Defines an HTML microdata property.
  */
 public interface MicrodataProperty
 {
