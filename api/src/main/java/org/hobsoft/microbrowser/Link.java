@@ -18,4 +18,5 @@ package org.hobsoft.microbrowser;
  */
 public interface Link
 {
+	void follow();
 }

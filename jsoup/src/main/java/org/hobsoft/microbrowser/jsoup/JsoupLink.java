@@ -13,7 +13,11 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
+import java.io.IOException;
+
 import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.MicrobrowserException;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -36,5 +40,26 @@ class JsoupLink implements Link
 	public JsoupLink(Element element)
 	{
 		this.element = checkNotNull(element, "element");
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Link methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void follow()
+	{
+		String url = element.absUrl("href");
+		
+		try
+		{
+			Jsoup.connect(url).get();
+		}
+		catch (IOException exception)
+		{
+			throw new MicrobrowserException("Error fetching page: " + url, exception);
+		}
 	}
 }

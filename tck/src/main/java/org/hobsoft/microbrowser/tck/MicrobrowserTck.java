@@ -203,6 +203,27 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// Link.follow tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void linkFollowSubmitsRequest() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r' href='/x'>a</a>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getLink("r")
+			.follow();
+		
+		server.takeRequest();
+		assertThat("request", takeRequest(server).getPath(), is("/x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// Microbrowser.getForm tests
 	// ----------------------------------------------------------------------------------------------------------------
 
