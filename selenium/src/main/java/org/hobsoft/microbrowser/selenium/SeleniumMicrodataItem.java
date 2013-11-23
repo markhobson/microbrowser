@@ -51,10 +51,10 @@ class SeleniumMicrodataItem implements MicrodataItem
 	/**
 	 * {@inheritDoc}
 	 */
-	public MicrodataProperty getProperty(String propertyName)
+	public MicrodataProperty getProperty(String name)
 	{
-		List<WebElement> elements = context.findElements(byItemProp(propertyName));
-		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", propertyName);
+		List<WebElement> elements = context.findElements(byItemProp(name));
+		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", name);
 		
 		return new SeleniumMicrodataProperty(elements.iterator().next());
 	}

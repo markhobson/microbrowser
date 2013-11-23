@@ -21,11 +21,11 @@ public interface MicrodataItem
 	/**
 	 * Gets the item property with the specified name.
 	 * 
-	 * @param propertyName
+	 * @param name
 	 *            the name of the item property to get
 	 * @return the item property
 	 * @throws IllegalArgumentException
 	 *             if the property cannot be found
 	 */
-	MicrodataProperty getProperty(String propertyName);
+	MicrodataProperty getProperty(String name);
 }

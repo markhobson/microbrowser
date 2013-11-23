@@ -48,10 +48,10 @@ class JsoupMicrodataItem implements MicrodataItem
 	/**
 	 * {@inheritDoc}
 	 */
-	public MicrodataProperty getProperty(String propertyName)
+	public MicrodataProperty getProperty(String name)
 	{
-		Elements elements = element.select(byItemProp(propertyName));
-		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", propertyName);
+		Elements elements = element.select(byItemProp(name));
+		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", name);
 		
 		return new JsoupMicrodataProperty(elements.first());
 	}
