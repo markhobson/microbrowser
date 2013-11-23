@@ -63,6 +63,14 @@ class JsoupForm implements Form
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getName()
+	{
+		return element.attr("name");
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");

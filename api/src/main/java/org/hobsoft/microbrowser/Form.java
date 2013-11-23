@@ -19,6 +19,13 @@ package org.hobsoft.microbrowser;
 public interface Form
 {
 	/**
+	 * Gets the name of this form.
+	 * 
+	 * @return the form name
+	 */
+	String getName();
+	
+	/**
 	 * Gets the value of the specified form control.
 	 * 
 	 * @param name

@@ -55,6 +55,14 @@ class SeleniumForm implements Form
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getName()
+	{
+		return element.getAttribute("name");
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getParameter(String name)
 	{
 		return getControl(name).getAttribute("value");

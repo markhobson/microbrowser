@@ -287,6 +287,24 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// Form.getName tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public void formGetNameReturnsName() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getForm("x")
+			.getName();
+		
+		assertThat("form name", actual, is("x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// Form.getParameter tests
 	// ----------------------------------------------------------------------------------------------------------------
 
