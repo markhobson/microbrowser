@@ -38,7 +38,11 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		String elementName = getElementName();
 		String value;
 		
-		if ("a".equals(elementName) || "area".equals(elementName) || "link".equals(elementName))
+		if ("meta".equals(elementName))
+		{
+			value = getAttribute("content");
+		}
+		else if ("a".equals(elementName) || "area".equals(elementName) || "link".equals(elementName))
 		{
 			value = getAbsoluteUrlAttribute("href");
 		}

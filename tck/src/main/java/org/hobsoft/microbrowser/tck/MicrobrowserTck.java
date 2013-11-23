@@ -192,6 +192,42 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
+	public void propertyGetValueWhenMetaReturnsContent() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<meta itemprop='p' content='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("x"));
+	}
+
+	@Test
+	public void propertyGetValueWhenMetaAndNoContentReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<meta itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, isEmptyString());
+	}
+
+	@Test
 	public void propertyGetValueWhenAnchorReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
