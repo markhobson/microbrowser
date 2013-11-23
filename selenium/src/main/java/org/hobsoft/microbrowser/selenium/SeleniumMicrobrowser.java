@@ -20,7 +20,7 @@ import org.openqa.selenium.WebDriver;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@code Microbrowser} adapter to a Selenium {@code WebDriver}.
+ * {@code Microbrowser} implementation that uses Selenium.
  */
 public class SeleniumMicrobrowser implements Microbrowser
 {
