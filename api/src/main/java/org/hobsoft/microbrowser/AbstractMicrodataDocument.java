@@ -13,7 +13,6 @@
  */
 package org.hobsoft.microbrowser;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -32,15 +31,11 @@ public abstract class AbstractMicrodataDocument implements MicrodataDocument
 	{
 		List<MicrodataItem> items = getItems(type);
 		
-		return first(items);
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private static <E> E first(Collection<E> collection)
-	{
-		return collection.isEmpty() ? null : collection.iterator().next();
+		if (items.isEmpty())
+		{
+			throw new IllegalArgumentException("Cannot find item: " + type);
+		}
+		
+		return items.iterator().next();
 	}
 }

@@ -21,7 +21,6 @@ import org.junit.Test;
 import static java.util.Arrays.asList;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -70,11 +69,11 @@ public class AbstractMicrodataDocumentTest
 		assertThat(document.getItem("x"), is(item1));
 	}
 
-	@Test
-	public void getItemWhenNoItemsReturnsNull()
+	@Test(expected = IllegalArgumentException.class)
+	public void getItemWhenNoItemsThrowsException()
 	{
 		when(document.getItems("x")).thenReturn(Collections.<MicrodataItem>emptyList());
 		
-		assertThat(document.getItem("x"), is(nullValue()));
+		document.getItem("x");
 	}
 }

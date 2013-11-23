@@ -20,6 +20,15 @@ import java.util.List;
  */
 public interface MicrodataDocument
 {
+	/**
+	 * Gets the item with the specified type.
+	 * 
+	 * @param type
+	 *            the item type to get
+	 * @return the item
+	 * @throws IllegalArgumentException
+	 *             if the item cannot be found
+	 */
 	MicrodataItem getItem(String type);
 
 	List<MicrodataItem> getItems(String type);

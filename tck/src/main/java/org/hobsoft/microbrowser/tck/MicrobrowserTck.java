@@ -22,6 +22,7 @@ import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.After;
 import org.junit.Before;
@@ -80,6 +81,34 @@ public abstract class MicrobrowserTck
 		newBrowser().get(server.getUrl("/x").toString());
 		
 		assertThat("request path", server.takeRequest().getPath(), is("/x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataDocument.getItem tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getItemReturnsItem() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		MicrodataItem actual = newBrowser().get(url(server))
+			.getItem("x");
+		
+		assertThat("item", actual, is(notNullValue()));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getItemWhenNotFoundThrowsException() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getItem("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
