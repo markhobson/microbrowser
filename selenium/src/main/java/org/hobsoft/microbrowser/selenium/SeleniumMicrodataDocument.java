@@ -77,7 +77,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 		List<WebElement> elements = driver.findElements(byLink(rel));
 		checkArgument(!elements.isEmpty(), "Cannot find link: %s", rel);
 		
-		return new SeleniumLink(elements.iterator().next());
+		return new SeleniumLink(driver, elements.iterator().next());
 	}
 	
 	/**

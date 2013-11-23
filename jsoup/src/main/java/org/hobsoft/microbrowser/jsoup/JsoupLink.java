@@ -17,7 +17,9 @@ import java.io.IOException;
 
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrobrowserException;
+import org.hobsoft.microbrowser.MicrodataDocument;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -49,17 +51,21 @@ class JsoupLink implements Link
 	/**
 	 * {@inheritDoc}
 	 */
-	public void follow()
+	public MicrodataDocument follow()
 	{
 		String url = element.absUrl("href");
 		
+		Document document;
+		
 		try
 		{
-			Jsoup.connect(url).get();
+			document = Jsoup.connect(url).get();
 		}
 		catch (IOException exception)
 		{
 			throw new MicrobrowserException("Error fetching page: " + url, exception);
 		}
+		
+		return new JsoupMicrodataDocument(document);
 	}
 }

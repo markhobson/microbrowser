@@ -223,6 +223,27 @@ public abstract class MicrobrowserTck
 		assertThat("request", takeRequest(server).getPath(), is("/x"));
 	}
 
+	@Test
+	public void linkFollowReturnsResponse() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r' href='/a'>a</a>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		MicrodataDocument actual = newBrowser().get(url(server))
+			.getLink("r")
+			.follow();
+		
+		server.takeRequest();
+		assertThat("request", actual.getItem("i").getProperty("p").getValue(), is("x"));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// Microbrowser.getForm tests
 	// ----------------------------------------------------------------------------------------------------------------

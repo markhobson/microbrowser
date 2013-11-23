@@ -14,6 +14,8 @@
 package org.hobsoft.microbrowser.selenium;
 
 import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.MicrodataDocument;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -27,14 +29,17 @@ class SeleniumLink implements Link
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private final WebDriver driver;
+	
 	private final WebElement element;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumLink(WebElement element)
+	public SeleniumLink(WebDriver driver, WebElement element)
 	{
+		this.driver = checkNotNull(driver, "driver");
 		this.element = checkNotNull(element, "element");
 	}
 	
@@ -45,8 +50,10 @@ class SeleniumLink implements Link
 	/**
 	 * {@inheritDoc}
 	 */
-	public void follow()
+	public MicrodataDocument follow()
 	{
 		element.click();
+		
+		return new SeleniumMicrodataDocument(driver);
 	}
 }
