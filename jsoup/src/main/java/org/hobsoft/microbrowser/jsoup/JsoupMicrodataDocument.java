@@ -56,9 +56,9 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<MicrodataItem> getItems(String itemType)
+	public List<MicrodataItem> getItems(String type)
 	{
-		Elements elements = document.select(byItemType(itemType));
+		Elements elements = document.select(byItemType(type));
 		
 		return Lists.transform(elements, new Function<Element, MicrodataItem>()
 		{

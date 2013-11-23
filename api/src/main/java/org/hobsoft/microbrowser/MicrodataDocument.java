@@ -20,9 +20,9 @@ import java.util.List;
  */
 public interface MicrodataDocument
 {
-	MicrodataItem getItem(String itemType);
+	MicrodataItem getItem(String type);
 
-	List<MicrodataItem> getItems(String itemType);
+	List<MicrodataItem> getItems(String type);
 
 	/**
 	 * Gets the link with the specified relationship.

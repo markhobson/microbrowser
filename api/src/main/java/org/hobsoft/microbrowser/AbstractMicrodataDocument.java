@@ -28,9 +28,9 @@ public abstract class AbstractMicrodataDocument implements MicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public final MicrodataItem getItem(String itemType)
+	public final MicrodataItem getItem(String type)
 	{
-		List<MicrodataItem> items = getItems(itemType);
+		List<MicrodataItem> items = getItems(type);
 		
 		return first(items);
 	}
