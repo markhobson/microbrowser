@@ -74,18 +74,9 @@ public class FakeMicrodataProperty extends AbstractMicrodataProperty
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getAttribute(String name)
+	protected String getAttribute(String name, boolean absoluteUrl)
 	{
-		return attributeValuesByName.get(name);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getAbsoluteUrlAttribute(String name)
-	{
-		return absoluteUrlAttributeValuesByName.get(name);
+		return absoluteUrl ? absoluteUrlAttributeValuesByName.get(name) : attributeValuesByName.get(name);
 	}
 
 	/**

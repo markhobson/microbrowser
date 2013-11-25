@@ -68,7 +68,7 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 	 */
 	public final String getName()
 	{
-		return getAttribute("itemprop");
+		return getAttribute("itemprop", false);
 	}
 
 	/**
@@ -83,14 +83,9 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		
 		if (valueAttributeName != null)
 		{
-			if (URL_ATTRIBUTES.contains(valueAttributeName))
-			{
-				value = getAbsoluteUrlAttribute(valueAttributeName);
-			}
-			else
-			{
-				value = getAttribute(valueAttributeName);
-			}
+			boolean url = URL_ATTRIBUTES.contains(valueAttributeName);
+			
+			value = getAttribute(valueAttributeName, url);
 			
 			if ("time".equals(elementName) && nullToEmpty(value).isEmpty())
 			{
@@ -111,12 +106,7 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 
 	protected abstract String getElementName();
 	
-	protected abstract String getAttribute(String name);
-	
-	protected String getAbsoluteUrlAttribute(String name)
-	{
-		return getAttribute(name);
-	}
+	protected abstract String getAttribute(String name, boolean absoluteUrl);
 	
 	protected abstract String getText();
 	

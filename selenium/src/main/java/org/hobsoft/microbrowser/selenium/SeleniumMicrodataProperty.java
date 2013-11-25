@@ -78,7 +78,7 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getAttribute(String name)
+	protected String getAttribute(String name, boolean absoluteUrl)
 	{
 		return element.getAttribute(name);
 	}
