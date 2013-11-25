@@ -78,6 +78,23 @@ public class AbstractMicrodataPropertyTest
 	}
 	
 	@Test
+	public void getValueWithIframeReturnsSrc()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("iframe");
+		property.addAttribute("src", "x");
+		
+		assertEquals("x", property.getValue());
+	}
+	
+	@Test
+	public void getValueWithIframeAndNoSrcReturnsEmpty()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("iframe");
+		
+		assertEquals("", property.getValue());
+	}
+	
+	@Test
 	public void getValueWithAnchorReturnsHref()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("a");
