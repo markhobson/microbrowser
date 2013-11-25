@@ -61,6 +61,23 @@ public class AbstractMicrodataPropertyTest
 	}
 	
 	@Test
+	public void getValueWithEmbedReturnsSrc()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("embed");
+		property.addAttribute("src", "x");
+		
+		assertEquals("x", property.getValue());
+	}
+	
+	@Test
+	public void getValueWithEmbedAndNoSrcReturnsEmpty()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("embed");
+		
+		assertEquals("", property.getValue());
+	}
+	
+	@Test
 	public void getValueWithAnchorReturnsHref()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("a");
