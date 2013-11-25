@@ -47,7 +47,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithAudioReturnsSrc()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("audio");
-		property.addAttribute("src", "x");
+		property.addAbsoluteUrlAttribute("src", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -64,7 +64,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithEmbedReturnsSrc()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("embed");
-		property.addAttribute("src", "x");
+		property.addAbsoluteUrlAttribute("src", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -81,7 +81,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithIframeReturnsSrc()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("iframe");
-		property.addAttribute("src", "x");
+		property.addAbsoluteUrlAttribute("src", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -98,7 +98,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithImgReturnsSrc()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("img");
-		property.addAttribute("src", "x");
+		property.addAbsoluteUrlAttribute("src", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -115,7 +115,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithSourceReturnsSrc()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("source");
-		property.addAttribute("src", "x");
+		property.addAbsoluteUrlAttribute("src", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -132,7 +132,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithTrackReturnsSrc()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("track");
-		property.addAttribute("src", "x");
+		property.addAbsoluteUrlAttribute("src", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -149,7 +149,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithVideoReturnsSrc()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("video");
-		property.addAttribute("src", "x");
+		property.addAbsoluteUrlAttribute("src", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -166,7 +166,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithAnchorReturnsHref()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("a");
-		property.addAttribute("href", "x");
+		property.addAbsoluteUrlAttribute("href", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -183,7 +183,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithAreaReturnsHref()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("area");
-		property.addAttribute("href", "x");
+		property.addAbsoluteUrlAttribute("href", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -200,7 +200,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithLinkReturnsHref()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("link");
-		property.addAttribute("href", "x");
+		property.addAbsoluteUrlAttribute("href", "x");
 		
 		assertEquals("x", property.getValue());
 	}
@@ -217,7 +217,7 @@ public class AbstractMicrodataPropertyTest
 	public void getValueWithObjectReturnsData()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("object");
-		property.addAttribute("data", "x");
+		property.addAbsoluteUrlAttribute("data", "x");
 		
 		assertEquals("x", property.getValue());
 	}

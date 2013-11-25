@@ -29,6 +29,8 @@ public class FakeMicrodataProperty extends AbstractMicrodataProperty
 	
 	private final Map<String, String> attributeValuesByName;
 	
+	private final Map<String, String> absoluteUrlAttributeValuesByName;
+	
 	private String text;
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -40,6 +42,7 @@ public class FakeMicrodataProperty extends AbstractMicrodataProperty
 		this.elementName = elementName;
 		
 		attributeValuesByName = new HashMap<String, String>();
+		absoluteUrlAttributeValuesByName = new HashMap<String, String>();
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -75,6 +78,15 @@ public class FakeMicrodataProperty extends AbstractMicrodataProperty
 	{
 		return attributeValuesByName.get(name);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getAbsoluteUrlAttribute(String name)
+	{
+		return absoluteUrlAttributeValuesByName.get(name);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -92,6 +104,11 @@ public class FakeMicrodataProperty extends AbstractMicrodataProperty
 	public void addAttribute(String name, String value)
 	{
 		attributeValuesByName.put(name, value);
+	}
+	
+	public void addAbsoluteUrlAttribute(String name, String value)
+	{
+		absoluteUrlAttributeValuesByName.put(name, value);
 	}
 	
 	public void setText(String text)
