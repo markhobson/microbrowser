@@ -774,6 +774,24 @@ public abstract class MicrobrowserTck
 		assertThat("item property value", actual, is("x"));
 	}
 
+	@Test
+	public void propertyGetValueWhenUnknownAndNoTextReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, isEmptyString());
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument.getLink tests
 	// ----------------------------------------------------------------------------------------------------------------
