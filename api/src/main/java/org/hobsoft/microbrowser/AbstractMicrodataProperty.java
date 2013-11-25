@@ -13,11 +13,52 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.Arrays.asList;
+
 /**
  * Base {@code MicrodataProperty} implementation.
  */
 public abstract class AbstractMicrodataProperty implements MicrodataProperty
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static final Map<String, String> VALUE_ATTRIBUTES_BY_ELEMENT;
+	
+	private static final Set<String> URL_ATTRIBUTES = new HashSet<String>(asList("src", "href", "data"));
+	
+	static
+	{
+		VALUE_ATTRIBUTES_BY_ELEMENT = new HashMap<String, String>();
+		
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("meta", "content");
+		
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("audio", "src");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("embed", "src");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("iframe", "src");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("img", "src");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("source", "src");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("track", "src");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("video", "src");
+		
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("a", "href");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("area", "href");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("link", "href");
+		
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("object", "data");
+		
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("data", "value");
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("meter", "value");
+		
+		VALUE_ATTRIBUTES_BY_ELEMENT.put("time", "datetime");
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataItemValue methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -36,35 +77,22 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 	public final String getValue()
 	{
 		String elementName = getElementName();
+		
+		String valueAttributeName = VALUE_ATTRIBUTES_BY_ELEMENT.get(elementName);
 		String value;
 		
-		if ("meta".equals(elementName))
+		if (valueAttributeName != null)
 		{
-			value = getAttribute("content");
-		}
-		else if ("audio".equals(elementName) || "embed".equals(elementName) || "iframe".equals(elementName)
-			|| "img".equals(elementName) || "source".equals(elementName) || "track".equals(elementName)
-			|| "video".equals(elementName))
-		{
-			value = getAbsoluteUrlAttribute("src");
-		}
-		else if ("a".equals(elementName) || "area".equals(elementName) || "link".equals(elementName))
-		{
-			value = getAbsoluteUrlAttribute("href");
-		}
-		else if ("object".equals(elementName))
-		{
-			value = getAbsoluteUrlAttribute("data");
-		}
-		else if ("data".equals(elementName) || "meter".equals(elementName))
-		{
-			value = getAttribute("value");
-		}
-		else if ("time".equals(elementName))
-		{
-			value = getAttribute("datetime");
+			if (URL_ATTRIBUTES.contains(valueAttributeName))
+			{
+				value = getAbsoluteUrlAttribute(valueAttributeName);
+			}
+			else
+			{
+				value = getAttribute(valueAttributeName);
+			}
 			
-			if (value == null || value.isEmpty())
+			if ("time".equals(elementName) && (value == null || value.isEmpty()))
 			{
 				value = getText();
 			}
