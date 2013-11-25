@@ -667,6 +667,42 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
+	public void propertyGetValueWhenMeterReturnsValue() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<meter itemprop='p' value='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("x"));
+	}
+	
+	@Test
+	public void propertyGetValueWhenMeterAndNoValueReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<meter itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, isEmptyString());
+	}
+	
+	@Test
 	public void propertyGetValueWhenUnknownReturnsText() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"

@@ -248,6 +248,23 @@ public class AbstractMicrodataPropertyTest
 	}
 	
 	@Test
+	public void getValueWithMeterReturnsValue()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("meter");
+		property.addAttribute("value", "x");
+		
+		assertEquals("x", property.getValue());
+	}
+	
+	@Test
+	public void getValueWithMeterAndNoValueReturnsEmpty()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("meter");
+		
+		assertEquals("", property.getValue());
+	}
+	
+	@Test
 	public void getValueWithOtherReturnsText()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
