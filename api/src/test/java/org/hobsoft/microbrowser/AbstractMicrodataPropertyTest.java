@@ -265,6 +265,32 @@ public class AbstractMicrodataPropertyTest
 	}
 	
 	@Test
+	public void getValueWithTimeReturnsDatetime()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("time");
+		property.addAttribute("datetime", "x");
+		
+		assertEquals("x", property.getValue());
+	}
+	
+	@Test
+	public void getValueWithTimeAndNoDatetimeReturnsText()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("time");
+		property.setText("x");
+		
+		assertEquals("x", property.getValue());
+	}
+	
+	@Test
+	public void getValueWithTimeAndNoTextReturnsEmpty()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("time");
+		
+		assertEquals("", property.getValue());
+	}
+	
+	@Test
 	public void getValueWithOtherReturnsText()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("div");

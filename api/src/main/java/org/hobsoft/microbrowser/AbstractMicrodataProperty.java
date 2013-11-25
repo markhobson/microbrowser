@@ -60,6 +60,15 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		{
 			value = getAttribute("value");
 		}
+		else if ("time".equals(elementName))
+		{
+			value = getAttribute("datetime");
+			
+			if (value == null || value.isEmpty())
+			{
+				value = getText();
+			}
+		}
 		else
 		{
 			value = getText();
