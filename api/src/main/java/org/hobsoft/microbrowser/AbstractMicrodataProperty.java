@@ -92,7 +92,7 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 				value = getAttribute(valueAttributeName);
 			}
 			
-			if ("time".equals(elementName) && (value == null || value.isEmpty()))
+			if ("time".equals(elementName) && nullToEmpty(value).isEmpty())
 			{
 				value = getText();
 			}
@@ -102,12 +102,7 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 			value = getText();
 		}
 		
-		if (value == null)
-		{
-			value = "";
-		}
-		
-		return value;
+		return nullToEmpty(value);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -124,4 +119,13 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 	}
 	
 	protected abstract String getText();
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static String nullToEmpty(String string)
+	{
+		return (string == null) ? "" : string;
+	}
 }
