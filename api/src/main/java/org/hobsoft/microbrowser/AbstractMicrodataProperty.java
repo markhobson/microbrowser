@@ -56,6 +56,10 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		{
 			value = getAbsoluteUrlAttribute("data");
 		}
+		else if ("data".equals(elementName))
+		{
+			value = getAttribute("value");
+		}
 		else
 		{
 			value = getText();

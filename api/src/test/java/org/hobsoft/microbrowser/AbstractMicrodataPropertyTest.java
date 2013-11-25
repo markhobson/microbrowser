@@ -231,6 +231,23 @@ public class AbstractMicrodataPropertyTest
 	}
 	
 	@Test
+	public void getValueWithDataReturnsValue()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("data");
+		property.addAttribute("value", "x");
+		
+		assertEquals("x", property.getValue());
+	}
+	
+	@Test
+	public void getValueWithDataAndNoValueReturnsEmpty()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("data");
+		
+		assertEquals("", property.getValue());
+	}
+	
+	@Test
 	public void getValueWithOtherReturnsText()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
