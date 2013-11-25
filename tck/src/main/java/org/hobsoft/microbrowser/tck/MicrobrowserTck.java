@@ -450,6 +450,43 @@ public abstract class MicrobrowserTck
 	}
 	
 	@Test
+	public void propertyGetValueWhenVideoReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<video itemprop='p' src='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+	}
+	
+	@Test
+	public void propertyGetValueWhenVideoAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<video itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, isEmptyString());
+	}
+	
+	@Test
 	public void propertyGetValueWhenAnchorReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"

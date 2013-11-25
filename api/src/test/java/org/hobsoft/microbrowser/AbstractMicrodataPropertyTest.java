@@ -146,6 +146,23 @@ public class AbstractMicrodataPropertyTest
 	}
 	
 	@Test
+	public void getValueWithVideoReturnsSrc()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("video");
+		property.addAttribute("src", "x");
+		
+		assertEquals("x", property.getValue());
+	}
+	
+	@Test
+	public void getValueWithVideoAndNoSrcReturnsEmpty()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("video");
+		
+		assertEquals("", property.getValue());
+	}
+	
+	@Test
 	public void getValueWithAnchorReturnsHref()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("a");
