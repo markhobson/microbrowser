@@ -43,7 +43,7 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 			value = getAttribute("content");
 		}
 		else if ("audio".equals(elementName) || "embed".equals(elementName) || "iframe".equals(elementName)
-			|| "img".equals(elementName))
+			|| "img".equals(elementName) || "source".equals(elementName))
 		{
 			value = getAbsoluteUrlAttribute("src");
 		}
