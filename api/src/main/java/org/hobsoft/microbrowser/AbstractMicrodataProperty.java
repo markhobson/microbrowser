@@ -33,6 +33,8 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 	
 	private static final Set<String> URL_ATTRIBUTES = new HashSet<String>(asList("src", "href", "data"));
 	
+	private static final String DEFAULT_METER_VALUE = "0";
+	
 	static
 	{
 		VALUE_ATTRIBUTES_BY_ELEMENT = new HashMap<String, String>();
@@ -86,8 +88,12 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 			boolean url = URL_ATTRIBUTES.contains(valueAttributeName);
 			
 			value = getAttribute(valueAttributeName, url);
-			
-			if ("time".equals(elementName) && nullToEmpty(value).isEmpty())
+
+			if ("meter".equals(elementName) && nullToEmpty(value).isEmpty())
+			{
+				value = DEFAULT_METER_VALUE;
+			}
+			else if ("time".equals(elementName) && nullToEmpty(value).isEmpty())
 			{
 				value = getText();
 			}
