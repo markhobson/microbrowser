@@ -413,6 +413,8 @@ public abstract class MicrobrowserTck
 		assertThat("item property value", actual, isEmptyString());
 	}
 	
+	// TODO: fix for Selenium
+	@Ignore
 	@Test
 	public void propertyGetValueWhenTrackReturnsSrc() throws IOException, InterruptedException
 	{
