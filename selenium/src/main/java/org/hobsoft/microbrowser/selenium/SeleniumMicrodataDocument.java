@@ -32,7 +32,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataDocument} adapter to a Selenium {@code WebDriver}.
  */
-class SeleniumMicrodataDocument extends AbstractMicrodataDocument
+// TODO: make package private when clients use SeleniumMicrobrowser directly
+public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
