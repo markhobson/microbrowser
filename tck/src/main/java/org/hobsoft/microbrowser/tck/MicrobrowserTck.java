@@ -229,7 +229,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void propertyGetValueWhenAudioReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenAudioAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<audio itemprop='p' src='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+
+	@Test
+	public void propertyGetValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -246,7 +264,7 @@ public abstract class MicrobrowserTck
 		
 		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
-
+	
 	@Test
 	public void propertyGetValueWhenAudioAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
@@ -266,7 +284,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void propertyGetValueWhenEmbedReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenEmbedAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<embed itemprop='p' src='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+
+	@Test
+	public void propertyGetValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -283,7 +319,7 @@ public abstract class MicrobrowserTck
 		
 		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
-
+	
 	@Test
 	public void propertyGetValueWhenEmbedAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
@@ -303,7 +339,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void propertyGetValueWhenIframeReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenIframeAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<iframe itemprop='p' src='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+	
+	@Test
+	public void propertyGetValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -340,7 +394,25 @@ public abstract class MicrobrowserTck
 	}
 	
 	@Test
-	public void propertyGetValueWhenImgReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenImgAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<img itemprop='p' src='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+	
+	@Test
+	public void propertyGetValueWhenImgAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -377,7 +449,25 @@ public abstract class MicrobrowserTck
 	}
 	
 	@Test
-	public void propertyGetValueWhenSourceReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenSourceAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<source itemprop='p' src='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+	
+	@Test
+	public void propertyGetValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -413,10 +503,28 @@ public abstract class MicrobrowserTck
 		assertThat("item property value", actual, isEmptyString());
 	}
 	
+	@Test
+	public void propertyGetValueWhenTrackAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<track itemprop='p' src='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+	
 	// TODO: fix for Selenium
 	@Ignore
 	@Test
-	public void propertyGetValueWhenTrackReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -453,7 +561,25 @@ public abstract class MicrobrowserTck
 	}
 	
 	@Test
-	public void propertyGetValueWhenVideoReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenVideoAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<video itemprop='p' src='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+	
+	@Test
+	public void propertyGetValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
