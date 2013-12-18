@@ -932,7 +932,7 @@ public abstract class MicrobrowserTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void linkGetHrefWhenAnchorAndAbsoluteHrefReturnsHref() throws IOException, InterruptedException
+	public void linkGetHrefWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='http://x/'/>"
@@ -947,7 +947,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void linkGetHrefWhenAnchorAndRelativeHrefReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void linkGetHrefWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='x'/>"
@@ -977,7 +977,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void linkGetHrefWhenLinkAndAbsoluteHrefReturnsHref() throws IOException, InterruptedException
+	public void linkGetHrefWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='http://x/'/>"
@@ -992,7 +992,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void linkGetHrefWhenLinkAndRelativeHrefReturnsAbsoluteHref() throws IOException, InterruptedException
+	public void linkGetHrefWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='x'/>"
