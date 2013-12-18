@@ -490,7 +490,25 @@ public abstract class MicrobrowserTck
 	}
 	
 	@Test
-	public void propertyGetValueWhenAnchorReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<a itemprop='p' href='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+
+	@Test
+	public void propertyGetValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -526,7 +544,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenAreaAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<area itemprop='p' href='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+
+	@Test
+	public void propertyGetValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -562,7 +598,25 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<link itemprop='p' href='http://x/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getItem("i")
+			.getProperty("p")
+			.getValue();
+		
+		assertThat("item property value", actual, is("http://x/"));
+	}
+
+	@Test
+	public void propertyGetValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
