@@ -80,7 +80,7 @@ public abstract class MicrobrowserTck
 		server.enqueue(new MockResponse());
 		server.play();
 		
-		newBrowser().get(server.getUrl("/x").toString());
+		newBrowser().get(url(server, "/x"));
 		
 		assertThat("request path", server.takeRequest().getPath(), is("/x"));
 	}
@@ -244,7 +244,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 
 	@Test
@@ -281,7 +281,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 
 	@Test
@@ -318,7 +318,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 	
 	@Test
@@ -355,7 +355,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 	
 	@Test
@@ -392,7 +392,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 	
 	@Test
@@ -431,7 +431,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 	
 	@Test
@@ -468,7 +468,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 	
 	@Test
@@ -522,7 +522,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 
 	@Test
@@ -576,7 +576,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 
 	@Test
@@ -630,7 +630,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 
 	@Test
@@ -668,7 +668,7 @@ public abstract class MicrobrowserTck
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(server.getUrl("/x").toString()));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
 	}
 
 	@Test
@@ -958,7 +958,7 @@ public abstract class MicrobrowserTck
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, is(server.getUrl("/x").toString()));
+		assertThat("link href", actual, is(url(server, "/x")));
 	}
 
 	@Test
@@ -1003,7 +1003,7 @@ public abstract class MicrobrowserTck
 			.getLink("x")
 			.getHref();
 		
-		assertThat("link href", actual, is(server.getUrl("/x").toString()));
+		assertThat("link href", actual, is(url(server, "/x")));
 	}
 
 	@Test
@@ -1389,7 +1389,12 @@ public abstract class MicrobrowserTck
 
 	private static String url(MockWebServer server)
 	{
-		return server.getUrl("/").toString();
+		return url(server, "/");
+	}
+	
+	private static String url(MockWebServer server, String path)
+	{
+		return server.getUrl(path).toString();
 	}
 	
 	/**
