@@ -18,6 +18,8 @@ import org.hobsoft.microbrowser.MicrodataDocument;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.google.common.base.Strings;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -53,6 +55,19 @@ class SeleniumLink implements Link
 	public String getRel()
 	{
 		return element.getAttribute("rel");
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getHref()
+	{
+		String href = element.getAttribute("href");
+		
+		// Selenium returns null for missing @href in <a> but not <link>
+		href = Strings.nullToEmpty(href);
+		
+		return href;
 	}
 
 	/**

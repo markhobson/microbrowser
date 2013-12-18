@@ -874,6 +874,100 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// Link.getHref tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void linkGetHrefWhenAnchorAndAbsoluteHrefReturnsHref() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r' href='http://x/'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("r")
+			.getHref();
+		
+		assertThat("link href", actual, is("http://x/"));
+	}
+
+	@Test
+	public void linkGetHrefWhenAnchorAndRelativeHrefReturnsAbsoluteHref() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r' href='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("r")
+			.getHref();
+		
+		assertThat("link href", actual, is(server.getUrl("/x").toString()));
+	}
+
+	@Test
+	public void linkGetHrefWhenAnchorAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("r")
+			.getHref();
+		
+		assertThat("link href", actual, isEmptyString());
+	}
+
+	@Test
+	public void linkGetHrefWhenLinkAndAbsoluteHrefReturnsHref() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><head>"
+			+ "<link rel='x' href='http://x/'/>"
+			+ "</head></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("x")
+			.getHref();
+		
+		assertThat("link href", actual, is("http://x/"));
+	}
+
+	@Test
+	public void linkGetHrefWhenLinkAndRelativeHrefReturnsAbsoluteHref() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><head>"
+			+ "<link rel='x' href='x'/>"
+			+ "</head></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("x")
+			.getHref();
+		
+		assertThat("link href", actual, is(server.getUrl("/x").toString()));
+	}
+
+	@Test
+	public void linkGetHrefWhenLinkAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><head>"
+			+ "<link rel='r'/>"
+			+ "</head></html>"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getLink("r")
+			.getHref();
+		
+		assertThat("link href", actual, isEmptyString());
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// Link.follow tests
 	// ----------------------------------------------------------------------------------------------------------------
 

@@ -20,5 +20,7 @@ public interface Link
 {
 	String getRel();
 	
+	String getHref();
+	
 	MicrodataDocument follow();
 }

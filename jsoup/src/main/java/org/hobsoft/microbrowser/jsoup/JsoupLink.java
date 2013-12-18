@@ -55,23 +55,29 @@ class JsoupLink implements Link
 	{
 		return element.attr("rel");
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getHref()
+	{
+		return element.absUrl("href");
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public MicrodataDocument follow()
 	{
-		String url = element.absUrl("href");
-		
 		Document document;
 		
 		try
 		{
-			document = Jsoup.connect(url).get();
+			document = Jsoup.connect(getHref()).get();
 		}
 		catch (IOException exception)
 		{
-			throw new MicrobrowserException("Error fetching page: " + url, exception);
+			throw new MicrobrowserException("Error fetching page: " + getHref(), exception);
 		}
 		
 		return new JsoupMicrodataDocument(document);
