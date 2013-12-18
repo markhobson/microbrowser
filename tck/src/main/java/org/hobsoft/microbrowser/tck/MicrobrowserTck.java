@@ -978,6 +978,50 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataDocument.hasLink tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void documentHasLinkWhenAnchorReturnsTrue() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		boolean actual = newBrowser().get(url(server))
+			.hasLink("x");
+		
+		assertThat("hasLink", actual, is(true));
+	}
+
+	@Test
+	public void documentHasLinkWhenLinkReturnsTrue() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body>"
+			+ "<link rel='x'/>"
+			+ "</body></html>"));
+		server.play();
+		
+		boolean actual = newBrowser().get(url(server))
+			.hasLink("x");
+		
+		assertThat("hasLink", actual, is(true));
+	}
+
+	@Test
+	public void documentHasLinkWhenNoFoundReturnsFalse() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server.play();
+		
+		boolean actual = newBrowser().get(url(server))
+			.hasLink("x");
+		
+		assertThat("hasLink", actual, is(false));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument.getLink tests
 	// ----------------------------------------------------------------------------------------------------------------
 

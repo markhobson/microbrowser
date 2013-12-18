@@ -73,11 +73,19 @@ public class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
+	public boolean hasLink(String rel)
+	{
+		return !driver.findElements(byLink(rel)).isEmpty();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Link getLink(String rel)
 	{
-		List<WebElement> elements = driver.findElements(byLink(rel));
-		checkArgument(!elements.isEmpty(), "Cannot find link: %s", rel);
+		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
 		
+		List<WebElement> elements = driver.findElements(byLink(rel));
 		return new SeleniumLink(driver, elements.iterator().next());
 	}
 	

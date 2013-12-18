@@ -34,6 +34,15 @@ public interface MicrodataDocument
 	List<MicrodataItem> getItems(String type);
 
 	/**
+	 * Gets whether a link with the specified relationship is present.
+	 * 
+	 * @param rel
+	 *            the relationship of the link to find
+	 * @return {@code true} if the link can be found
+	 */
+	boolean hasLink(String rel);
+
+	/**
 	 * Gets the link with the specified relationship.
 	 * 
 	 * @param rel
