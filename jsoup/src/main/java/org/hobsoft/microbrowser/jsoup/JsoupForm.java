@@ -41,6 +41,8 @@ class JsoupForm implements Form
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private final JsoupMicrobrowserState state;
+	
 	private final Element element;
 	
 	private final Map<String, String> parameterValuesByName;
@@ -49,8 +51,9 @@ class JsoupForm implements Form
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupForm(Element element)
+	public JsoupForm(JsoupMicrobrowserState state, Element element)
 	{
+		this.state = checkNotNull(state, "state");
 		this.element = checkNotNull(element, "element");
 		
 		parameterValuesByName = new HashMap<String, String>();
@@ -131,6 +134,8 @@ class JsoupForm implements Form
 		{
 			connection.data(entry.getKey(), entry.getValue());
 		}
+		
+		connection.cookies(state.getCookies());
 
 		return connection;
 	}
