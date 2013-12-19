@@ -13,14 +13,11 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.hobsoft.microbrowser.Microbrowser;
-import org.junit.After;
-import org.junit.Before;
+import org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerRule;
+import org.junit.Rule;
 
 import com.google.mockwebserver.MockWebServer;
 import com.google.mockwebserver.RecordedRequest;
@@ -34,24 +31,16 @@ public abstract class AbstractMicrobrowserTest
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private MockWebServer server;
+	private MockWebServerRule serverRule = new MockWebServerRule();
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// test case methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	@Before
-	public final void setUpTck()
+	@Rule
+	public final MockWebServerRule getServerRule()
 	{
-		Logger.getLogger("com.google.mockwebserver").setLevel(Level.WARNING);
-		
-		server = new MockWebServer();
-	}
-
-	@After
-	public final void tearDownTck() throws IOException
-	{
-		server.shutdown();
+		return serverRule;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -60,7 +49,7 @@ public abstract class AbstractMicrobrowserTest
 	
 	protected final MockWebServer server()
 	{
-		return server;
+		return serverRule.getServer();
 	}
 
 	protected abstract Microbrowser newBrowser();
