@@ -74,6 +74,11 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 		this.document = checkNotNull(document, "document");
 	}
 	
+	public JsoupMicrodataDocument(Map<String, String> cookies, Response response) throws IOException
+	{
+		this(union(cookies, response.cookies()), response.parse());
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// Microbrowser methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -92,7 +97,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 				.cookies(cookies)
 				.execute();
 			
-			nextDocument = newDocument(response);
+			nextDocument = new JsoupMicrodataDocument(cookies, response);
 		}
 		catch (IOException exception)
 		{
@@ -165,14 +170,11 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private JsoupMicrodataDocument newDocument(Response response) throws IOException
+	private static <K, V> Map<K, V> union(Map<K, V> map1, Map<K, V> map2)
 	{
-		Map<String, String> nextCookies = new HashMap<String, String>(cookies);
-		nextCookies.putAll(response.cookies());
-		
-		Document nextDocument = response.parse();
-		
-		return new JsoupMicrodataDocument(nextCookies, nextDocument);
+		Map<K, V> union = new HashMap<K, V>(map1);
+		union.putAll(map2);
+		return union;
 	}
 
 	private static String byItemType(String itemType)

@@ -23,7 +23,6 @@ import org.hobsoft.microbrowser.MicrodataDocument;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -40,7 +39,7 @@ class JsoupForm implements Form
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final JsoupMicrodataDocument state;
+	private final JsoupMicrodataDocument document;
 	
 	private final Element element;
 	
@@ -50,9 +49,9 @@ class JsoupForm implements Form
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupForm(JsoupMicrodataDocument state, Element element)
+	public JsoupForm(JsoupMicrodataDocument document, Element element)
 	{
-		this.state = checkNotNull(state, "state");
+		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
 		
 		parameterValuesByName = new HashMap<String, String>();
@@ -102,21 +101,18 @@ class JsoupForm implements Form
 	{
 		getSubmit();
 		
-		Document document;
+		JsoupMicrodataDocument nextDocument;
 		
 		try
 		{
-			document = getConnection().execute().parse();
+			nextDocument = new JsoupMicrodataDocument(document.getCookies(), getConnection().execute());
 		}
 		catch (IOException exception)
 		{
 			throw new MicrobrowserException("Error submitting form", exception);
 		}
 		
-		// TODO: set cookies
-		Map<String, String> nextCookies = state.getCookies();
-		
-		return new JsoupMicrodataDocument(nextCookies, document);
+		return nextDocument;
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -128,7 +124,7 @@ class JsoupForm implements Form
 		return Jsoup.connect(getAction())
 			.method(getMethod())
 			.data(parameterValuesByName)
-			.cookies(state.getCookies());
+			.cookies(document.getCookies());
 	}
 	
 	private String getAction()
