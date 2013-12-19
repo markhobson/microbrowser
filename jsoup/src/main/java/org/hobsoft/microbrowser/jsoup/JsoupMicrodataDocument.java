@@ -13,15 +13,21 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
+import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -77,7 +83,23 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public MicrodataDocument get(String url)
 	{
-		return JsoupMicrobrowser.getInternal(this, url);
+		JsoupMicrodataDocument nextDocument;
+		
+		try
+		{
+			Response response = Jsoup.connect(url)
+				.method(Method.GET)
+				.cookies(cookies)
+				.execute();
+			
+			nextDocument = newDocument(response);
+		}
+		catch (IOException exception)
+		{
+			throw new MicrobrowserException("Error fetching page: " + url, exception);
+		}
+		
+		return nextDocument;
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -142,6 +164,16 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
+
+	private JsoupMicrodataDocument newDocument(Response response) throws IOException
+	{
+		Map<String, String> nextCookies = new HashMap<String, String>(cookies);
+		nextCookies.putAll(response.cookies());
+		
+		Document nextDocument = response.parse();
+		
+		return new JsoupMicrodataDocument(nextCookies, nextDocument);
+	}
 
 	private static String byItemType(String itemType)
 	{
