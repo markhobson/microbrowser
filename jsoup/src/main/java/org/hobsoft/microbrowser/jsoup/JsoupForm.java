@@ -16,7 +16,6 @@ package org.hobsoft.microbrowser.jsoup;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
@@ -126,18 +125,10 @@ class JsoupForm implements Form
 	
 	private Connection getConnection()
 	{
-		Connection connection = Jsoup.connect(getAction());
-		
-		connection.method(getMethod());
-		
-		for (Entry<String, String> entry : parameterValuesByName.entrySet())
-		{
-			connection.data(entry.getKey(), entry.getValue());
-		}
-		
-		connection.cookies(state.getCookies());
-
-		return connection;
+		return Jsoup.connect(getAction())
+			.method(getMethod())
+			.data(parameterValuesByName)
+			.cookies(state.getCookies());
 	}
 	
 	private String getAction()
