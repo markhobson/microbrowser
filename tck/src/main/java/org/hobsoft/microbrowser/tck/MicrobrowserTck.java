@@ -57,7 +57,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getSetsCookie() throws IOException, InterruptedException
+	public void getSetsCookie() throws IOException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server().play();
@@ -87,7 +87,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void documentGetSetsCookie() throws IOException, InterruptedException
+	public void documentGetSetsCookie() throws IOException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server().play();
@@ -134,7 +134,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void documentGetItemReturnsItem() throws IOException, InterruptedException
+	public void documentGetItemReturnsItem() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='x'/>"
@@ -148,7 +148,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void documentGetItemWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void documentGetItemWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
@@ -162,7 +162,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void itemGetTypeReturnsType() throws IOException, InterruptedException
+	public void itemGetTypeReturnsType() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='x'/>"
@@ -181,7 +181,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void itemGetPropertyReturnsProperty() throws IOException, InterruptedException
+	public void itemGetPropertyReturnsProperty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -198,7 +198,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void itemGetPropertyWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void itemGetPropertyWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'/>"
@@ -215,7 +215,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void propertyGetNameReturnsName() throws IOException, InterruptedException
+	public void propertyGetNameReturnsName() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -237,7 +237,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void propertyGetValueWhenMetaReturnsContent() throws IOException, InterruptedException
+	public void propertyGetValueWhenMetaReturnsContent() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -255,7 +255,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenMetaAndNoContentReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenMetaAndNoContentReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -273,7 +273,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAudioAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenAudioAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -291,7 +291,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -310,7 +310,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenAudioAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenAudioAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -328,7 +328,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenEmbedAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenEmbedAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -346,7 +346,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -365,7 +365,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenEmbedAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenEmbedAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -383,7 +383,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenIframeAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenIframeAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -401,7 +401,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -420,7 +420,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenIframeAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenIframeAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -438,7 +438,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenImgAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenImgAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -456,7 +456,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenImgAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenImgAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -475,7 +475,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenImgAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenImgAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -493,7 +493,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenSourceAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenSourceAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -511,7 +511,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -530,7 +530,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenSourceAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenSourceAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -548,7 +548,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTrackAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenTrackAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -568,7 +568,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// TODO: fix for Selenium
 	@Ignore
 	@Test
-	public void propertyGetValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -587,7 +587,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTrackAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenTrackAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -605,7 +605,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenVideoAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenVideoAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -623,7 +623,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
+	public void propertyGetValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -642,7 +642,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenVideoAndNoSrcReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenVideoAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -660,7 +660,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -678,7 +678,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -696,7 +696,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAnchorAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenAnchorAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -714,7 +714,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenAreaAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -732,7 +732,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -750,7 +750,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenAreaAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -768,7 +768,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -786,7 +786,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -804,7 +804,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenLinkAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -824,7 +824,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// TODO: fix for Selenium
 	@Ignore
 	@Test
-	public void propertyGetValueWhenObjectReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void propertyGetValueWhenObjectReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -842,7 +842,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenObjectAndNoDataReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenObjectAndNoDataReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -860,7 +860,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenDataReturnsValue() throws IOException, InterruptedException
+	public void propertyGetValueWhenDataReturnsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -878,7 +878,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenDataAndNoValueReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenDataAndNoValueReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -896,7 +896,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenMeterReturnsValue() throws IOException, InterruptedException
+	public void propertyGetValueWhenMeterReturnsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -914,7 +914,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenMeterAndNoValueReturnsZero() throws IOException, InterruptedException
+	public void propertyGetValueWhenMeterAndNoValueReturnsZero() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -932,7 +932,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTimeReturnsDatetime() throws IOException, InterruptedException
+	public void propertyGetValueWhenTimeReturnsDatetime() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -950,7 +950,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTimeAndNoDatetimeReturnsText() throws IOException, InterruptedException
+	public void propertyGetValueWhenTimeAndNoDatetimeReturnsText() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -968,7 +968,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTimeAndNoTextReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenTimeAndNoTextReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -986,7 +986,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenUnknownReturnsText() throws IOException, InterruptedException
+	public void propertyGetValueWhenUnknownReturnsText() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -1004,7 +1004,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenUnknownAndNoTextReturnsEmpty() throws IOException, InterruptedException
+	public void propertyGetValueWhenUnknownAndNoTextReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -1026,7 +1026,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void documentHasLinkWhenAnchorReturnsTrue() throws IOException, InterruptedException
+	public void documentHasLinkWhenAnchorReturnsTrue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
@@ -1040,7 +1040,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void documentHasLinkWhenLinkReturnsTrue() throws IOException, InterruptedException
+	public void documentHasLinkWhenLinkReturnsTrue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
@@ -1054,7 +1054,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void documentHasLinkWhenNoFoundReturnsFalse() throws IOException, InterruptedException
+	public void documentHasLinkWhenNoFoundReturnsFalse() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
@@ -1070,7 +1070,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void documentGetLinkWhenAnchorReturnsLink() throws IOException, InterruptedException
+	public void documentGetLinkWhenAnchorReturnsLink() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
@@ -1084,7 +1084,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void documentGetLinkWhenLinkReturnsLink() throws IOException, InterruptedException
+	public void documentGetLinkWhenLinkReturnsLink() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
@@ -1098,7 +1098,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void documentGetLinkWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void documentGetLinkWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
@@ -1112,7 +1112,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void linkGetRelWhenAnchorReturnsRelationship() throws IOException, InterruptedException
+	public void linkGetRelWhenAnchorReturnsRelationship() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
@@ -1127,7 +1127,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void linkGetRelWhenLinkReturnsRelationship() throws IOException, InterruptedException
+	public void linkGetRelWhenLinkReturnsRelationship() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
@@ -1146,7 +1146,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void linkGetHrefWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	public void linkGetHrefWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='http://x/'/>"
@@ -1161,7 +1161,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void linkGetHrefWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void linkGetHrefWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='x'/>"
@@ -1176,7 +1176,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void linkGetHrefWhenAnchorAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	public void linkGetHrefWhenAnchorAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r'/>"
@@ -1191,7 +1191,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void linkGetHrefWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
+	public void linkGetHrefWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='http://x/'/>"
@@ -1206,7 +1206,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void linkGetHrefWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
+	public void linkGetHrefWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='x'/>"
@@ -1221,7 +1221,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void linkGetHrefWhenLinkAndNoHrefReturnsEmpty() throws IOException, InterruptedException
+	public void linkGetHrefWhenLinkAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='r'/>"
@@ -1282,7 +1282,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void documentGetFormReturnsForm() throws IOException, InterruptedException
+	public void documentGetFormReturnsForm() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
@@ -1296,7 +1296,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void documentGetFormWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void documentGetFormWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
@@ -1309,7 +1309,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// Form.getName tests
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public void formGetNameReturnsName() throws IOException, InterruptedException
+	public void formGetNameReturnsName() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
@@ -1328,7 +1328,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test(expected = IllegalArgumentException.class)
-	public void formGetParameterWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void formGetParameterWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -1345,7 +1345,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void formSetParameterSetsValue() throws IOException, InterruptedException
+	public void formSetParameterSetsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -1362,7 +1362,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void formSetParameterWhenNotFoundThrowsException() throws IOException, InterruptedException
+	public void formSetParameterWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -1436,7 +1436,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void formSubmitWhenNoSubmitButtonThrowsException() throws IOException, InterruptedException
+	public void formSubmitWhenNoSubmitButtonThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -1508,7 +1508,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void formSubmitWhenGetSetsCookie() throws IOException, InterruptedException
+	public void formSubmitWhenGetSetsCookie() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -1567,7 +1567,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void formSubmitWhenGetReturnsResponse() throws IOException, InterruptedException
+	public void formSubmitWhenGetReturnsResponse() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -1629,7 +1629,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void formSubmitWhenPostReturnsResponse() throws IOException, InterruptedException
+	public void formSubmitWhenPostReturnsResponse() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
