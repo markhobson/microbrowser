@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.tck;
+package org.hobsoft.microbrowser.tck.support.mockwebserver;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -22,7 +22,7 @@ import com.google.mockwebserver.RecordedRequest;
 /**
  * Hamcrest matcher for {@code RecordedRequest}.
  */
-class RecordedRequestMatcher extends TypeSafeMatcher<RecordedRequest>
+public class RecordedRequestMatcher extends TypeSafeMatcher<RecordedRequest>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
