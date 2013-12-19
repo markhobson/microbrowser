@@ -116,6 +116,18 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
+	public void documentGetSetsCookie() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getCookie("x");
+		
+		assertThat("cookie", actual, is("y"));
+	}
+
+	@Test
 	public void documentGetSendsCookie() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
