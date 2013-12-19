@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.selenium;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.MicrobrowserTck;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -39,6 +40,12 @@ public class SeleniumMicrobrowserIT extends MicrobrowserTck
 	public static void setUpDriver()
 	{
 		driver = new FirefoxDriver();
+	}
+	
+	@Before
+	public void setUp()
+	{
+		driver.manage().deleteAllCookies();
 	}
 	
 	@AfterClass

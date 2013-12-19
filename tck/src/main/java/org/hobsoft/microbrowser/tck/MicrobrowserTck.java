@@ -1636,6 +1636,32 @@ public abstract class MicrobrowserTck
 		
 		assertThat("response", actual.getItem("i").getProperty("p").getValue(), is("x"));
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataDocument.getCookie tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void documentGetCookieReturnsValue() throws IOException
+	{
+		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getCookie("x");
+		
+		assertThat("cookie", actual, is("y"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void documentGetCookieWhenNotFoundThrowsException() throws IOException
+	{
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(url(server))
+			.getCookie("x");
+	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods

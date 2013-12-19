@@ -63,4 +63,13 @@ public interface MicrodataDocument extends Microbrowser
 	 *             if the form cannot be found
 	 */
 	Form getForm(String name);
+
+	/**
+	 * Gets the value of the specified cookie.
+	 * 
+	 * @param the
+	 *            name of the cookie to get
+	 * @return the cookie value
+	 */
+	String getCookie(String name);
 }

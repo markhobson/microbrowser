@@ -21,6 +21,7 @@ import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -112,6 +113,17 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
 		
 		return new SeleniumForm(driver, elements.iterator().next());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getCookie(String name)
+	{
+		Cookie cookie = driver.manage().getCookieNamed(name);
+		checkArgument(cookie != null, "Cannot find cookie: %s", name);
+		
+		return cookie.getValue();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
