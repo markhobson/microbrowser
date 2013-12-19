@@ -13,76 +13,63 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
-import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
 
-import org.hobsoft.microbrowser.Link;
-import org.hobsoft.microbrowser.MicrobrowserException;
-import org.hobsoft.microbrowser.MicrodataDocument;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@code Link} adapter to a jsoup {@code Element}.
+ * Holds the state of a {@code JsoupMicrobrowser} which consists of cookies and a document. 
  */
-class JsoupLink implements Link
+final class JsoupMicrobrowserState
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static final Map<String, String> NO_COOKIES = Collections.<String, String>emptyMap();
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final Element element;
-
+	private final Map<String, String> cookies;
+	
+	private final Document document;
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
-
-	public JsoupLink(Element element)
+	
+	public JsoupMicrobrowserState()
 	{
-		this.element = checkNotNull(element, "element");
+		this(new Document("microbrowser://"));
+	}
+
+	public JsoupMicrobrowserState(Document document)
+	{
+		this(NO_COOKIES, document);
+	}
+
+	public JsoupMicrobrowserState(Map<String, String> cookies, Document document)
+	{
+		this.cookies = checkNotNull(cookies, "cookies");
+		this.document = checkNotNull(document, "document");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// Link methods
+	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getRel()
+	public Map<String, String> getCookies()
 	{
-		return element.attr("rel");
+		return cookies;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getHref()
+	public Document getDocument()
 	{
-		return element.absUrl("href");
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public MicrodataDocument follow()
-	{
-		Document document;
-		
-		try
-		{
-			document = Jsoup.connect(getHref()).get();
-		}
-		catch (IOException exception)
-		{
-			throw new MicrobrowserException("Error fetching page: " + getHref(), exception);
-		}
-		
-		// TODO: cookies
-		JsoupMicrobrowserState nextState = new JsoupMicrobrowserState(document);
-		
-		return new JsoupMicrodataDocument(nextState);
+		return document;
 	}
 }

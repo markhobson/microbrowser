@@ -103,6 +103,37 @@ public abstract class MicrobrowserTck
 		assertThat("request path", takeRequest(server).getPath(), is("/x"));
 	}
 
+	@Test
+	public void documentGetSendsCookies() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(url(server))
+			.get(url(server));
+		
+		server.takeRequest();
+		assertThat("cookie", takeRequest(server).getHeader("Cookie"), is("x=y"));
+	}
+
+	@Test
+	public void documentGetWhenSubsequentRequestSendsCookies() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server.enqueue(new MockResponse());
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(url(server))
+			.get(url(server))
+			.get(url(server));
+		
+		server.takeRequest();
+		takeRequest(server);
+		assertThat("cookie", takeRequest(server).getHeader("Cookie"), is("x=y"));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument.getItem tests
 	// ----------------------------------------------------------------------------------------------------------------

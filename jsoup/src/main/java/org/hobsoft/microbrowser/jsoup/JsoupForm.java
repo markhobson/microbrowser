@@ -111,7 +111,10 @@ class JsoupForm implements Form
 			throw new MicrobrowserException("Error submitting form", exception);
 		}
 		
-		return new JsoupMicrodataDocument(document);
+		// TODO: cookies
+		JsoupMicrobrowserState nextState = new JsoupMicrobrowserState(document);
+		
+		return new JsoupMicrodataDocument(nextState);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------

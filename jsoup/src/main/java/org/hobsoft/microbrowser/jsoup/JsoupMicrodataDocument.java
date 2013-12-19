@@ -20,7 +20,6 @@ import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -39,15 +38,15 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final Document document;
-
+	private final JsoupMicrobrowserState state;
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupMicrodataDocument(Document document)
+	public JsoupMicrodataDocument(JsoupMicrobrowserState state)
 	{
-		this.document = checkNotNull(document, "document");
+		this.state = checkNotNull(state, "state");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -59,7 +58,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public MicrodataDocument get(String url)
 	{
-		return JsoupMicrobrowser.getInternal(url);
+		return JsoupMicrobrowser.getInternal(state, url);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -71,7 +70,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public List<MicrodataItem> getItems(String type)
 	{
-		Elements elements = document.select(byItemType(type));
+		Elements elements = state.getDocument().select(byItemType(type));
 		
 		return Lists.transform(elements, new Function<Element, MicrodataItem>()
 		{
@@ -87,7 +86,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public boolean hasLink(String rel)
 	{
-		return !document.select(byLink(rel)).isEmpty();
+		return !state.getDocument().select(byLink(rel)).isEmpty();
 	}
 	
 	/**
@@ -97,7 +96,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	{
 		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
 		
-		Elements elements = document.select(byLink(rel));
+		Elements elements = state.getDocument().select(byLink(rel));
 		return new JsoupLink(elements.first());
 	}
 	
@@ -106,7 +105,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public Form getForm(String name)
 	{
-		Elements elements = document.select(byForm(name));
+		Elements elements = state.getDocument().select(byForm(name));
 		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
 		
 		return new JsoupForm(elements.first());
