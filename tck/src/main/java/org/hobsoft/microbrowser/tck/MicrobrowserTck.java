@@ -142,7 +142,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void documentGetWhenSubsequentRequestSendsCookie() throws IOException, InterruptedException
+	public void documentGetSendsPreviousCookie() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server.enqueue(new MockResponse());
