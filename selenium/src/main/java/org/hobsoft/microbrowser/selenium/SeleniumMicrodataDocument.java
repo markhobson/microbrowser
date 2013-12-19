@@ -59,7 +59,9 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public MicrodataDocument get(String url)
 	{
-		return SeleniumMicrobrowser.getInternal(driver, url);
+		driver.get(url);
+		
+		return new SeleniumMicrodataDocument(driver);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
