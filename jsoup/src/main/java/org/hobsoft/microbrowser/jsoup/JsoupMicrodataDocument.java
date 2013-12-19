@@ -13,13 +13,16 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -35,18 +38,34 @@ import static com.google.common.base.Preconditions.checkNotNull;
 class JsoupMicrodataDocument extends AbstractMicrodataDocument
 {
 	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static final Map<String, String> NO_COOKIES = Collections.<String, String>emptyMap();
+	
+	private static final String DEFAULT_BASE_URI = "microbrowser://";
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final JsoupMicrobrowserState state;
+	private final Map<String, String> cookies;
+	
+	private final Document document;
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
-
-	public JsoupMicrodataDocument(JsoupMicrobrowserState state)
+	
+	public JsoupMicrodataDocument()
 	{
-		this.state = checkNotNull(state, "state");
+		this(NO_COOKIES, new Document(DEFAULT_BASE_URI));
+	}
+
+	public JsoupMicrodataDocument(Map<String, String> cookies, Document document)
+	{
+		this.cookies = checkNotNull(cookies, "cookies");
+		this.document = checkNotNull(document, "document");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -58,7 +77,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public MicrodataDocument get(String url)
 	{
-		return JsoupMicrobrowser.getInternal(state, url);
+		return JsoupMicrobrowser.getInternal(this, url);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -70,7 +89,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public List<MicrodataItem> getItems(String type)
 	{
-		Elements elements = state.getDocument().select(byItemType(type));
+		Elements elements = document.select(byItemType(type));
 		
 		return Lists.transform(elements, new Function<Element, MicrodataItem>()
 		{
@@ -86,7 +105,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public boolean hasLink(String rel)
 	{
-		return !state.getDocument().select(byLink(rel)).isEmpty();
+		return !document.select(byLink(rel)).isEmpty();
 	}
 	
 	/**
@@ -96,7 +115,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	{
 		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
 		
-		Elements elements = state.getDocument().select(byLink(rel));
+		Elements elements = document.select(byLink(rel));
 		return new JsoupLink(elements.first());
 	}
 	
@@ -105,10 +124,19 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public Form getForm(String name)
 	{
-		Elements elements = state.getDocument().select(byForm(name));
+		Elements elements = document.select(byForm(name));
 		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
 		
-		return new JsoupForm(state, elements.first());
+		return new JsoupForm(this, elements.first());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// public methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public Map<String, String> getCookies()
+	{
+		return cookies;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

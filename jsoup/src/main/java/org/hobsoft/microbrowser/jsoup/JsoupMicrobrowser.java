@@ -39,16 +39,16 @@ public class JsoupMicrobrowser implements Microbrowser
 	 */
 	public MicrodataDocument get(String url)
 	{
-		return getInternal(new JsoupMicrobrowserState(), url);
+		return getInternal(new JsoupMicrodataDocument(), url);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// package methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	static MicrodataDocument getInternal(JsoupMicrobrowserState state, String url)
+	static MicrodataDocument getInternal(JsoupMicrodataDocument state, String url)
 	{
-		JsoupMicrobrowserState nextState;
+		JsoupMicrodataDocument nextState;
 		
 		try
 		{
@@ -64,20 +64,20 @@ public class JsoupMicrobrowser implements Microbrowser
 			throw new MicrobrowserException("Error fetching page: " + url, exception);
 		}
 		
-		return new JsoupMicrodataDocument(nextState);
+		return nextState;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static JsoupMicrobrowserState newState(JsoupMicrobrowserState state, Response response) throws IOException
+	private static JsoupMicrodataDocument newState(JsoupMicrodataDocument state, Response response) throws IOException
 	{
 		Map<String, String> nextCookies = new HashMap<String, String>(state.getCookies());
 		nextCookies.putAll(response.cookies());
 		
 		Document nextDocument = response.parse();
 		
-		return new JsoupMicrobrowserState(nextCookies, nextDocument);
+		return new JsoupMicrodataDocument(nextCookies, nextDocument);
 	}
 }

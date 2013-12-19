@@ -40,7 +40,7 @@ class JsoupForm implements Form
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final JsoupMicrobrowserState state;
+	private final JsoupMicrodataDocument state;
 	
 	private final Element element;
 	
@@ -50,7 +50,7 @@ class JsoupForm implements Form
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupForm(JsoupMicrobrowserState state, Element element)
+	public JsoupForm(JsoupMicrodataDocument state, Element element)
 	{
 		this.state = checkNotNull(state, "state");
 		this.element = checkNotNull(element, "element");
@@ -113,10 +113,10 @@ class JsoupForm implements Form
 			throw new MicrobrowserException("Error submitting form", exception);
 		}
 		
-		// TODO: cookies
-		JsoupMicrobrowserState nextState = new JsoupMicrobrowserState(document);
+		// TODO: set cookies
+		Map<String, String> nextCookies = state.getCookies();
 		
-		return new JsoupMicrodataDocument(nextState);
+		return new JsoupMicrodataDocument(nextCookies, document);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------

@@ -14,6 +14,8 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
 
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrobrowserException;
@@ -81,8 +83,8 @@ class JsoupLink implements Link
 		}
 		
 		// TODO: cookies
-		JsoupMicrobrowserState nextState = new JsoupMicrobrowserState(document);
+		Map<String, String> nextCookies = Collections.<String, String>emptyMap();
 		
-		return new JsoupMicrodataDocument(nextState);
+		return new JsoupMicrodataDocument(nextCookies, document);
 	}
 }
