@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Defines an HTML microdata document.
  */
-public interface MicrodataDocument
+public interface MicrodataDocument extends Microbrowser
 {
 	/**
 	 * Gets the item with the specified type.

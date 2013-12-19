@@ -18,6 +18,7 @@ import java.util.List;
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -47,6 +48,18 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	public JsoupMicrodataDocument(Document document)
 	{
 		this.document = checkNotNull(document, "document");
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Microbrowser methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public MicrodataDocument get(String url)
+	{
+		return JsoupMicrobrowser.getInternal(url);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------

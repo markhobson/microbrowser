@@ -35,6 +35,15 @@ public class JsoupMicrobrowser implements Microbrowser
 	 */
 	public MicrodataDocument get(String url)
 	{
+		return getInternal(url);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// package methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	static MicrodataDocument getInternal(String url)
+	{
 		Document document;
 		
 		try

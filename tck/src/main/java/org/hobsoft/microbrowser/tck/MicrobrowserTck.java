@@ -86,6 +86,24 @@ public abstract class MicrobrowserTck
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataDocument.get tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void documentGetRequestsPath() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse());
+		server.enqueue(new MockResponse());
+		server.play();
+		
+		newBrowser().get(url(server))
+			.get(url(server, "/x"));
+		
+		server.takeRequest();
+		assertThat("request path", takeRequest(server).getPath(), is("/x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument.getItem tests
 	// ----------------------------------------------------------------------------------------------------------------
 
