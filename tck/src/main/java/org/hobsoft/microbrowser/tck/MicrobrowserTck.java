@@ -14,24 +14,16 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
-import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.mockwebserver.MockResponse;
-import com.google.mockwebserver.MockWebServer;
-import com.google.mockwebserver.RecordedRequest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -44,32 +36,8 @@ import static org.junit.Assert.assertThat;
 /**
  * TCK for {@code Microbrowser}.
  */
-public abstract class MicrobrowserTck
+public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 {
-	// ----------------------------------------------------------------------------------------------------------------
-	// fields
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private MockWebServer server;
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// test case methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Before
-	public final void setUpTck()
-	{
-		Logger.getLogger("com.google.mockwebserver").setLevel(Level.WARNING);
-		
-		server = new MockWebServer();
-	}
-
-	@After
-	public final void tearDownTck() throws IOException
-	{
-		server.shutdown();
-	}
-
 	// ----------------------------------------------------------------------------------------------------------------
 	// Microbrowser.get tests
 	// ----------------------------------------------------------------------------------------------------------------
@@ -77,21 +45,21 @@ public abstract class MicrobrowserTck
 	@Test
 	public void getRequestsPath() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server, "/x"));
+		newBrowser().get(url(server(), "/x"));
 		
-		assertThat("request path", server.takeRequest().getPath(), is("/x"));
+		assertThat("request path", server().takeRequest().getPath(), is("/x"));
 	}
 
 	@Test
 	public void getSetsCookie() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.play();
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getCookie("x");
 		
 		assertThat("cookie", actual, is("y"));
@@ -104,24 +72,24 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentGetRequestsPath() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse());
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
-			.get(url(server, "/x"));
+		newBrowser().get(url(server()))
+			.get(url(server(), "/x"));
 		
-		server.takeRequest();
-		assertThat("request path", takeRequest(server).getPath(), is("/x"));
+		server().takeRequest();
+		assertThat("request path", takeRequest(server()).getPath(), is("/x"));
 	}
 
 	@Test
 	public void documentGetSetsCookie() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.play();
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getCookie("x");
 		
 		assertThat("cookie", actual, is("y"));
@@ -130,32 +98,32 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentGetSendsCookie() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
-			.get(url(server));
+		newBrowser().get(url(server()))
+			.get(url(server()));
 		
-		server.takeRequest();
-		assertThat("cookie", takeRequest(server).getHeader("Cookie"), is("x=y"));
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
 	}
 
 	@Test
 	public void documentGetSendsPreviousCookie() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.enqueue(new MockResponse());
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().enqueue(new MockResponse());
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
-			.get(url(server))
-			.get(url(server));
+		newBrowser().get(url(server()))
+			.get(url(server()))
+			.get(url(server()));
 		
-		server.takeRequest();
-		takeRequest(server);
-		assertThat("cookie", takeRequest(server).getHeader("Cookie"), is("x=y"));
+		server().takeRequest();
+		takeRequest(server());
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -165,12 +133,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentGetItemReturnsItem() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		MicrodataItem actual = newBrowser().get(url(server))
+		MicrodataItem actual = newBrowser().get(url(server()))
 			.getItem("x");
 		
 		assertThat("item", actual, is(notNullValue()));
@@ -179,10 +147,10 @@ public abstract class MicrobrowserTck
 	@Test(expected = IllegalArgumentException.class)
 	public void documentGetItemWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server.play();
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getItem("x");
 	}
 
@@ -193,12 +161,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void itemGetTypeReturnsType() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("x")
 			.getType();
 		
@@ -212,14 +180,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void itemGetPropertyReturnsProperty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		MicrodataProperty actual = newBrowser().get(url(server))
+		MicrodataProperty actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("x");
 		
@@ -229,12 +197,12 @@ public abstract class MicrobrowserTck
 	@Test(expected = IllegalArgumentException.class)
 	public void itemGetPropertyWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("x");
 	}
@@ -246,14 +214,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetNameReturnsName() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("x")
 			.getName();
@@ -268,14 +236,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenMetaReturnsContent() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<meta itemprop='p' content='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -286,14 +254,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenMetaAndNoContentReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<meta itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -304,14 +272,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenAudioAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<audio itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -322,33 +290,33 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<audio itemprop='p' src='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 	
 	@Test
 	public void propertyGetValueWhenAudioAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<audio itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -359,14 +327,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenEmbedAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<embed itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -377,33 +345,33 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<embed itemprop='p' src='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 	
 	@Test
 	public void propertyGetValueWhenEmbedAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<embed itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -414,14 +382,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenIframeAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<iframe itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -432,33 +400,33 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<iframe itemprop='p' src='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 	
 	@Test
 	public void propertyGetValueWhenIframeAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<iframe itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -469,14 +437,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenImgAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<img itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -487,33 +455,33 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenImgAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<img itemprop='p' src='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 	
 	@Test
 	public void propertyGetValueWhenImgAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<img itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -524,14 +492,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenSourceAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<source itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -542,33 +510,33 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<source itemprop='p' src='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 	
 	@Test
 	public void propertyGetValueWhenSourceAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<source itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -579,14 +547,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenTrackAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<track itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -599,33 +567,33 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<track itemprop='p' src='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 	
 	@Test
 	public void propertyGetValueWhenTrackAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<track itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -636,14 +604,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenVideoAndAbsoluteSrcReturnsSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<video itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -654,33 +622,33 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<video itemprop='p' src='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 	
 	@Test
 	public void propertyGetValueWhenVideoAndNoSrcReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<video itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -691,14 +659,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<a itemprop='p' href='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -709,32 +677,32 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<a itemprop='p' href='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 
 	@Test
 	public void propertyGetValueWhenAnchorAndNoHrefReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<a itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -745,14 +713,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenAreaAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<area itemprop='p' href='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -763,32 +731,32 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<area itemprop='p' href='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 
 	@Test
 	public void propertyGetValueWhenAreaAndNoHrefReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<area itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -799,14 +767,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<link itemprop='p' href='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -817,32 +785,32 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<link itemprop='p' href='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 
 	@Test
 	public void propertyGetValueWhenLinkAndNoHrefReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<link itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -855,32 +823,32 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenObjectReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<object itemprop='p' data='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
 		
-		assertThat("item property value", actual, equalToIgnoringCase(url(server, "/x")));
+		assertThat("item property value", actual, equalToIgnoringCase(url(server(), "/x")));
 	}
 
 	@Test
 	public void propertyGetValueWhenObjectAndNoDataReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<object itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -891,14 +859,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenDataReturnsValue() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<data itemprop='p' value='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -909,14 +877,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenDataAndNoValueReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<data itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -927,14 +895,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenMeterReturnsValue() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<meter itemprop='p' value='1'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -945,14 +913,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenMeterAndNoValueReturnsZero() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<meter itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -963,14 +931,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenTimeReturnsDatetime() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<time itemprop='p' datetime='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -981,14 +949,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenTimeAndNoDatetimeReturnsText() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<time itemprop='p'>x</time>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -999,14 +967,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenTimeAndNoTextReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<time itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -1017,14 +985,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenUnknownReturnsText() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -1035,14 +1003,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void propertyGetValueWhenUnknownAndNoTextReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("p")
 			.getValue();
@@ -1057,12 +1025,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentHasLinkWhenAnchorReturnsTrue() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		boolean actual = newBrowser().get(url(server))
+		boolean actual = newBrowser().get(url(server()))
 			.hasLink("x");
 		
 		assertThat("hasLink", actual, is(true));
@@ -1071,12 +1039,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentHasLinkWhenLinkReturnsTrue() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		boolean actual = newBrowser().get(url(server))
+		boolean actual = newBrowser().get(url(server()))
 			.hasLink("x");
 		
 		assertThat("hasLink", actual, is(true));
@@ -1085,10 +1053,10 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentHasLinkWhenNoFoundReturnsFalse() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server.play();
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
 		
-		boolean actual = newBrowser().get(url(server))
+		boolean actual = newBrowser().get(url(server()))
 			.hasLink("x");
 		
 		assertThat("hasLink", actual, is(false));
@@ -1101,12 +1069,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentGetLinkWhenAnchorReturnsLink() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		Link actual = newBrowser().get(url(server))
+		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
 		
 		assertThat("link", actual, is(notNullValue()));
@@ -1115,12 +1083,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentGetLinkWhenLinkReturnsLink() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		Link actual = newBrowser().get(url(server))
+		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
 		
 		assertThat("link", actual, is(notNullValue()));
@@ -1129,10 +1097,10 @@ public abstract class MicrobrowserTck
 	@Test(expected = IllegalArgumentException.class)
 	public void documentGetLinkWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server.play();
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getLink("x");
 	}
 
@@ -1143,12 +1111,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void linkGetRelWhenAnchorReturnsRelationship() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("x")
 			.getRel();
 		
@@ -1158,12 +1126,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void linkGetRelWhenLinkReturnsRelationship() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("x")
 			.getRel();
 		
@@ -1177,12 +1145,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void linkGetHrefWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='http://x/'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
@@ -1192,27 +1160,27 @@ public abstract class MicrobrowserTck
 	@Test
 	public void linkGetHrefWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, is(url(server, "/x")));
+		assertThat("link href", actual, is(url(server(), "/x")));
 	}
 
 	@Test
 	public void linkGetHrefWhenAnchorAndNoHrefReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
@@ -1222,12 +1190,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void linkGetHrefWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><head>"
+		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='http://x/'/>"
 			+ "</head></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("x")
 			.getHref();
 		
@@ -1237,27 +1205,27 @@ public abstract class MicrobrowserTck
 	@Test
 	public void linkGetHrefWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><head>"
+		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='x'/>"
 			+ "</head></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("x")
 			.getHref();
 		
-		assertThat("link href", actual, is(url(server, "/x")));
+		assertThat("link href", actual, is(url(server(), "/x")));
 	}
 
 	@Test
 	public void linkGetHrefWhenLinkAndNoHrefReturnsEmpty() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><head>"
+		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='r'/>"
 			+ "</head></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
@@ -1271,38 +1239,38 @@ public abstract class MicrobrowserTck
 	@Test
 	public void linkFollowWhenAnchorSubmitsRequest() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/x'>a</a>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getLink("r")
 			.follow();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server).getPath(), is("/x"));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()).getPath(), is("/x"));
 	}
 
 	@Test
 	public void linkFollowWhenAnchorReturnsResponse() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		MicrodataDocument actual = newBrowser().get(url(server))
+		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.follow();
 		
-		server.takeRequest();
+		server().takeRequest();
 		assertThat("request", actual.getItem("i").getProperty("p").getValue(), is("x"));
 	}
 
@@ -1313,12 +1281,12 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentGetFormReturnsForm() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		Form actual = newBrowser().get(url(server))
+		Form actual = newBrowser().get(url(server()))
 			.getForm("x");
 		
 		assertThat("form", actual, is(notNullValue()));
@@ -1327,10 +1295,10 @@ public abstract class MicrobrowserTck
 	@Test(expected = IllegalArgumentException.class)
 	public void documentGetFormWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server.play();
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("x");
 	}
 
@@ -1340,12 +1308,12 @@ public abstract class MicrobrowserTck
 
 	public void formGetNameReturnsName() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getForm("x")
 			.getName();
 		
@@ -1359,12 +1327,12 @@ public abstract class MicrobrowserTck
 	@Test(expected = IllegalArgumentException.class)
 	public void formGetParameterWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
 	}
@@ -1376,14 +1344,14 @@ public abstract class MicrobrowserTck
 	@Test
 	public void formSetParameterSetsValue() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='p'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		Form form = newBrowser().get(url(server))
+		Form form = newBrowser().get(url(server()))
 			.getForm("f");
 		form.setParameter("p", "x");
 		
@@ -1393,12 +1361,12 @@ public abstract class MicrobrowserTck
 	@Test(expected = IllegalArgumentException.class)
 	public void formSetParameterWhenNotFoundThrowsException() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.setParameter("p", "x");
 	}
@@ -1410,69 +1378,69 @@ public abstract class MicrobrowserTck
 	@Test
 	public void formSubmitWhenSubmitInputSubmitsRequest() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server).getPath(), is("/x"));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()).getPath(), is("/x"));
 	}
 
 	@Test
 	public void formSubmitWhenSubmitButtonSubmitsRequest() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
 			+ "<button type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server).getPath(), is("/x"));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()).getPath(), is("/x"));
 	}
 
 	@Test
 	public void formSubmitWhenDefaultButtonSubmitsRequest() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
 			+ "<button/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server).getPath(), is("/x"));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()).getPath(), is("/x"));
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void formSubmitWhenNoSubmitButtonThrowsException() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 	}
@@ -1480,74 +1448,74 @@ public abstract class MicrobrowserTck
 	@Test
 	public void formSubmitWhenNoMethodSubmitsGetRequest() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server), is(get("/x")));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/x")));
 	}
 
 	@Test
 	public void formSubmitWhenGetSubmitsGetRequest() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/x'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server), is(get("/x")));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/x")));
 	}
 
 	@Test
 	public void formSubmitWhenGetSubmitsTextControlValue() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='text' name='p'/>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.setParameter("p", "x")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server), is(get("/a?p=x")));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
 	}
 
 	@Test
 	public void formSubmitWhenGetSetsCookie() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.play();
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.submit()
 			.getCookie("x");
@@ -1558,59 +1526,59 @@ public abstract class MicrobrowserTck
 	@Test
 	public void formSubmitWhenGetSendsCookie() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("cookie", takeRequest(server).getHeader("Cookie"), is("x=y"));
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
 	}
 
 	@Test
 	public void formSubmitWhenGetSendsPreviousCookie() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
-			.get(url(server))
+		newBrowser().get(url(server()))
+			.get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("cookie", takeRequest(server).getHeader("Cookie"), is("x=y"));
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
 	}
 
 	@Test
 	public void formSubmitWhenGetReturnsResponse() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		MicrodataDocument actual = newBrowser().get(url(server))
+		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
@@ -1620,59 +1588,59 @@ public abstract class MicrobrowserTck
 	@Test
 	public void formSubmitWhenPostSubmitsPostRequest() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/x'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request", takeRequest(server), is(post("/x")));
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(post("/x")));
 	}
 
 	@Test
 	public void formSubmitWhenPostSubmitsTextControlValue() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='text' name='p'/>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getForm("f")
 			.setParameter("p", "x")
 			.submit();
 		
-		server.takeRequest();
-		assertThat("request body", body(takeRequest(server)), is("p=x"));
+		server().takeRequest();
+		assertThat("request body", body(takeRequest(server())), is("p=x"));
 	}
 
 	@Test
 	public void formSubmitWhenPostReturnsResponse() throws IOException, InterruptedException
 	{
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='submit'>"
 			+ "</form>"
 			+ "</body></html>"));
-		server.enqueue(new MockResponse().setBody("<html><body>"
+		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server.play();
+		server().play();
 		
-		MicrodataDocument actual = newBrowser().get(url(server))
+		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.submit();
 		
@@ -1686,10 +1654,10 @@ public abstract class MicrobrowserTck
 	@Test
 	public void documentGetCookieReturnsValue() throws IOException
 	{
-		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.play();
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().play();
 		
-		String actual = newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server()))
 			.getCookie("x");
 		
 		assertThat("cookie", actual, is("y"));
@@ -1698,52 +1666,10 @@ public abstract class MicrobrowserTck
 	@Test(expected = IllegalArgumentException.class)
 	public void documentGetCookieWhenNotFoundThrowsException() throws IOException
 	{
-		server.enqueue(new MockResponse());
-		server.play();
+		server().enqueue(new MockResponse());
+		server().play();
 		
-		newBrowser().get(url(server))
+		newBrowser().get(url(server()))
 			.getCookie("x");
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	protected abstract Microbrowser newBrowser();
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private static String url(MockWebServer server)
-	{
-		return url(server, "/");
-	}
-	
-	private static String url(MockWebServer server, String path)
-	{
-		return server.getUrl(path).toString();
-	}
-	
-	/**
-	 * Workaround MockWebServer issue #11.
-	 * 
-	 * @see https://code.google.com/p/mockwebserver/issues/detail?id=11
-	 */
-	private static RecordedRequest takeRequest(MockWebServer server) throws InterruptedException
-	{
-		RecordedRequest request = server.takeRequest();
-		
-		while ("GET /favicon.ico HTTP/1.1".equals(request.getRequestLine()))
-		{
-			request = server.takeRequest();
-		}
-		
-		return request;
-	}
-	
-	private static String body(RecordedRequest request)
-	{
-		return new String(request.getBody(), Charset.forName("ISO-8859-1"));
 	}
 }
