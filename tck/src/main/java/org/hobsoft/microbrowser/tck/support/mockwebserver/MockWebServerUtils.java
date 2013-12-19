@@ -11,51 +11,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.tck;
-
-import java.nio.charset.Charset;
-
-import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerRule;
-import org.junit.Rule;
+package org.hobsoft.microbrowser.tck.support.mockwebserver;
 
 import com.google.mockwebserver.MockWebServer;
 import com.google.mockwebserver.RecordedRequest;
 
 /**
- * Base test for Microbrowser TCKs.
+ * Utility methods for working with {@code MockWebServer}.
  */
-public abstract class AbstractMicrobrowserTest
+public final class MockWebServerUtils
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// fields
+	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private MockWebServerRule serverRule = new MockWebServerRule();
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// test case methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Rule
-	public final MockWebServerRule getServerRule()
+	private MockWebServerUtils()
 	{
-		return serverRule;
+		throw new AssertionError();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
+	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
-	
-	protected final MockWebServer server()
-	{
-		return serverRule.getServer();
-	}
 
-	protected abstract Microbrowser newBrowser();
-	
-	protected final String body(RecordedRequest request)
+	public static String url(MockWebServer server)
 	{
-		return new String(request.getBody(), Charset.forName("ISO-8859-1"));
+		return url(server, "/");
+	}
+	
+	public static String url(MockWebServer server, String path)
+	{
+		return server.getUrl(path).toString();
+	}
+	
+	/**
+	 * Workaround MockWebServer issue #11.
+	 * 
+	 * @see https://code.google.com/p/mockwebserver/issues/detail?id=11
+	 */
+	public static RecordedRequest takeRequest(MockWebServer server) throws InterruptedException
+	{
+		RecordedRequest request = server.takeRequest();
+		
+		while ("GET /favicon.ico HTTP/1.1".equals(request.getRequestLine()))
+		{
+			request = server.takeRequest();
+		}
+		
+		return request;
 	}
 }

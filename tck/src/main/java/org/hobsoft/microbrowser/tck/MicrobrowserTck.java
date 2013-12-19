@@ -29,6 +29,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.isEmptyString;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.get;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.post;
 import static org.junit.Assert.assertThat;
