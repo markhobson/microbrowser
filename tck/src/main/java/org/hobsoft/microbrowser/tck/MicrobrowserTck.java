@@ -33,6 +33,7 @@ import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUt
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.get;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.post;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestUtils.body;
 import static org.junit.Assert.assertThat;
 
 /**

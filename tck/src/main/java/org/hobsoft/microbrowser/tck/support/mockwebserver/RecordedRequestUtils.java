@@ -11,43 +11,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.tck;
+package org.hobsoft.microbrowser.tck.support.mockwebserver;
 
-import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerRule;
-import org.junit.Rule;
+import java.nio.charset.Charset;
 
-import com.google.mockwebserver.MockWebServer;
+import com.google.mockwebserver.RecordedRequest;
 
 /**
- * Base test for Microbrowser TCKs.
+ * Utility methods for working with {@code RecordedRequest}.
  */
-public abstract class AbstractMicrobrowserTest
+public final class RecordedRequestUtils
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// fields
+	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private MockWebServerRule serverRule = new MockWebServerRule();
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// test case methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Rule
-	public final MockWebServerRule getServerRule()
+	private RecordedRequestUtils()
 	{
-		return serverRule;
+		throw new AssertionError();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
+	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
-	
-	protected final MockWebServer server()
-	{
-		return serverRule.getServer();
-	}
 
-	protected abstract Microbrowser newBrowser();
+	public static String body(RecordedRequest request)
+	{
+		return new String(request.getBody(), Charset.forName("ISO-8859-1"));
+	}
 }
