@@ -104,7 +104,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void documentGetSendsCookies() throws IOException, InterruptedException
+	public void documentGetSendsCookie() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server.enqueue(new MockResponse());
@@ -118,7 +118,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void documentGetWhenSubsequentRequestSendsCookies() throws IOException, InterruptedException
+	public void documentGetWhenSubsequentRequestSendsCookie() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server.enqueue(new MockResponse());
@@ -1513,7 +1513,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void formSubmitWhenGetSendsCookies() throws IOException, InterruptedException
+	public void formSubmitWhenGetSendsCookie() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -1532,7 +1532,7 @@ public abstract class MicrobrowserTck
 	}
 
 	@Test
-	public void formSubmitWhenGetSetsCookies() throws IOException, InterruptedException
+	public void formSubmitWhenGetSetsCookie() throws IOException, InterruptedException
 	{
 		server.enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
