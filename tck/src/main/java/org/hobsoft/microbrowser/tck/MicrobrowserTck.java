@@ -1564,17 +1564,14 @@ public abstract class MicrobrowserTck
 			+ "</form>"
 			+ "</body></html>"));
 		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server.enqueue(new MockResponse());
 		server.play();
 		
-		newBrowser().get(url(server))
+		String actual = newBrowser().get(url(server))
 			.getForm("f")
 			.submit()
-			.get(url(server));
+			.getCookie("x");
 		
-		server.takeRequest();
-		takeRequest(server);
-		assertThat("cookie", takeRequest(server).getHeader("Cookie"), is("x=y"));
+		assertThat("cookie", actual, is("y"));
 	}
 
 	@Test
