@@ -85,6 +85,18 @@ public abstract class MicrobrowserTck
 		assertThat("request path", server.takeRequest().getPath(), is("/x"));
 	}
 
+	@Test
+	public void getSetsCookie() throws IOException, InterruptedException
+	{
+		server.enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server.play();
+		
+		String actual = newBrowser().get(url(server))
+			.getCookie("x");
+		
+		assertThat("cookie", actual, is("y"));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument.get tests
 	// ----------------------------------------------------------------------------------------------------------------
