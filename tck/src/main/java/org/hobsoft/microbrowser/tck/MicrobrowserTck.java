@@ -629,6 +629,21 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		assertThat("form parameter value", actual, is("z"));
 	}
 
+	@Test
+	public void formGetParameterWhenHiddenControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'/>"
+			+ "<input type='hidden' name='x' value='y'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, is("y"));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void formGetParameterWhenNotFoundThrowsException() throws IOException
 	{
@@ -888,6 +903,26 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void formSubmitWhenGetSubmitsHiddenControlInitialValue() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='hidden' name='p' value='x'/>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+	}
+
+	@Test
 	public void formSubmitWhenGetSetsCookie() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -1063,6 +1098,26 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		newBrowser().get(url(server()))
 			.getForm("f")
 			.setParameter("p", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request body", body(takeRequest(server())), is("p=x"));
+	}
+
+	@Test
+	public void formSubmitWhenPostSubmitsHiddenControlInitialValue() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='hidden' name='p' value='x'/>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
 			.submit();
 		
 		server().takeRequest();

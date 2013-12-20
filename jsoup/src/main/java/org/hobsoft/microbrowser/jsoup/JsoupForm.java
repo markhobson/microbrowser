@@ -136,7 +136,7 @@ class JsoupForm implements Form
 	
 	private static String byControls()
 	{
-		return "input[type=text], input[type=password]";
+		return "input[type=text], input[type=password], input[type=hidden]";
 	}
 	
 	private void checkControl(String name)
