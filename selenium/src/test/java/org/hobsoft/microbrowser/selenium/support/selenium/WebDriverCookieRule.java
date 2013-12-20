@@ -11,55 +11,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.selenium;
+package org.hobsoft.microbrowser.selenium.support.selenium;
 
-import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverCookieRule;
-import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
-import org.hobsoft.microbrowser.tck.MicrobrowserTck;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.junit.rules.ExternalResource;
+import org.openqa.selenium.WebDriver;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Integration test that executes the TCK against {@code SeleniumMicrobrowser}.
+ * JUnit rule to delete all {@code WebDriver} cookies before test methods.
  */
-public class SeleniumMicrobrowserIT extends MicrobrowserTck
+public class WebDriverCookieRule extends ExternalResource
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static WebDriverRule driverRule = new WebDriverRule(FirefoxDriver.class);
+	private final WebDriver driver;
 	
-	private WebDriverCookieRule driverCookieRule = new WebDriverCookieRule(driverRule.getDriver());
-
 	// ----------------------------------------------------------------------------------------------------------------
-	// test case methods
+	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	@ClassRule
-	public static WebDriverRule getDriverRule()
+	public WebDriverCookieRule(WebDriver driver)
 	{
-		return driverRule;
+		this.driver = checkNotNull(driver, "driver");
 	}
-	
-	@Rule
-	public WebDriverCookieRule getDriverCookieRule()
-	{
-		return driverCookieRule;
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
-	// ----------------------------------------------------------------------------------------------------------------
 
+	// ----------------------------------------------------------------------------------------------------------------
+	// ExternalResource methods
+	// ----------------------------------------------------------------------------------------------------------------
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Microbrowser newBrowser()
+	protected void before()
 	{
-		return new SeleniumMicrobrowser(driverRule.getDriver());
+		driver.manage().deleteAllCookies();
 	}
 }
