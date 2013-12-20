@@ -14,12 +14,12 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.tck.MicrobrowserTck;
+import org.hobsoft.microbrowser.tck.MicrodataPropertyTck;
 
 /**
- * Integration test that executes the {@code Microbrowser} TCK against {@code JsoupMicrobrowser}.
+ * Integration test that executes the {@code MicrodataProperty} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupMicrobrowserIT extends MicrobrowserTck
+public class JsoupMicrodataPropertyIT extends MicrodataPropertyTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrobrowserTck methods

@@ -16,15 +16,15 @@ package org.hobsoft.microbrowser.selenium;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverCookieRule;
 import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
-import org.hobsoft.microbrowser.tck.MicrobrowserTck;
+import org.hobsoft.microbrowser.tck.MicrodataPropertyTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
- * Integration test that executes the {@code Microbrowser} TCK against {@code SeleniumMicrobrowser}.
+ * Integration test that executes the {@code MicrodataProperty} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumMicrobrowserIT extends MicrobrowserTck
+public class SeleniumMicrodataPropertyIT extends MicrodataPropertyTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
