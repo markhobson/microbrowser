@@ -14,14 +14,13 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Map;
 
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -35,14 +34,17 @@ class JsoupLink implements Link
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private final JsoupMicrodataDocument document;
+	
 	private final Element element;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupLink(Element element)
+	public JsoupLink(JsoupMicrodataDocument document, Element element)
 	{
+		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
 	}
 	
@@ -71,20 +73,28 @@ class JsoupLink implements Link
 	 */
 	public MicrodataDocument follow()
 	{
-		Document document;
+		JsoupMicrodataDocument nextDocument;
 		
 		try
 		{
-			document = Jsoup.connect(getHref()).get();
+			nextDocument = new JsoupMicrodataDocument(document.getCookies(), getConnection().execute());
 		}
 		catch (IOException exception)
 		{
 			throw new MicrobrowserException("Error fetching page: " + getHref(), exception);
 		}
 		
-		// TODO: cookies
-		Map<String, String> nextCookies = Collections.<String, String>emptyMap();
-		
-		return new JsoupMicrodataDocument(nextCookies, document);
+		return nextDocument;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private Connection getConnection()
+	{
+		return Jsoup.connect(getHref())
+			.method(Method.GET)
+			.cookies(document.getCookies());
 	}
 }

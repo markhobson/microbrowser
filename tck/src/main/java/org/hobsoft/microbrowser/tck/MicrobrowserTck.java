@@ -444,6 +444,59 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void linkFollowWhenAnchorSetsCookie() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r' href='/a'>a</a>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().play();
+		
+		String actual = newBrowser().get(url(server()))
+			.getLink("r")
+			.follow()
+			.getCookie("x");
+		
+		assertThat("cookie", actual, is("y"));
+	}
+
+	@Test
+	public void linkFollowWhenAnchorSendsCookie() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
+			+ "<a rel='r' href='/a'>a</a>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getLink("r")
+			.follow();
+		
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
+	}
+
+	@Test
+	public void linkFollowWhenAnchorSendsPreviousCookie() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r' href='/a'>a</a>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.get(url(server()))
+			.getLink("r")
+			.follow();
+		
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
+	}
+
+	@Test
 	public void linkFollowWhenAnchorReturnsResponse() throws IOException, InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"

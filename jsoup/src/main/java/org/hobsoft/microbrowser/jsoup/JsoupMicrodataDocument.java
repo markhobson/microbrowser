@@ -143,7 +143,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
 		
 		Elements elements = document.select(byLink(rel));
-		return new JsoupLink(elements.first());
+		return new JsoupLink(this, elements.first());
 	}
 	
 	/**
