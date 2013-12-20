@@ -36,7 +36,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void propertyGetNameReturnsName() throws IOException
+	public void getNameReturnsName() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -58,7 +58,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void propertyGetValueWhenMetaReturnsContent() throws IOException
+	public void getValueWhenMetaReturnsContent() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -76,7 +76,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenMetaAndNoContentReturnsEmpty() throws IOException
+	public void getValueWhenMetaAndNoContentReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -94,7 +94,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAudioAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenAudioAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -112,7 +112,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -131,7 +131,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenAudioAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenAudioAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -149,7 +149,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenEmbedAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenEmbedAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -167,7 +167,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -186,7 +186,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenEmbedAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenEmbedAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -204,7 +204,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenIframeAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenIframeAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -222,7 +222,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -241,7 +241,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenIframeAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenIframeAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -259,7 +259,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenImgAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenImgAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -277,7 +277,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenImgAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenImgAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -296,7 +296,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenImgAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenImgAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -314,7 +314,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenSourceAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenSourceAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -332,7 +332,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -351,7 +351,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenSourceAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenSourceAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -369,7 +369,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTrackAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenTrackAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -389,7 +389,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	// TODO: fix for Selenium
 	@Ignore
 	@Test
-	public void propertyGetValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -408,7 +408,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTrackAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenTrackAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -426,7 +426,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenVideoAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenVideoAndAbsoluteSrcReturnsSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -444,7 +444,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -463,7 +463,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenVideoAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenVideoAndNoSrcReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -481,7 +481,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getValueWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -499,7 +499,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -517,7 +517,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAnchorAndNoHrefReturnsEmpty() throws IOException
+	public void getValueWhenAnchorAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -535,7 +535,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getValueWhenAreaAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -553,7 +553,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -571,7 +571,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenAreaAndNoHrefReturnsEmpty() throws IOException
+	public void getValueWhenAreaAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -589,7 +589,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getValueWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -607,7 +607,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -625,7 +625,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenLinkAndNoHrefReturnsEmpty() throws IOException
+	public void getValueWhenLinkAndNoHrefReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -645,7 +645,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	// TODO: fix for Selenium
 	@Ignore
 	@Test
-	public void propertyGetValueWhenObjectReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenObjectReturnsAbsoluteUrl() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -663,7 +663,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenObjectAndNoDataReturnsEmpty() throws IOException
+	public void getValueWhenObjectAndNoDataReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -681,7 +681,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenDataReturnsValue() throws IOException
+	public void getValueWhenDataReturnsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -699,7 +699,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenDataAndNoValueReturnsEmpty() throws IOException
+	public void getValueWhenDataAndNoValueReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -717,7 +717,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenMeterReturnsValue() throws IOException
+	public void getValueWhenMeterReturnsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -735,7 +735,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenMeterAndNoValueReturnsZero() throws IOException
+	public void getValueWhenMeterAndNoValueReturnsZero() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -753,7 +753,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTimeReturnsDatetime() throws IOException
+	public void getValueWhenTimeReturnsDatetime() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -771,7 +771,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTimeAndNoDatetimeReturnsText() throws IOException
+	public void getValueWhenTimeAndNoDatetimeReturnsText() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -789,7 +789,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenTimeAndNoTextReturnsEmpty() throws IOException
+	public void getValueWhenTimeAndNoTextReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -807,7 +807,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void propertyGetValueWhenUnknownReturnsText() throws IOException
+	public void getValueWhenUnknownReturnsText() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
@@ -825,7 +825,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void propertyGetValueWhenUnknownAndNoTextReturnsEmpty() throws IOException
+	public void getValueWhenUnknownAndNoTextReturnsEmpty() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
