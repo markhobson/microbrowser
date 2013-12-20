@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
@@ -85,5 +86,39 @@ public class AbstractMicrodataDocumentTest
 		};
 		
 		document.getItem("x");
+	}
+	
+	@Test
+	public void getFormReturnsForm()
+	{
+		final Form form = mock(Form.class);
+		document = new FakeMicrodataDocument()
+		{
+			@Override
+			protected Form newForm(String name)
+			{
+				return "x".equals(name) ? form : null;
+			}
+		};
+		
+		assertThat(document.getForm("x"), is(form));
+	}
+	
+	@Test
+	public void getFormCachesForm()
+	{
+		Form form = mock(Form.class);
+		final Iterator<Form> forms = asList(form, mock(Form.class)).iterator();
+		document = new FakeMicrodataDocument()
+		{
+			@Override
+			protected Form newForm(String name)
+			{
+				return "x".equals(name) ? forms.next() : null;
+			}
+		};
+		
+		document.getForm("x");
+		assertThat(document.getForm("x"), is(form));
 	}
 }

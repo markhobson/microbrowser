@@ -13,13 +13,30 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Base {@code MicrodataDocument} implementation.
  */
 public abstract class AbstractMicrodataDocument implements MicrodataDocument
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// fields
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private final Map<String, Form> formsByName;
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// constructors
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public AbstractMicrodataDocument()
+	{
+		formsByName = new HashMap<String, Form>();
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -38,4 +55,26 @@ public abstract class AbstractMicrodataDocument implements MicrodataDocument
 		
 		return items.iterator().next();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Form getForm(String name)
+	{
+		Form form = formsByName.get(name);
+		
+		if (form == null)
+		{
+			form = newForm(name);
+			formsByName.put(name, form);
+		}
+		
+		return form;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Form newForm(String name);
 }

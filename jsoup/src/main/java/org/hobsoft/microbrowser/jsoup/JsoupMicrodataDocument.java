@@ -149,23 +149,28 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public Form getForm(String name)
-	{
-		Elements elements = document.select(byForm(name));
-		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
-		
-		return new JsoupForm(this, elements.first());
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getCookie(String name)
 	{
 		String value = cookies.get(name);
 		checkArgument(value != null, "Cannot find cookie: %s", name);
 
 		return value;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractMicrodataDocument methods
+	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Form newForm(String name)
+	{
+		Elements elements = document.select(byForm(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
+		
+		return new JsoupForm(this, elements.first());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

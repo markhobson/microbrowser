@@ -63,4 +63,13 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	{
 		return null;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Form newForm(String name)
+	{
+		return null;
+	}
 }

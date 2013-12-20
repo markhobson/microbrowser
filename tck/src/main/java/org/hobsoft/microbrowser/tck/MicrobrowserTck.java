@@ -26,6 +26,7 @@ import com.google.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
@@ -533,6 +534,19 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			.getForm("x");
 		
 		assertThat("form", actual, is(notNullValue()));
+	}
+
+	@Test
+	public void documentGetFormCachesForm() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='x'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		MicrodataDocument document = newBrowser().get(url(server()));
+		
+		assertThat("form", document.getForm("x"), is(sameInstance(document.getForm("x"))));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

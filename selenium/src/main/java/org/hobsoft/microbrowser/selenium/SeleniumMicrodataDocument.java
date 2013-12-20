@@ -107,23 +107,28 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public Form getForm(String name)
-	{
-		List<WebElement> elements = driver.findElements(byForm(name));
-		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
-		
-		return new SeleniumForm(driver, elements.iterator().next());
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getCookie(String name)
 	{
 		Cookie cookie = driver.manage().getCookieNamed(name);
 		checkArgument(cookie != null, "Cannot find cookie: %s", name);
 		
 		return cookie.getValue();
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractMicrodataDocument methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Form newForm(String name)
+	{
+		List<WebElement> elements = driver.findElements(byForm(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
+		
+		return new SeleniumForm(driver, elements.iterator().next());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
