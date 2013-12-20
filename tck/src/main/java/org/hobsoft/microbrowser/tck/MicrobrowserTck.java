@@ -816,6 +816,65 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void formSubmitWhenPostSetsCookie() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().play();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.submit()
+			.getCookie("x");
+		
+		assertThat("cookie", actual, is("y"));
+	}
+
+	@Test
+	public void formSubmitWhenPostSendsCookie() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
+	}
+
+	@Test
+	public void formSubmitWhenPostSendsPreviousCookie() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
+	}
+
+	@Test
 	public void formSubmitWhenPostReturnsResponse() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
