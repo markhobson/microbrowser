@@ -758,6 +758,26 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void formSubmitWhenGetSubmitsTextControlInitialValue() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='text' name='p' value='x'/>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+	}
+
+	@Test
 	public void formSubmitWhenGetSubmitsTextControlSetValue() throws IOException, InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -876,6 +896,26 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		
 		server().takeRequest();
 		assertThat("request", takeRequest(server()), is(post("/x")));
+	}
+
+	@Test
+	public void formSubmitWhenPostSubmitsTextControlInitialValue() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='text' name='p' value='x'/>"
+			+ "<input type='submit'>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request body", body(takeRequest(server())), is("p=x"));
 	}
 
 	@Test
