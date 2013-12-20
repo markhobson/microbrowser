@@ -568,7 +568,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void formGetParameterWhenTextInputReturnsValue() throws IOException
+	public void formGetParameterWhenTextControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -583,7 +583,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void formGetParameterWhenTextInputReturnsSetValue() throws IOException
+	public void formGetParameterWhenTextControlReturnsSetValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -616,7 +616,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void formSetParameterWhenTextInputSetsValue() throws IOException
+	public void formSetParameterWhenTextControlSetsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -758,7 +758,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void formSubmitWhenGetSubmitsTextControlValue() throws IOException, InterruptedException
+	public void formSubmitWhenGetSubmitsTextControlSetValue() throws IOException, InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -879,7 +879,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void formSubmitWhenPostSubmitsTextControlValue() throws IOException, InterruptedException
+	public void formSubmitWhenPostSubmitsTextControlSetValue() throws IOException, InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
