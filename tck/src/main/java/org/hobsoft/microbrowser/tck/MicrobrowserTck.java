@@ -514,6 +514,37 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// Form.getParameter tests
 	// ----------------------------------------------------------------------------------------------------------------
 
+	@Test
+	public void formGetParameterWhenTextInputReturnsValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'/>"
+			+ "<input type='text' name='x' value='y'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, is("y"));
+	}
+
+	@Test
+	public void formGetParameterWhenTextInputReturnsSetValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'/>"
+			+ "<input type='text' name='x' value='y'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("x", "z")
+			.getParameter("x");
+		assertThat("form parameter value", actual, is("z"));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void formGetParameterWhenNotFoundThrowsException() throws IOException
 	{
@@ -532,7 +563,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void formSetParameterSetsValue() throws IOException
+	public void formSetParameterWhenTextInputSetsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"

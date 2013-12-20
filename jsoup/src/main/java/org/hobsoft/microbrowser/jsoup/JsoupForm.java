@@ -75,9 +75,20 @@ class JsoupForm implements Form
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");
-		getControl(name);
+		Element control = getControl(name);
 		
-		return parameterValuesByName.get(name);
+		String value;
+		
+		if (parameterValuesByName.containsKey(name))
+		{
+			value = parameterValuesByName.get(name);
+		}
+		else
+		{
+			value = control.val();
+		}
+		
+		return value;
 	}
 
 	/**

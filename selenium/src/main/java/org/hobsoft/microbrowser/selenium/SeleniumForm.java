@@ -73,7 +73,9 @@ class SeleniumForm implements Form
 	 */
 	public Form setParameter(String name, String value)
 	{
-		getControl(name).sendKeys(value);
+		WebElement control = getControl(name);
+		control.clear();
+		control.sendKeys(value);
 		
 		return this;
 	}
