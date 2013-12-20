@@ -14,11 +14,10 @@
 package org.hobsoft.microbrowser.selenium;
 
 import org.hobsoft.microbrowser.Microbrowser;
+import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.MicrobrowserTck;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.openqa.selenium.WebDriver;
+import org.junit.ClassRule;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -30,30 +29,24 @@ public class SeleniumMicrobrowserIT extends MicrobrowserTck
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static WebDriver driver;
+	private static WebDriverRule driverRule = new WebDriverRule(FirefoxDriver.class);
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// test case methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	@BeforeClass
-	public static void setUpDriver()
+	@ClassRule
+	public static WebDriverRule getDriverRule()
 	{
-		driver = new FirefoxDriver();
+		return driverRule;
 	}
 	
 	@Before
 	public void setUp()
 	{
-		driver.manage().deleteAllCookies();
+		driverRule.getDriver().manage().deleteAllCookies();
 	}
 	
-	@AfterClass
-	public static void tearDownDriver()
-	{
-		driver.quit();
-	}
-
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrobrowserTck methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -64,6 +57,6 @@ public class SeleniumMicrobrowserIT extends MicrobrowserTck
 	@Override
 	protected Microbrowser newBrowser()
 	{
-		return new SeleniumMicrobrowser(driver);
+		return new SeleniumMicrobrowser(driverRule.getDriver());
 	}
 }
