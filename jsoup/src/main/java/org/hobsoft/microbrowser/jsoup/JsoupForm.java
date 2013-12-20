@@ -14,9 +14,7 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.hobsoft.microbrowser.Form;
@@ -56,7 +54,7 @@ class JsoupForm implements Form
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
 		
-		parameterValuesByName = new HashMap<String, String>();
+		parameterValuesByName = getInitialParameters(element);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -77,20 +75,9 @@ class JsoupForm implements Form
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");
-		Element control = getControl(name);
+		checkControl(name);
 		
-		String value;
-		
-		if (parameterValuesByName.containsKey(name))
-		{
-			value = parameterValuesByName.get(name);
-		}
-		else
-		{
-			value = control.val();
-		}
-		
-		return value;
+		return parameterValuesByName.get(name);
 	}
 
 	/**
@@ -100,7 +87,7 @@ class JsoupForm implements Form
 	{
 		checkNotNull(name, "name");
 		checkNotNull(value, "value");
-		getControl(name);
+		checkControl(name);
 		
 		parameterValuesByName.put(name, value);
 		
@@ -132,11 +119,36 @@ class JsoupForm implements Form
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
+	private static Map<String, String> getInitialParameters(Element element)
+	{
+		Map<String, String> parameterValuesByName = new HashMap<String, String>();
+		
+		for (Element control : element.select(byControls()))
+		{
+			String name = control.attr("name");
+			String value = control.val();
+			
+			parameterValuesByName.put(name, value);
+		}
+		
+		return parameterValuesByName;
+	}
+	
+	private static String byControls()
+	{
+		return "input[type=text]";
+	}
+	
+	private void checkControl(String name)
+	{
+		checkArgument(parameterValuesByName.containsKey(name), "Cannot find form control: %s", name);
+	}
+	
 	private Connection getConnection()
 	{
 		return Jsoup.connect(getAction())
 			.method(getMethod())
-			.data(getParameters())
+			.data(parameterValuesByName)
 			.cookies(document.getCookies());
 	}
 	
@@ -157,57 +169,6 @@ class JsoupForm implements Form
 		return Method.valueOf(value);
 	}
 	
-	private List<String> getInitialParameterNames()
-	{
-		List<String> names = new ArrayList<String>();
-		
-		for (Element control : element.select(byControls()))
-		{
-			String name = control.attr("name");
-			names.add(name);
-		}
-		
-		return names;
-	}
-	
-	private Map<String, String> getInitialParameters()
-	{
-		Map<String, String> parameter = new HashMap<String, String>();
-		
-		for (String name : getInitialParameterNames())
-		{
-			String value = getParameter(name);
-			parameter.put(name, value);
-		}
-		
-		return parameter;
-	}
-	
-	private Map<String, String> getParameters()
-	{
-		Map<String, String> parameters = new HashMap<String, String>(getInitialParameters());
-		parameters.putAll(parameterValuesByName);
-		return parameters;
-	}
-	
-	private Element getControl(String name)
-	{
-		Elements elements = element.select(byControl(name));
-		checkArgument(!elements.isEmpty(), "Cannot find form control: %s", name);
-		
-		return elements.first();
-	}
-	
-	private static String byControls()
-	{
-		return "input[type=text]";
-	}
-	
-	private static String byControl(String name)
-	{
-		return String.format("input[name=%s]", name);
-	}
-
 	private Element getSubmit()
 	{
 		Elements elements = element.select(bySubmit());
