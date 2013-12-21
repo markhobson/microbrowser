@@ -732,7 +732,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -751,7 +751,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
-			+ "<button type='submit'>"
+			+ "<button type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -802,7 +802,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -821,7 +821,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/x'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -841,7 +841,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='text' name='p' value='x'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -861,7 +861,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='text' name='p'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -882,7 +882,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='password' name='p' value='x'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -902,7 +902,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='password' name='p'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -923,7 +923,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
 			+ "<input type='hidden' name='p' value='x'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -942,7 +942,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
@@ -961,7 +961,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -981,7 +981,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1001,7 +1001,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -1023,7 +1023,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/x'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1043,7 +1043,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='text' name='p' value='x'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1063,7 +1063,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='text' name='p'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1084,7 +1084,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='password' name='p' value='x'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1104,7 +1104,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='password' name='p'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1125,7 +1125,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
 			+ "<input type='hidden' name='p' value='x'/>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1144,7 +1144,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
@@ -1163,7 +1163,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1183,7 +1183,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
@@ -1203,7 +1203,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='submit'>"
+			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().setBody("<html><body>"
