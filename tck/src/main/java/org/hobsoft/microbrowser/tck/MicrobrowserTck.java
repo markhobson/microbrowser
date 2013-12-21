@@ -27,6 +27,7 @@ import com.google.mockwebserver.MockResponse;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
@@ -360,7 +361,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, is(url(server(), "/x")));
+		assertThat("link href", actual, is(equalToIgnoringCase(url(server(), "/x"))));
 	}
 
 	@Test
@@ -405,7 +406,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			.getLink("x")
 			.getHref();
 		
-		assertThat("link href", actual, is(url(server(), "/x")));
+		assertThat("link href", actual, is(equalToIgnoringCase(url(server(), "/x"))));
 	}
 
 	@Test
