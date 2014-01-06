@@ -47,7 +47,7 @@ public final class MockWebServerUtils
 	/**
 	 * Workaround MockWebServer issue #11.
 	 * 
-	 * @see https://code.google.com/p/mockwebserver/issues/detail?id=11
+	 * @see <a href="https://code.google.com/p/mockwebserver/issues/detail?id=11">Issue #11</a>
 	 */
 	public static RecordedRequest takeRequest(MockWebServer server) throws InterruptedException
 	{
