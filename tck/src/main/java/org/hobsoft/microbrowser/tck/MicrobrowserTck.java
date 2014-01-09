@@ -68,6 +68,21 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		assertThat("cookie", actual, is("y"));
 	}
 
+	@Test
+	public void getReturnsResponse() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		MicrodataDocument actual = newBrowser().get(url(server()));
+		
+		assertThat("response", actual.getItem("i").getProperty("p").getValue(), is("x"));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument.get tests
 	// ----------------------------------------------------------------------------------------------------------------
@@ -129,6 +144,23 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().takeRequest();
 		takeRequest(server());
 		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
+	}
+
+	@Test
+	public void documentGetReturnsResponse() throws IOException
+	{
+		server().enqueue(new MockResponse());
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		MicrodataDocument actual = newBrowser().get(url(server()))
+			.get(url(server()));
+		
+		assertThat("response", actual.getItem("i").getProperty("p").getValue(), is("x"));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
