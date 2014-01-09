@@ -499,7 +499,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void linkFollowWhenAnchorReturnsResponse() throws IOException, InterruptedException
+	public void linkFollowWhenAnchorReturnsResponse() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
@@ -515,8 +515,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			.getLink("r")
 			.follow();
 		
-		server().takeRequest();
-		assertThat("request", actual.getItem("i").getProperty("p").getValue(), is("x"));
+		assertThat("response", actual.getItem("i").getProperty("p").getValue(), is("x"));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
