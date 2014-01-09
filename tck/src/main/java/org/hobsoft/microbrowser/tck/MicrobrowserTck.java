@@ -89,10 +89,12 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	@Test
 	public void documentGetSetsCookie() throws IOException
 	{
+		server().enqueue(new MockResponse());
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
+			.get(url(server()))
 			.getCookie("x");
 		
 		assertThat("cookie", actual, is("y"));
