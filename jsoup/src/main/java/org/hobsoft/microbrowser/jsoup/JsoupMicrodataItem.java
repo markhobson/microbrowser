@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
+import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.jsoup.nodes.Element;
@@ -30,14 +31,17 @@ class JsoupMicrodataItem implements MicrodataItem
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private final JsoupMicrodataDocument document;
+	
 	private final Element element;
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupMicrodataItem(Element element)
+	public JsoupMicrodataItem(JsoupMicrodataDocument document, Element element)
 	{
+		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
 	}
 
@@ -64,12 +68,33 @@ class JsoupMicrodataItem implements MicrodataItem
 		return new JsoupMicrodataProperty(elements.first());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Link getLink(String rel)
+	{
+		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
+		
+		Elements elements = element.select(byLink(rel));
+		return new JsoupLink(document, elements.first());
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private boolean hasLink(String rel)
+	{
+		return !element.select(byLink(rel)).isEmpty();
+	}
+	
 	private static String byItemProp(String itemProp)
 	{
 		return String.format("[itemprop=%s]", itemProp);
+	}
+	
+	private static String byLink(String rel)
+	{
+		return String.format("a[rel=%1$s], link[rel=%1$s]", rel);
 	}
 }

@@ -15,6 +15,7 @@ package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
 
+import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.Test;
 
@@ -81,5 +82,56 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		newBrowser().get(url(server()))
 			.getItem("i")
 			.getProperty("x");
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getLink tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getLinkWhenAnchorReturnsLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<a rel='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		Link actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getLink("x");
+		
+		assertThat("link", actual, is(notNullValue()));
+	}
+
+	@Test
+	public void getLinkWhenLinkReturnsLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<link rel='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		Link actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getLink("x");
+		
+		assertThat("link", actual, is(notNullValue()));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getLinkWhenNotFoundThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getItem("i")
+			.getLink("x");
 	}
 }

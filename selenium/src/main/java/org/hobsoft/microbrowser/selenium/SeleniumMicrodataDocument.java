@@ -80,7 +80,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 		{
 			public MicrodataItem apply(WebElement element)
 			{
-				return new SeleniumMicrodataItem(element);
+				return new SeleniumMicrodataItem(driver, element);
 			}
 		});
 	}

@@ -122,7 +122,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 		{
 			public MicrodataItem apply(Element element)
 			{
-				return new JsoupMicrodataItem(element);
+				return new JsoupMicrodataItem(JsoupMicrodataDocument.this, element);
 			}
 		});
 	}

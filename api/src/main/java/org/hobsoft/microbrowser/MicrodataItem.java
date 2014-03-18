@@ -35,4 +35,15 @@ public interface MicrodataItem
 	 *             if the property cannot be found
 	 */
 	MicrodataProperty getProperty(String name);
+	
+	/**
+	 * Gets the link with the specified relationship.
+	 * 
+	 * @param rel
+	 *            the relationship of the link to get
+	 * @return the link
+	 * @throws IllegalArgumentException
+	 *             if the link cannot be found
+	 */
+	Link getLink(String rel);
 }
