@@ -19,7 +19,6 @@ import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
-import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.Test;
 
 import com.google.mockwebserver.MockResponse;
@@ -189,59 +188,6 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getItem("x");
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataItem.getType tests
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Test
-	public void itemGetTypeReturnsType() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='x'/>"
-			+ "</body></html>"));
-		server().play();
-		
-		String actual = newBrowser().get(url(server()))
-			.getItem("x")
-			.getType();
-		
-		assertThat("item type", actual, is("x"));
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataItem.getProperty tests
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Test
-	public void itemGetPropertyReturnsProperty() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i'>"
-			+ "<p itemprop='x'/>"
-			+ "</div>"
-			+ "</body></html>"));
-		server().play();
-		
-		MicrodataProperty actual = newBrowser().get(url(server()))
-			.getItem("i")
-			.getProperty("x");
-		
-		assertThat("item property", actual, is(notNullValue()));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void itemGetPropertyWhenNotFoundThrowsException() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i'/>"
-			+ "</body></html>"));
-		server().play();
-		
-		newBrowser().get(url(server()))
-			.getItem("i")
-			.getProperty("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
