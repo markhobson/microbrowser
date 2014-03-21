@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
+import java.net.URL;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
@@ -25,9 +26,8 @@ import com.google.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
-import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.get;
@@ -322,11 +322,11 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		String actual = newBrowser().get(url(server()))
+		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, is("http://x/"));
+		assertThat("link href", actual, is(new URL("http://x/")));
 	}
 
 	@Test
@@ -337,26 +337,26 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		String actual = newBrowser().get(url(server()))
+		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, is(equalToIgnoringCase(url(server(), "/x"))));
+		assertThat("link href", actual, is(server().getUrl("/x")));
 	}
 
 	@Test
-	public void linkGetHrefWhenAnchorAndNoHrefReturnsEmpty() throws IOException
+	public void linkGetHrefWhenAnchorAndNoHrefReturnsNull() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r'/>"
 			+ "</body></html>"));
 		server().play();
 		
-		String actual = newBrowser().get(url(server()))
+		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, isEmptyString());
+		assertThat("link href", actual, is(nullValue()));
 	}
 
 	@Test
@@ -367,11 +367,11 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			+ "</head></html>"));
 		server().play();
 		
-		String actual = newBrowser().get(url(server()))
+		URL actual = newBrowser().get(url(server()))
 			.getLink("x")
 			.getHref();
 		
-		assertThat("link href", actual, is("http://x/"));
+		assertThat("link href", actual, is(new URL("http://x/")));
 	}
 
 	@Test
@@ -382,26 +382,26 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 			+ "</head></html>"));
 		server().play();
 		
-		String actual = newBrowser().get(url(server()))
+		URL actual = newBrowser().get(url(server()))
 			.getLink("x")
 			.getHref();
 		
-		assertThat("link href", actual, is(equalToIgnoringCase(url(server(), "/x"))));
+		assertThat("link href", actual, is(server().getUrl("/x")));
 	}
 
 	@Test
-	public void linkGetHrefWhenLinkAndNoHrefReturnsEmpty() throws IOException
+	public void linkGetHrefWhenLinkAndNoHrefReturnsNull() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='r'/>"
 			+ "</head></html>"));
 		server().play();
 		
-		String actual = newBrowser().get(url(server()))
+		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, isEmptyString());
+		assertThat("link href", actual, is(nullValue()));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------

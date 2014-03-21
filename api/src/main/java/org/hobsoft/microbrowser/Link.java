@@ -13,6 +13,8 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.net.URL;
+
 /**
  * Defines an HTML link.
  */
@@ -20,7 +22,12 @@ public interface Link
 {
 	String getRel();
 	
-	String getHref();
+	/**
+	 * Gets the href of this link.
+	 * 
+	 * @return the link href, or {@code null} if not a valid URL
+	 */
+	URL getHref();
 	
 	MicrodataDocument follow();
 }

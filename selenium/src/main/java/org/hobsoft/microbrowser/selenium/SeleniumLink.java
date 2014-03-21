@@ -13,12 +13,13 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import com.google.common.base.Strings;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -60,14 +61,23 @@ class SeleniumLink implements Link
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getHref()
+	public URL getHref()
 	{
 		String href = element.getAttribute("href");
 		
-		// Selenium returns null for missing @href in <a> but not <link>
-		href = Strings.nullToEmpty(href);
+		if (href == null)
+		{
+			return null;
+		}
 		
-		return href;
+		try
+		{
+			return new URL(href);
+		}
+		catch (MalformedURLException exception)
+		{
+			return null;
+		}
 	}
 
 	/**
