@@ -22,7 +22,7 @@ import org.hobsoft.microbrowser.tck.LinkTck;
 public class JsoupLinkIT extends LinkTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
+	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**

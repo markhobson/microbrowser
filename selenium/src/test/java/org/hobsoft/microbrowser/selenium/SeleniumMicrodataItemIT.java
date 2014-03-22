@@ -51,7 +51,7 @@ public class SeleniumMicrodataItemIT extends MicrodataItemTck
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
+	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**

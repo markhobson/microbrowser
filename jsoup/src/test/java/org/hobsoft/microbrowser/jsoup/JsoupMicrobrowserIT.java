@@ -22,7 +22,7 @@ import org.hobsoft.microbrowser.tck.MicrobrowserTck;
 public class JsoupMicrobrowserIT extends MicrobrowserTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
+	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**

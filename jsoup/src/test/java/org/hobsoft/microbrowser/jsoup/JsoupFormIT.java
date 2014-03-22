@@ -22,7 +22,7 @@ import org.hobsoft.microbrowser.tck.FormTck;
 public class JsoupFormIT extends FormTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
+	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**

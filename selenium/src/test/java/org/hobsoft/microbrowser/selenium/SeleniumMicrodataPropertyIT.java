@@ -51,7 +51,7 @@ public class SeleniumMicrodataPropertyIT extends MicrodataPropertyTck
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
+	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**

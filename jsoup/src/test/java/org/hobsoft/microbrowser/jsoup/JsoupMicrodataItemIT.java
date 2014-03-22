@@ -22,7 +22,7 @@ import org.hobsoft.microbrowser.tck.MicrodataItemTck;
 public class JsoupMicrodataItemIT extends MicrodataItemTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
+	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
