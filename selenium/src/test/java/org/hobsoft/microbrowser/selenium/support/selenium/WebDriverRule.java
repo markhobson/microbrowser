@@ -13,29 +13,37 @@
  */
 package org.hobsoft.microbrowser.selenium.support.selenium;
 
+import java.util.Map;
+
 import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Maps.newHashMap;
 
 /**
  * JUnit rule for {@code WebDriver}.
  */
-public class WebDriverRule extends ExternalResource
+public final class WebDriverRule extends ExternalResource
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
+	// SUPPRESS CHECKSTYLE ConstantName
+	private static final Map<Class<? extends WebDriver>, WebDriverRule> instancesByDriverClass = newHashMap();
+	
 	private final Class<? extends WebDriver> driverClass;
 	
 	private WebDriver driver;
+	
+	private int statements;
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public WebDriverRule(Class<? extends WebDriver> driverClass)
+	private WebDriverRule(Class<? extends WebDriver> driverClass)
 	{
 		this.driverClass = checkNotNull(driverClass, "driverClass");
 	}
@@ -50,7 +58,12 @@ public class WebDriverRule extends ExternalResource
 	@Override
 	protected void before() throws InstantiationException, IllegalAccessException
 	{
-		driver = driverClass.newInstance();
+		if (statements == 0)
+		{
+			driver = driverClass.newInstance();
+		}
+		
+		statements++;
 	}
 
 	/**
@@ -59,13 +72,31 @@ public class WebDriverRule extends ExternalResource
 	@Override
 	protected void after()
 	{
-		driver.quit();
+		statements--;
+		
+		if (statements == 0)
+		{
+			driver.quit();
+		}
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	public static WebDriverRule get(Class<? extends WebDriver> driverClass)
+	{
+		WebDriverRule instance = instancesByDriverClass.get(driverClass);
+		
+		if (instance == null)
+		{
+			instance = new WebDriverRule(driverClass);
+			instancesByDriverClass.put(driverClass, instance);
+		}
+		
+		return instance;
+	}
+	
 	public WebDriver getDriver()
 	{
 		return driver;

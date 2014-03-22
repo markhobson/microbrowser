@@ -44,6 +44,11 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<includes>
+						<include>**/*ITSuite.java</include>
+					</includes>
+				</configuration>
 			</plugin>
 	
 		</plugins>

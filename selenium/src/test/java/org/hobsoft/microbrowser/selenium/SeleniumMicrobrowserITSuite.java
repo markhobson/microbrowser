@@ -13,18 +13,24 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
-import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverCookieRule;
 import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
-import org.hobsoft.microbrowser.tck.MicrodataPropertyTck;
 import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
- * Integration test that executes the {@code MicrodataProperty} TCK against {@code SeleniumMicrobrowser}.
+ * Integration test suite that executes the {@code Microbrowser} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumMicrodataPropertyIT extends MicrodataPropertyTck
+// SUPPRESS CHECKSTYLE HideUtilityClassConstructor
+@RunWith(Suite.class)
+@SuiteClasses({
+	SeleniumMicrobrowserIT.class,
+	SeleniumMicrodataItemIT.class,
+	SeleniumMicrodataPropertyIT.class
+})
+public class SeleniumMicrobrowserITSuite
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -32,34 +38,13 @@ public class SeleniumMicrodataPropertyIT extends MicrodataPropertyTck
 
 	private static WebDriverRule driverRule = WebDriverRule.get(FirefoxDriver.class);
 	
-	private WebDriverCookieRule driverCookieRule = new WebDriverCookieRule(driverRule.getDriver());
-
 	// ----------------------------------------------------------------------------------------------------------------
-	// test case methods
+	// test suite methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@ClassRule
 	public static WebDriverRule getDriverRule()
 	{
 		return driverRule;
-	}
-	
-	@Rule
-	public WebDriverCookieRule getDriverCookieRule()
-	{
-		return driverCookieRule;
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// MicrobrowserTck methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Microbrowser newBrowser()
-	{
-		return new SeleniumMicrobrowser(driverRule.getDriver());
 	}
 }

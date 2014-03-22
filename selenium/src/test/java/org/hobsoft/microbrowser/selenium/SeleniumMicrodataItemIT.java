@@ -30,7 +30,7 @@ public class SeleniumMicrodataItemIT extends MicrodataItemTck
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static WebDriverRule driverRule = new WebDriverRule(FirefoxDriver.class);
+	private static WebDriverRule driverRule = WebDriverRule.get(FirefoxDriver.class);
 	
 	private WebDriverCookieRule driverCookieRule = new WebDriverCookieRule(driverRule.getDriver());
 
