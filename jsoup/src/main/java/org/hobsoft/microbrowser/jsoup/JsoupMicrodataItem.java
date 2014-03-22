@@ -71,6 +71,14 @@ class JsoupMicrodataItem implements MicrodataItem
 	/**
 	 * {@inheritDoc}
 	 */
+	public boolean hasLink(String rel)
+	{
+		return !element.select(byLink(rel)).isEmpty();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Link getLink(String rel)
 	{
 		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
@@ -83,11 +91,6 @@ class JsoupMicrodataItem implements MicrodataItem
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private boolean hasLink(String rel)
-	{
-		return !element.select(byLink(rel)).isEmpty();
-	}
-	
 	private static String byItemProp(String itemProp)
 	{
 		return String.format("[itemprop=%s]", itemProp);

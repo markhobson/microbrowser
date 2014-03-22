@@ -85,6 +85,59 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// hasLink tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void hasLinkWhenAnchorReturnsTrue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<a rel='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		boolean actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.hasLink("x");
+		
+		assertThat("hasLink", actual, is(true));
+	}
+
+	@Test
+	public void hasLinkWhenLinkReturnsTrue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<link rel='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		boolean actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.hasLink("x");
+		
+		assertThat("hasLink", actual, is(true));
+	}
+
+	@Test
+	public void hasLinkWhenNoFoundReturnsFalse() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		boolean actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.hasLink("x");
+		
+		assertThat("hasLink", actual, is(false));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// getLink tests
 	// ----------------------------------------------------------------------------------------------------------------
 

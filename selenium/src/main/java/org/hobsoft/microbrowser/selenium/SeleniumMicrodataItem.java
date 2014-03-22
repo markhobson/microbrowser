@@ -74,6 +74,14 @@ class SeleniumMicrodataItem implements MicrodataItem
 	/**
 	 * {@inheritDoc}
 	 */
+	public boolean hasLink(String rel)
+	{
+		return !driver.findElements(byLink(rel)).isEmpty();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Link getLink(String rel)
 	{
 		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
@@ -86,11 +94,6 @@ class SeleniumMicrodataItem implements MicrodataItem
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private boolean hasLink(String rel)
-	{
-		return !driver.findElements(byLink(rel)).isEmpty();
-	}
-	
 	private static By byItemProp(String itemProp)
 	{
 		return By.cssSelector(String.format("[itemprop='%s']", itemProp));
