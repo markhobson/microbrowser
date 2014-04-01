@@ -154,9 +154,9 @@
 			<!-- MockWebServer -->
 			
 			<dependency>
-				<groupId>com.google.mockwebserver</groupId>
+				<groupId>com.squareup.okhttp</groupId>
 				<artifactId>mockwebserver</artifactId>
-				<version>20130706</version>
+				<version>1.5.3</version>
 			</dependency>
 		
 		</dependencies>

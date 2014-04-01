@@ -15,7 +15,7 @@ package org.hobsoft.microbrowser.tck.support.mockwebserver;
 
 import java.nio.charset.Charset;
 
-import com.google.mockwebserver.RecordedRequest;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 /**
  * Utility methods for working with {@code RecordedRequest}.

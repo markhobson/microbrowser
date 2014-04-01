@@ -17,7 +17,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import com.google.mockwebserver.RecordedRequest;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 /**
  * Hamcrest matcher for {@code RecordedRequest}.

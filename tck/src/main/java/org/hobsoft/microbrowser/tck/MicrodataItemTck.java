@@ -19,7 +19,7 @@ import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.Test;
 
-import com.google.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;

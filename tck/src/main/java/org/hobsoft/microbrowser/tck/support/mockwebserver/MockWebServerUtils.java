@@ -13,8 +13,8 @@
  */
 package org.hobsoft.microbrowser.tck.support.mockwebserver;
 
-import com.google.mockwebserver.MockWebServer;
-import com.google.mockwebserver.RecordedRequest;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 /**
  * Utility methods for working with {@code MockWebServer}.

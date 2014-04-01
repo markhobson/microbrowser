@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 import org.junit.rules.ExternalResource;
 
-import com.google.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
 
 /**
  * JUnit rule for {@code MockWebServer}.
@@ -48,7 +48,7 @@ public class MockWebServerRule extends ExternalResource
 	@Override
 	protected void before()
 	{
-		Logger.getLogger("com.google.mockwebserver").setLevel(Level.WARNING);
+		Logger.getLogger("com.squareup.okhttp.mockwebserver").setLevel(Level.WARNING);
 		
 		server = new MockWebServer();
 	}

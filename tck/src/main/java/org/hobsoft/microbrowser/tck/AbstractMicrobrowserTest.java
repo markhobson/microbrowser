@@ -17,7 +17,7 @@ import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerRule;
 import org.junit.Rule;
 
-import com.google.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
 
 /**
  * Base test for Microbrowser TCKs.
