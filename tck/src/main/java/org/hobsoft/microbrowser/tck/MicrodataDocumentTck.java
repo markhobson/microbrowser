@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
@@ -24,8 +25,11 @@ import org.junit.Test;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -60,50 +64,6 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getItem("x");
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// hasLink tests
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Test
-	public void hasLinkWhenAnchorReturnsTrue() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<a rel='x'/>"
-			+ "</body></html>"));
-		server().play();
-		
-		boolean actual = newBrowser().get(url(server()))
-			.hasLink("x");
-		
-		assertThat("hasLink", actual, is(true));
-	}
-
-	@Test
-	public void hasLinkWhenLinkReturnsTrue() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<link rel='x'/>"
-			+ "</body></html>"));
-		server().play();
-		
-		boolean actual = newBrowser().get(url(server()))
-			.hasLink("x");
-		
-		assertThat("hasLink", actual, is(true));
-	}
-
-	@Test
-	public void hasLinkWhenNoFoundReturnsFalse() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
-		
-		boolean actual = newBrowser().get(url(server()))
-			.hasLink("x");
-		
-		assertThat("hasLink", actual, is(false));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -146,6 +106,50 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getLink("x");
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// getLinks tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getLinksWhenAnchorReturnsLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='x'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getLinks("x");
+		
+		assertThat("links", actual, contains(isA(Link.class)));
+	}
+
+	@Test
+	public void getLinksWhenLinkReturnsLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<link rel='x'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getLinks("x");
+		
+		assertThat("links", actual, contains(isA(Link.class)));
+	}
+
+	@Test
+	public void getLinksWhenNotFoundReturnsEmptyList() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getLinks("x");
+		
+		assertThat("links", actual, is(empty()));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------

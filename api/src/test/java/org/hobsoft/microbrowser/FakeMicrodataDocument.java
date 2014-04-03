@@ -35,15 +35,15 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasLink(String rel)
+	public Link getLink(String rel)
 	{
-		return false;
+		return null;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
-	public Link getLink(String rel)
+	public List<Link> getLinks(String rel)
 	{
 		return null;
 	}
