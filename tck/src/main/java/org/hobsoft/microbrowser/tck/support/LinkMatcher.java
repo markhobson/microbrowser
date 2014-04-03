@@ -11,92 +11,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.selenium;
+package org.hobsoft.microbrowser.tck.support;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 import org.hobsoft.microbrowser.Link;
-import org.hobsoft.microbrowser.MicrodataDocument;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@code Link} adapter to a Selenium {@code WebElement}.
+ * Hamcrest matcher for a {@code Link}.
  */
-class SeleniumLink implements Link
+public final class LinkMatcher extends TypeSafeMatcher<Link>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final WebDriver driver;
+	private final String expectedRel;
 	
-	private final WebElement element;
+	private final URL expectedHref;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumLink(WebDriver driver, WebElement element)
+	private LinkMatcher(String expectedRel, URL expectedHref)
 	{
-		this.driver = checkNotNull(driver, "driver");
-		this.element = checkNotNull(element, "element");
+		this.expectedRel = checkNotNull(expectedRel, "expectedRel");
+		this.expectedHref = checkNotNull(expectedHref, "expectedHref");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// Link methods
+	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getRel()
+
+	public static LinkMatcher link(String expectedRel, String expectedHref) throws MalformedURLException
 	{
-		return element.getAttribute("rel");
+		return link(expectedRel, new URL(expectedHref));
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public URL getHref()
+	public static LinkMatcher link(String expectedRel, URL expectedHref)
 	{
-		String href = element.getAttribute("href");
-		
-		if (href == null)
-		{
-			return null;
-		}
-		
-		try
-		{
-			return new URL(href);
-		}
-		catch (MalformedURLException exception)
-		{
-			return null;
-		}
+		return new LinkMatcher(expectedRel, expectedHref);
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// TypeSafeMatcher methods
+	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public MicrodataDocument follow()
-	{
-		element.click();
-		
-		return new SeleniumMicrodataDocument(driver);
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// Object methods
-	// ----------------------------------------------------------------------------------------------------------------
-
 	@Override
-	public String toString()
+	protected boolean matchesSafely(Link link)
 	{
-		return String.format("%s[rel=%s, href=%s]", getClass().getName(), getRel(), getHref());
+		return expectedRel.equals(link.getRel())
+			&& expectedHref.equals(link.getHref());
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// SelfDescribing methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void describeTo(Description description)
+	{
+		description.appendText("rel=").appendValue(expectedRel).appendText(" ");
+		description.appendText("href=").appendValue(expectedHref);
 	}
 }

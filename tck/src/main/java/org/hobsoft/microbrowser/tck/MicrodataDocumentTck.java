@@ -25,11 +25,11 @@ import org.junit.Test;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
+import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -74,28 +74,28 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getLinkWhenAnchorReturnsLink() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<a rel='x'/>"
+			+ "<a rel='x' href='http://y/'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
 		
-		assertThat("link", actual, is(notNullValue()));
+		assertThat("link", actual, is(link("x", "http://y/")));
 	}
 
 	@Test
 	public void getLinkWhenLinkReturnsLink() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<link rel='x'/>"
+			+ "<link rel='x' href='http://y/'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
 		
-		assertThat("link", actual, is(notNullValue()));
+		assertThat("link", actual, is(link("x", "http://y/")));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -116,28 +116,28 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getLinksWhenAnchorReturnsLink() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<a rel='x'/>"
+			+ "<a rel='x' href='http://y/'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getLinks("x");
 		
-		assertThat("links", actual, contains(isA(Link.class)));
+		assertThat("links", actual, contains(link("x", "http://y/")));
 	}
 
 	@Test
 	public void getLinksWhenLinkReturnsLink() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<link rel='x'/>"
+			+ "<link rel='x' href='http://y/'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getLinks("x");
 		
-		assertThat("links", actual, contains(isA(Link.class)));
+		assertThat("links", actual, contains(link("x", "http://y/")));
 	}
 
 	@Test
