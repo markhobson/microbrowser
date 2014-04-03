@@ -55,6 +55,10 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	{
 		return null;
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractMicrodataDocument methods
+	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
