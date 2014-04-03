@@ -31,6 +31,13 @@ public interface MicrodataDocument
 	 */
 	MicrodataItem getItem(String type);
 
+	/**
+	 * Gets all the items with the specified type.
+	 * 
+	 * @param type
+	 *            the item type to get
+	 * @return the items, or an empty list if none are found
+	 */
 	List<MicrodataItem> getItems(String type);
 
 	/**

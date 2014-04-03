@@ -20,6 +20,11 @@ import java.net.URL;
  */
 public interface Link
 {
+	/**
+	 * Gets the relationship of this link.
+	 * 
+	 * @return the link relationship
+	 */
 	String getRel();
 	
 	/**
@@ -29,5 +34,12 @@ public interface Link
 	 */
 	URL getHref();
 	
+	/**
+	 * Follows this link.
+	 * 
+	 * @return the response as a microdata document
+	 * @throws MicrobrowserException
+	 *             if an error occurs
+	 */
 	MicrodataDocument follow();
 }
