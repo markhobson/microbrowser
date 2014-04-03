@@ -59,14 +59,6 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public MicrodataDocument get(String url)
-	{
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Form newForm(String name)
 	{

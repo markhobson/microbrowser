@@ -18,7 +18,6 @@ import java.util.List;
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
-import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -51,20 +50,6 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 		this.driver = checkNotNull(driver, "driver");
 	}
 	
-	// ----------------------------------------------------------------------------------------------------------------
-	// Microbrowser methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public MicrodataDocument get(String url)
-	{
-		driver.get(url);
-		
-		return new SeleniumMicrodataDocument(driver);
-	}
-
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------

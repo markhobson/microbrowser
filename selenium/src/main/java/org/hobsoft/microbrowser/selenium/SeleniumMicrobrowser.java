@@ -48,6 +48,8 @@ public class SeleniumMicrobrowser implements Microbrowser
 	 */
 	public MicrodataDocument get(String url)
 	{
-		return new SeleniumMicrodataDocument(driver).get(url);
+		driver.get(url);
+		
+		return new SeleniumMicrodataDocument(driver);
 	}
 }
