@@ -83,12 +83,42 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		
 		assertThat("link", actual, is(link("x", "http://y/")));
 	}
+	
+	@Test
+	public void getLinkWhenAnchorsReturnsFirstLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='x' href='http://y/'/>"
+			+ "<a rel='x' href='http://z/'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		Link actual = newBrowser().get(url(server()))
+			.getLink("x");
+		
+		assertThat("link", actual, is(link("x", "http://y/")));
+	}
 
 	@Test
 	public void getLinkWhenLinkReturnsLink() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x' href='http://y/'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		Link actual = newBrowser().get(url(server()))
+			.getLink("x");
+		
+		assertThat("link", actual, is(link("x", "http://y/")));
+	}
+	
+	@Test
+	public void getLinkWhenLinksReturnsFirstLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<link rel='x' href='http://y/'/>"
+			+ "<link rel='x' href='http://z/'/>"
 			+ "</body></html>"));
 		server().play();
 		
@@ -125,6 +155,24 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		
 		assertThat("links", actual, contains(link("x", "http://y/")));
 	}
+	
+	@Test
+	public void getLinksWhenAnchorsReturnsLinks() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='x' href='http://y/'/>"
+			+ "<a rel='x' href='http://z/'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getLinks("x");
+		
+		assertThat("links", actual, contains(
+			link("x", "http://y/"),
+			link("x", "http://z/")
+		));
+	}
 
 	@Test
 	public void getLinksWhenLinkReturnsLink() throws IOException
@@ -138,6 +186,24 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 			.getLinks("x");
 		
 		assertThat("links", actual, contains(link("x", "http://y/")));
+	}
+	
+	@Test
+	public void getLinksWhenLinksReturnsLinks() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<link rel='x' href='http://y/'/>"
+			+ "<link rel='x' href='http://z/'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getLinks("x");
+		
+		assertThat("links", actual, contains(
+			link("x", "http://y/"),
+			link("x", "http://z/")
+		));
 	}
 
 	@Test
