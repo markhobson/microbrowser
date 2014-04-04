@@ -23,7 +23,6 @@ import org.junit.Test;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
@@ -135,7 +134,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			.getItem("i")
 			.getProperty("x");
 		
-		assertThat("item property", actual, isA(MicrodataProperty.class));
+		assertThat("item property", actual.getName(), is("x"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
