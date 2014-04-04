@@ -29,6 +29,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
+import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -45,35 +46,29 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemWhenItemReturnsItem() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='x'>"
-			+ "<p itemprop='p'>y</p>"
-			+ "</div>"
+			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
 			.getItem("x");
 		
-		assertThat("item", actual.getProperty("p").getValue(), is("y"));
+		assertThat("item", actual, is(item("http://y")));
 	}
 	
 	@Test
 	public void getItemWhenItemsReturnsFirstItem() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='x'>"
-			+ "<p itemprop='p'>y</p>"
-			+ "</div>"
-			+ "<div itemscope='itemscope' itemtype='x'>"
-			+ "<p itemprop='p'>z</p>"
-			+ "</div>"
+			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
+			+ "<div itemscope='itemscope' itemtype='x' itemid='http://z'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
 			.getItem("x");
 		
-		assertThat("item", actual.getProperty("p").getValue(), is("y"));
+		assertThat("item", actual, is(item("http://y")));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
