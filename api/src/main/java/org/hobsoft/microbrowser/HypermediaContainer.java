@@ -13,35 +13,30 @@
  */
 package org.hobsoft.microbrowser;
 
-import java.net.URL;
+import java.util.List;
 
 /**
- * Defines an HTML microdata item.
+ * Defines a container for links.
  */
-public interface MicrodataItem extends HypermediaContainer
+public interface HypermediaContainer
 {
 	/**
-	 * Gets the global identifier of this item.
+	 * Gets the link with the specified relationship.
 	 * 
-	 * @return the item's global identifier, or {@code null} if not a valid URL
-	 */
-	URL getId();
-	
-	/**
-	 * Gets the type of this item.
-	 * 
-	 * @return the item type
-	 */
-	String getType();
-	
-	/**
-	 * Gets the item property with the specified name.
-	 * 
-	 * @param name
-	 *            the name of the item property to get
-	 * @return the item property
+	 * @param rel
+	 *            the relationship of the link to get
+	 * @return the link
 	 * @throws IllegalArgumentException
-	 *             if the property cannot be found
+	 *             if the link cannot be found
 	 */
-	MicrodataProperty getProperty(String name);
+	Link getLink(String rel);
+
+	/**
+	 * Gets all the links with the specified relationship.
+	 * 
+	 * @param rel
+	 *            the relationship of the links to get
+	 * @return the links, or an empty list if none are found
+	 */
+	List<Link> getLinks(String rel);
 }

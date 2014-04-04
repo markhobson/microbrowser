@@ -98,6 +98,21 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getCookie(String name)
+	{
+		String value = cookies.get(name);
+		checkArgument(value != null, "Cannot find cookie: %s", name);
+
+		return value;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// HypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public Link getLink(String rel)
 	{
 		List<Link> links = getLinks(rel);
@@ -120,17 +135,6 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 				return new JsoupLink(JsoupMicrodataDocument.this, element);
 			}
 		});
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getCookie(String name)
-	{
-		String value = cookies.get(name);
-		checkArgument(value != null, "Cannot find cookie: %s", name);
-
-		return value;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

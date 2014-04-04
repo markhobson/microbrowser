@@ -35,6 +35,18 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getCookie(String name)
+	{
+		return null;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// HypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public Link getLink(String rel)
 	{
 		return null;
@@ -48,14 +60,6 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getCookie(String name)
-	{
-		return null;
-	}
-	
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------

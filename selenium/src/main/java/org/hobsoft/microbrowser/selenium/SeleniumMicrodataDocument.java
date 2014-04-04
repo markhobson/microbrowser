@@ -73,6 +73,21 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getCookie(String name)
+	{
+		Cookie cookie = driver.manage().getCookieNamed(name);
+		checkArgument(cookie != null, "Cannot find cookie: %s", name);
+		
+		return cookie.getValue();
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// HypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public Link getLink(String rel)
 	{
 		List<Link> links = getLinks(rel);
@@ -95,17 +110,6 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 				return new SeleniumLink(driver, element);
 			}
 		});
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getCookie(String name)
-	{
-		Cookie cookie = driver.manage().getCookieNamed(name);
-		checkArgument(cookie != null, "Cannot find cookie: %s", name);
-		
-		return cookie.getValue();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

@@ -91,6 +91,10 @@ class SeleniumMicrodataItem implements MicrodataItem
 		return new SeleniumMicrodataProperty(elements.iterator().next());
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// HypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * {@inheritDoc}
 	 */

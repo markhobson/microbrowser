@@ -90,6 +90,10 @@ class JsoupMicrodataItem implements MicrodataItem
 		return new JsoupMicrodataProperty(elements.first());
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// HypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * {@inheritDoc}
 	 */

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Defines an HTML microdata document.
  */
-public interface MicrodataDocument
+public interface MicrodataDocument extends HypermediaContainer
 {
 	/**
 	 * Gets the item with the specified type.
@@ -39,26 +39,6 @@ public interface MicrodataDocument
 	 * @return the items, or an empty list if none are found
 	 */
 	List<MicrodataItem> getItems(String type);
-
-	/**
-	 * Gets the link with the specified relationship.
-	 * 
-	 * @param rel
-	 *            the relationship of the link to get
-	 * @return the link
-	 * @throws IllegalArgumentException
-	 *             if the link cannot be found
-	 */
-	Link getLink(String rel);
-
-	/**
-	 * Gets all the links with the specified relationship.
-	 * 
-	 * @param rel
-	 *            the relationship of the links to get
-	 * @return the links, or an empty list if none are found
-	 */
-	List<Link> getLinks(String rel);
 
 	/**
 	 * Gets the form with the specified name.
