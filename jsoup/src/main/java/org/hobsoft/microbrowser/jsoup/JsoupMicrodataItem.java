@@ -15,12 +15,16 @@ package org.hobsoft.microbrowser.jsoup;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -89,20 +93,28 @@ class JsoupMicrodataItem implements MicrodataItem
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasLink(String rel)
+	public Link getLink(String rel)
 	{
-		return !element.select(byLink(rel)).isEmpty();
+		List<Link> links = getLinks(rel);
+		checkArgument(!links.isEmpty(), "Cannot find link: %s", rel);
+		
+		return links.get(0);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public Link getLink(String rel)
+	public List<Link> getLinks(String rel)
 	{
-		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
-		
 		Elements elements = element.select(byLink(rel));
-		return new JsoupLink(document, elements.first());
+		
+		return Lists.transform(elements, new Function<Element, Link>()
+		{
+			public Link apply(Element element)
+			{
+				return new JsoupLink(document, element);
+			}
+		});
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

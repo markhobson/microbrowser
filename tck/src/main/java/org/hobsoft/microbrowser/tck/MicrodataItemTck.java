@@ -15,6 +15,7 @@ package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -24,6 +25,8 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
 import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
@@ -151,59 +154,6 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// hasLink tests
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Test
-	public void hasLinkWhenAnchorReturnsTrue() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i'>"
-			+ "<a rel='x'/>"
-			+ "</div>"
-			+ "</body></html>"));
-		server().play();
-		
-		boolean actual = newBrowser().get(url(server()))
-			.getItem("i")
-			.hasLink("x");
-		
-		assertThat("hasLink", actual, is(true));
-	}
-
-	@Test
-	public void hasLinkWhenLinkReturnsTrue() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i'>"
-			+ "<link rel='x'/>"
-			+ "</div>"
-			+ "</body></html>"));
-		server().play();
-		
-		boolean actual = newBrowser().get(url(server()))
-			.getItem("i")
-			.hasLink("x");
-		
-		assertThat("hasLink", actual, is(true));
-	}
-
-	@Test
-	public void hasLinkWhenNoFoundReturnsFalse() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i'/>"
-			+ "</body></html>"));
-		server().play();
-		
-		boolean actual = newBrowser().get(url(server()))
-			.getItem("i")
-			.hasLink("x");
-		
-		assertThat("hasLink", actual, is(false));
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
 	// getLink tests
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -252,5 +202,58 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		newBrowser().get(url(server()))
 			.getItem("i")
 			.getLink("x");
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// getLinks tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getLinksWhenAnchorReturnsLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<a rel='x' href='http://y/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getLinks("x");
+		
+		assertThat("links", actual, contains(link("x", "http://y/")));
+	}
+
+	@Test
+	public void getLinksWhenLinkReturnsLink() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<link rel='x' href='http://y/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getLinks("x");
+		
+		assertThat("link", actual, contains(link("x", "http://y/")));
+	}
+
+	@Test
+	public void getLinkWhenNotFoundReturnsEmptyList() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getLinks("x");
+		
+		assertThat("link", actual, is(empty()));
 	}
 }

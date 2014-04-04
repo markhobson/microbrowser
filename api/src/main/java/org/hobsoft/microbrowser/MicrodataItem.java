@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser;
 
 import java.net.URL;
+import java.util.List;
 
 /**
  * Defines an HTML microdata item.
@@ -44,15 +45,6 @@ public interface MicrodataItem
 	 *             if the property cannot be found
 	 */
 	MicrodataProperty getProperty(String name);
-	
-	/**
-	 * Gets whether a link with the specified relationship is present.
-	 * 
-	 * @param rel
-	 *            the relationship of the link to find
-	 * @return {@code true} if the link can be found
-	 */
-	boolean hasLink(String rel);
 
 	/**
 	 * Gets the link with the specified relationship.
@@ -64,4 +56,13 @@ public interface MicrodataItem
 	 *             if the link cannot be found
 	 */
 	Link getLink(String rel);
+	
+	/**
+	 * Gets all links with the specified relationship.
+	 * 
+	 * @param rel
+	 *            the relationship of the links to get
+	 * @return the links, or an empty list if none are found
+	 */
+	List<Link> getLinks(String rel);
 }

@@ -24,6 +24,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -91,20 +94,28 @@ class SeleniumMicrodataItem implements MicrodataItem
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasLink(String rel)
+	public Link getLink(String rel)
 	{
-		return !driver.findElements(byLink(rel)).isEmpty();
+		List<Link> links = getLinks(rel);
+		checkArgument(!links.isEmpty(), "Cannot find link: %s", rel);
+		
+		return links.get(0);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public Link getLink(String rel)
+	public List<Link> getLinks(String rel)
 	{
-		checkArgument(hasLink(rel), "Cannot find link: %s", rel);
-		
 		List<WebElement> elements = element.findElements(byLink(rel));
-		return new SeleniumLink(driver, elements.iterator().next());
+		
+		return Lists.transform(elements, new Function<WebElement, Link>()
+		{
+			public Link apply(WebElement element)
+			{
+				return new SeleniumLink(driver, element);
+			}
+		});
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
