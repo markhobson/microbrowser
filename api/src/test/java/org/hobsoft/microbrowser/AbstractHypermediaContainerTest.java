@@ -15,6 +15,7 @@ package org.hobsoft.microbrowser;
 
 import java.util.Iterator;
 
+import org.hobsoft.microbrowser.support.FakeHypermediaContainer;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;

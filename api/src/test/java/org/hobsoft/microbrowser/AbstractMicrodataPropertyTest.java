@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser;
 
+import org.hobsoft.microbrowser.support.FakeMicrodataProperty;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

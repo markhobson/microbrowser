@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser;
 import java.util.Collections;
 import java.util.List;
 
+import org.hobsoft.microbrowser.support.FakeMicrodataDocument;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;

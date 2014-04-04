@@ -11,15 +11,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser;
+package org.hobsoft.microbrowser.support;
 
 import java.util.List;
 
+import org.hobsoft.microbrowser.AbstractMicrodataDocument;
+import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.MicrodataItem;
+
 /**
- * Fake {@code AbstractHypermediaContainer} for testing.
+ * Fake {@code AbstractMicrodataDocument} for testing.
  */
-public class FakeHypermediaContainer extends AbstractHypermediaContainer
+public class FakeMicrodataDocument extends AbstractMicrodataDocument
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataDocument methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<MicrodataItem> getItems(String type)
+	{
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getCookie(String name)
+	{
+		return null;
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -33,7 +58,7 @@ public class FakeHypermediaContainer extends AbstractHypermediaContainer
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermediaContainer methods
+	// AbstractMicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
