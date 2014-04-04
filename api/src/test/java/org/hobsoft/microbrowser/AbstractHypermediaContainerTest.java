@@ -13,8 +13,7 @@
  */
 package org.hobsoft.microbrowser;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -25,65 +24,51 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**
- * Tests {@code AbstractMicrodataDocument}.
+ * Tests {@code AbstractHypermediaContainer}.
  */
-public class AbstractMicrodataDocumentTest
+public class AbstractHypermediaContainerTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private AbstractMicrodataDocument document;
+	private AbstractHypermediaContainer container;
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getItemWhenItemReturnsItem()
+	public void getFormReturnsForm()
 	{
-		final MicrodataItem item = mock(MicrodataItem.class);
-		document = new FakeMicrodataDocument()
+		final Form form = mock(Form.class);
+		container = new FakeHypermediaContainer()
 		{
 			@Override
-			public List<MicrodataItem> getItems(String type)
+			protected Form newForm(String name)
 			{
-				return "x".equals(type) ? asList(item) : null;
+				return "x".equals(name) ? form : null;
 			}
 		};
 		
-		assertThat(document.getItem("x"), is(item));
+		assertThat(container.getForm("x"), is(form));
 	}
 	
 	@Test
-	public void getItemWhenItemsReturnsFirstItem()
+	public void getFormCachesForm()
 	{
-		final MicrodataItem item1 = mock(MicrodataItem.class);
-		final MicrodataItem item2 = mock(MicrodataItem.class);
-		document = new FakeMicrodataDocument()
+		Form form = mock(Form.class);
+		final Iterator<Form> forms = asList(form, mock(Form.class)).iterator();
+		container = new FakeHypermediaContainer()
 		{
 			@Override
-			public List<MicrodataItem> getItems(String type)
+			protected Form newForm(String name)
 			{
-				return "x".equals(type) ? asList(item1, item2) : null;
+				return "x".equals(name) ? forms.next() : null;
 			}
 		};
 		
-		assertThat(document.getItem("x"), is(item1));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void getItemWhenNoItemsThrowsException()
-	{
-		document = new FakeMicrodataDocument()
-		{
-			@Override
-			public List<MicrodataItem> getItems(String type)
-			{
-				return "x".equals(type) ? Collections.<MicrodataItem>emptyList() : null;
-			}
-		};
-		
-		document.getItem("x");
+		container.getForm("x");
+		assertThat(container.getForm("x"), is(form));
 	}
 }

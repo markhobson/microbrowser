@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.Test;
 
@@ -25,6 +27,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
@@ -297,5 +300,55 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			.getLinks("x");
 		
 		assertThat("link", actual, is(empty()));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getForm tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getFormReturnsForm() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<form name='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		Form actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getForm("x");
+		
+		assertThat("form", actual.getName(), is("x"));
+	}
+
+	@Test
+	public void getFormCachesForm() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<form name='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		MicrodataItem item = newBrowser().get(url(server()))
+			.getItem("i");
+		
+		assertThat("form", item.getForm("x"), is(sameInstance(item.getForm("x"))));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getFormWhenNotFoundThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getItem("i")
+			.getForm("x");
 	}
 }

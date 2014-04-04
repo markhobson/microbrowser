@@ -39,4 +39,15 @@ public interface HypermediaContainer
 	 * @return the links, or an empty list if none are found
 	 */
 	List<Link> getLinks(String rel);
+	
+	/**
+	 * Gets the form with the specified name.
+	 * 
+	 * @param name
+	 *            the name of the form to get
+	 * @return the form
+	 * @throws IllegalArgumentException
+	 *             if the form cannot be found
+	 */
+	Form getForm(String name);
 }

@@ -13,13 +13,30 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Base {@code HypermediaContainer} implementation.
  */
 public abstract class AbstractHypermediaContainer implements HypermediaContainer
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// fields
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private final Map<String, Form> formsByName;
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// constructors
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public AbstractHypermediaContainer()
+	{
+		formsByName = new HashMap<String, Form>();
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -38,4 +55,26 @@ public abstract class AbstractHypermediaContainer implements HypermediaContainer
 		
 		return links.get(0);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Form getForm(String name)
+	{
+		Form form = formsByName.get(name);
+		
+		if (form == null)
+		{
+			form = newForm(name);
+			formsByName.put(name, form);
+		}
+		
+		return form;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Form newForm(String name);
 }

@@ -41,17 +41,6 @@ public interface MicrodataDocument extends HypermediaContainer
 	List<MicrodataItem> getItems(String type);
 
 	/**
-	 * Gets the form with the specified name.
-	 * 
-	 * @param name
-	 *            the name of the form to get
-	 * @return the form
-	 * @throws IllegalArgumentException
-	 *             if the form cannot be found
-	 */
-	Form getForm(String name);
-
-	/**
 	 * Gets the value of the specified cookie.
 	 * 
 	 * @param the

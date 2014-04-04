@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractHypermediaContainer;
+import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -113,6 +114,22 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractHypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Form newForm(String name)
+	{
+		List<WebElement> elements = element.findElements(byForm(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
+		
+		return new SeleniumForm(driver, elements.iterator().next());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -124,5 +141,10 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	private static By byLink(String rel)
 	{
 		return By.cssSelector(String.format("a[rel='%1$s'], link[rel='%1$s']", rel));
+	}
+
+	private static By byForm(String name)
+	{
+		return By.cssSelector(String.format("form[name='%s']", name));
 	}
 }

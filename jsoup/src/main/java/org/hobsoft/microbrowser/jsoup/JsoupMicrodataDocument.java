@@ -127,7 +127,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractMicrodataDocument methods
+	// AbstractHypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	/**

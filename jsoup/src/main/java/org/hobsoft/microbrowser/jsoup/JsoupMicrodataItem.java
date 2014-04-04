@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractHypermediaContainer;
+import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -112,6 +113,22 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractHypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Form newForm(String name)
+	{
+		Elements elements = element.select(byForm(name));
+		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
+		
+		return new JsoupForm(document, elements.first());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -123,5 +140,10 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	private static String byLink(String rel)
 	{
 		return String.format("a[rel=%1$s], link[rel=%1$s]", rel);
+	}
+	
+	private static String byForm(String name)
+	{
+		return String.format("form[name=%s]", name);
 	}
 }

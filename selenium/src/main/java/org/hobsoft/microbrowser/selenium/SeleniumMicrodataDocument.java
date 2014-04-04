@@ -102,9 +102,9 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractMicrodataDocument methods
+	// AbstractHypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
-
+	
 	/**
 	 * {@inheritDoc}
 	 */

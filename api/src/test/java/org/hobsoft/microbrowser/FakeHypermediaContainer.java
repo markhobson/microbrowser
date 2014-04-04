@@ -16,26 +16,32 @@ package org.hobsoft.microbrowser;
 import java.util.List;
 
 /**
- * Base {@code MicrodataDocument} implementation.
+ * Fake {@code AbstractHypermediaContainer} for testing.
  */
-public abstract class AbstractMicrodataDocument extends AbstractHypermediaContainer implements MicrodataDocument
+public class FakeHypermediaContainer extends AbstractHypermediaContainer
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataDocument methods
+	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final MicrodataItem getItem(String type)
+	public List<Link> getLinks(String rel)
 	{
-		List<MicrodataItem> items = getItems(type);
-		
-		if (items.isEmpty())
-		{
-			throw new IllegalArgumentException("Cannot find item: " + type);
-		}
-		
-		return items.iterator().next();
+		return null;
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractHypermediaContainer methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Form newForm(String name)
+	{
+		return null;
 	}
 }
