@@ -21,6 +21,7 @@ import org.junit.Test;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -60,14 +61,12 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	public void getReturnsResponse() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i'>"
-			+ "<p itemprop='p'>x</p>"
-			+ "</div>"
+			+ "<div itemscope='itemscope' itemtype='i' itemid='http://x'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		
-		assertThat("response", actual.getItem("i").getProperty("p").getValue(), is("x"));
+		assertThat("response", actual.getItem("i"), is(item("http://x")));
 	}
 }
