@@ -24,8 +24,8 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -198,7 +198,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
-			+ "<a rel='x'/>"
+			+ "<a rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
 		server().play();
@@ -207,7 +207,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			.getItem("i")
 			.getLink("x");
 		
-		assertThat("link", actual, is(notNullValue()));
+		assertThat("link", actual, is(link("x", "http://y/")));
 	}
 
 	@Test
@@ -215,7 +215,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='i'>"
-			+ "<link rel='x'/>"
+			+ "<link rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
 		server().play();
@@ -224,7 +224,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			.getItem("i")
 			.getLink("x");
 		
-		assertThat("link", actual, is(notNullValue()));
+		assertThat("link", actual, is(link("x", "http://y/")));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
