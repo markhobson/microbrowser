@@ -54,6 +54,21 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void getIdReturnsTrimmedId() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='y' itemid=' http://x '/>"
+			+ "</body></html>"));
+		server().play();
+		
+		URL actual = newBrowser().get(url(server()))
+			.getItem("y")
+			.getId();
+		
+		assertThat("item id", actual, is(new URL("http://x")));
+	}
+	
+	@Test
 	public void getIdWhenInvalidReturnsNull() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
