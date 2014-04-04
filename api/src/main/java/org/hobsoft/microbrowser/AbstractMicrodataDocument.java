@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Base {@code MicrodataDocument} implementation.
  */
-public abstract class AbstractMicrodataDocument implements MicrodataDocument
+public abstract class AbstractMicrodataDocument extends AbstractHypermediaContainer implements MicrodataDocument
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

@@ -113,17 +113,6 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public Link getLink(String rel)
-	{
-		List<Link> links = getLinks(rel);
-		checkArgument(!links.isEmpty(), "Cannot find link: %s", rel);
-		
-		return links.get(0);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<Link> getLinks(String rel)
 	{
 		Elements elements = document.select(byLink(rel));

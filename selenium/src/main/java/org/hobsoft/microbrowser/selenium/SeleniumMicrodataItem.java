@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import org.hobsoft.microbrowser.AbstractHypermediaContainer;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -33,7 +34,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItem} adapter to a Selenium {@code WebElement}.
  */
-class SeleniumMicrodataItem implements MicrodataItem
+class SeleniumMicrodataItem extends AbstractHypermediaContainer implements MicrodataItem
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -95,17 +96,6 @@ class SeleniumMicrodataItem implements MicrodataItem
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Link getLink(String rel)
-	{
-		List<Link> links = getLinks(rel);
-		checkArgument(!links.isEmpty(), "Cannot find link: %s", rel);
-		
-		return links.get(0);
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
