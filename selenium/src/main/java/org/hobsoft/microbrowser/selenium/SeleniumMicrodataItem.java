@@ -64,22 +64,15 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	 */
 	public URL getId()
 	{
-		try
-		{
-			return new URL(element.getAttribute("itemid"));
-		}
-		catch (MalformedURLException exception)
-		{
-			return null;
-		}
+		return newUrl(element.getAttribute("itemid"));
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getType()
+	public URL getType()
 	{
-		return element.getAttribute("itemtype");
+		return newUrl(element.getAttribute("itemtype"));
 	}
 
 	/**
@@ -133,6 +126,18 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private static URL newUrl(String spec)
+	{
+		try
+		{
+			return new URL(spec);
+		}
+		catch (MalformedURLException exception)
+		{
+			return null;
+		}
+	}
+	
 	private static By byItemProp(String itemProp)
 	{
 		return By.cssSelector(String.format("[itemprop='%s']", itemProp));

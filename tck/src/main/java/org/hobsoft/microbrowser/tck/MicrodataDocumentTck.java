@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
@@ -46,12 +47,12 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemWhenItemReturnsItem() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
+			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
-			.getItem("x");
+			.getItem(new URL("http://x"));
 		
 		assertThat("item", actual, is(item("http://y")));
 	}
@@ -60,13 +61,13 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemWhenItemsReturnsFirstItem() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
-			+ "<div itemscope='itemscope' itemtype='x' itemid='http://z'/>"
+			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
+			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://z'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
-			.getItem("x");
+			.getItem(new URL("http://x"));
 		
 		assertThat("item", actual, is(item("http://y")));
 	}
@@ -78,7 +79,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		newBrowser().get(url(server()))
-			.getItem("x");
+			.getItem(new URL("http://x"));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -89,12 +90,12 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemsWhenItemReturnsItem() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
+			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
-			.getItems("x");
+			.getItems(new URL("http://x"));
 		
 		assertThat("items", actual, contains(item("http://y")));
 	}
@@ -103,13 +104,13 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemsWhenItemsReturnsItems() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
-			+ "<div itemscope='itemscope' itemtype='x' itemid='http://z'/>"
+			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
+			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://z'/>"
 			+ "</body></html>"));
 		server().play();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
-			.getItems("x");
+			.getItems(new URL("http://x"));
 		
 		assertThat("items", actual, contains(
 			item("http://y"),
@@ -124,7 +125,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
-			.getItems("x");
+			.getItems(new URL("http://x"));
 		
 		assertThat("items", actual, is(empty()));
 	}

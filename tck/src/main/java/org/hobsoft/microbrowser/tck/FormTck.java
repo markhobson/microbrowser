@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
+import java.net.URL;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
@@ -483,7 +484,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i' itemid='http://x'/>"
+			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
 		server().play();
 		
@@ -491,7 +492,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			.getForm("f")
 			.submit();
 		
-		assertThat("response", actual.getItem("i"), is(item("http://x")));
+		assertThat("response", actual.getItem(new URL("http://i")), is(item("http://x")));
 	}
 
 	@Test
@@ -686,7 +687,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i' itemid='http://x'/>"
+			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
 		server().play();
 		
@@ -694,6 +695,6 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			.getForm("f")
 			.submit();
 		
-		assertThat("response", actual.getItem("i"), is(item("http://x")));
+		assertThat("response", actual.getItem(new URL("http://i")), is(item("http://x")));
 	}
 }

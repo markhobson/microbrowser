@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +83,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<MicrodataItem> getItems(String type)
+	public List<MicrodataItem> getItems(URL type)
 	{
 		Elements elements = document.select(byItemType(type));
 		
@@ -162,7 +163,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 		return union;
 	}
 
-	private static String byItemType(String itemType)
+	private static String byItemType(URL itemType)
 	{
 		return String.format("[itemscope][itemtype=%s]", itemType);
 	}

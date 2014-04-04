@@ -32,7 +32,7 @@ public interface MicrodataItem extends HypermediaContainer
 	 * 
 	 * @return the item type
 	 */
-	String getType();
+	URL getType();
 	
 	/**
 	 * Gets the item property with the specified name.

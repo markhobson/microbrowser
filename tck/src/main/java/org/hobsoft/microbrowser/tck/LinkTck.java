@@ -245,7 +245,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			+ "<a rel='r' href='/a'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='i' itemid='http://x'/>"
+			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
 		server().play();
 		
@@ -253,6 +253,6 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			.getLink("r")
 			.follow();
 		
-		assertThat("response", actual.getItem("i"), is(item("http://x")));
+		assertThat("response", actual.getItem(new URL("http://i")), is(item("http://x")));
 	}
 }

@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
@@ -57,7 +58,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<MicrodataItem> getItems(String type)
+	public List<MicrodataItem> getItems(URL type)
 	{
 		List<WebElement> elements = driver.findElements(byItemType(type));
 		
@@ -121,7 +122,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static By byItemType(String itemType)
+	private static By byItemType(URL itemType)
 	{
 		return By.cssSelector(String.format("[itemscope][itemtype='%s']", itemType));
 	}

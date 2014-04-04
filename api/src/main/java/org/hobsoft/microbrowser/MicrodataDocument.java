@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public interface MicrodataDocument extends HypermediaContainer
 	 * @throws IllegalArgumentException
 	 *             if the item cannot be found
 	 */
-	MicrodataItem getItem(String type);
+	MicrodataItem getItem(URL type);
 
 	/**
 	 * Gets all the items with the specified type.
@@ -38,7 +39,7 @@ public interface MicrodataDocument extends HypermediaContainer
 	 *            the item type to get
 	 * @return the items, or an empty list if none are found
 	 */
-	List<MicrodataItem> getItems(String type);
+	List<MicrodataItem> getItems(URL type);
 
 	/**
 	 * Gets the value of the specified cookie.

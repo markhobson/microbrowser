@@ -63,22 +63,15 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	 */
 	public URL getId()
 	{
-		try
-		{
-			return new URL(element.attr("itemid"));
-		}
-		catch (MalformedURLException exception)
-		{
-			return null;
-		}
+		return newUrl(element.attr("itemid"));
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getType()
+	public URL getType()
 	{
-		return element.attr("itemtype");
+		return newUrl(element.attr("itemtype"));
 	}
 
 	/**
@@ -132,6 +125,18 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private static URL newUrl(String spec)
+	{
+		try
+		{
+			return new URL(spec);
+		}
+		catch (MalformedURLException exception)
+		{
+			return null;
+		}
+	}
+	
 	private static String byItemProp(String itemProp)
 	{
 		return String.format("[itemprop=%s]", itemProp);

@@ -13,6 +13,8 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 
 import org.hobsoft.microbrowser.support.FakeMicrodataDocument;
@@ -41,32 +43,32 @@ public class AbstractMicrodataDocumentTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getItemWhenItemReturnsItem()
+	public void getItemWhenItemReturnsItem() throws MalformedURLException
 	{
 		final MicrodataItem item = mock(MicrodataItem.class);
 		document = mock(FakeMicrodataDocument.class);
-		when(document.getItems("x")).thenReturn(asList(item));
+		when(document.getItems(new URL("http://x"))).thenReturn(asList(item));
 		
-		assertThat(document.getItem("x"), is(item));
+		assertThat(document.getItem(new URL("http://x")), is(item));
 	}
 	
 	@Test
-	public void getItemWhenItemsReturnsFirstItem()
+	public void getItemWhenItemsReturnsFirstItem() throws MalformedURLException
 	{
 		final MicrodataItem item1 = mock(MicrodataItem.class);
 		final MicrodataItem item2 = mock(MicrodataItem.class);
 		document = mock(FakeMicrodataDocument.class);
-		when(document.getItems("x")).thenReturn(asList(item1, item2));
+		when(document.getItems(new URL("http://x"))).thenReturn(asList(item1, item2));
 		
-		assertThat(document.getItem("x"), is(item1));
+		assertThat(document.getItem(new URL("http://x")), is(item1));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getItemWhenNoItemsThrowsException()
+	public void getItemWhenNoItemsThrowsException() throws MalformedURLException
 	{
 		document = mock(FakeMicrodataDocument.class);
-		when(document.getItems("x")).thenReturn(Collections.<MicrodataItem>emptyList());
+		when(document.getItems(new URL("http://x"))).thenReturn(Collections.<MicrodataItem>emptyList());
 		
-		document.getItem("x");
+		document.getItem(new URL("http://x"));
 	}
 }

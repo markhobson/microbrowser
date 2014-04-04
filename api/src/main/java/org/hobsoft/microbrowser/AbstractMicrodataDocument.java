@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public abstract class AbstractMicrodataDocument extends AbstractHypermediaContai
 	/**
 	 * {@inheritDoc}
 	 */
-	public final MicrodataItem getItem(String type)
+	public final MicrodataItem getItem(URL type)
 	{
 		List<MicrodataItem> items = getItems(type);
 		

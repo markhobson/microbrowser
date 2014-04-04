@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.support;
 
+import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
@@ -32,7 +33,7 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<MicrodataItem> getItems(String type)
+	public List<MicrodataItem> getItems(URL type)
 	{
 		return null;
 	}
