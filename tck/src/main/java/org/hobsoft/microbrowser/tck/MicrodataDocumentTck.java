@@ -56,6 +56,25 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		
 		assertThat("item", actual.getProperty("p").getValue(), is("y"));
 	}
+	
+	@Test
+	public void getItemWhenItemsReturnsFirstItem() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='x'>"
+			+ "<p itemprop='p'>y</p>"
+			+ "</div>"
+			+ "<div itemscope='itemscope' itemtype='x'>"
+			+ "<p itemprop='p'>z</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		MicrodataItem actual = newBrowser().get(url(server()))
+			.getItem("x");
+		
+		assertThat("item", actual.getProperty("p").getValue(), is("y"));
+	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void getItemWhenNotFoundThrowsException() throws IOException
