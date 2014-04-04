@@ -82,6 +82,54 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+	// getItems tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getItemsWhenItemReturnsItem() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<MicrodataItem> actual = newBrowser().get(url(server()))
+			.getItems("x");
+		
+		assertThat("items", actual, contains(item("http://y")));
+	}
+	
+	@Test
+	public void getItemsWhenItemsReturnsItems() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='x' itemid='http://y'/>"
+			+ "<div itemscope='itemscope' itemtype='x' itemid='http://z'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<MicrodataItem> actual = newBrowser().get(url(server()))
+			.getItems("x");
+		
+		assertThat("items", actual, contains(
+			item("http://y"),
+			item("http://z")
+		));
+	}
+	
+	@Test
+	public void getItemsWhenNotFoundReturnsEmptyList() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
+		
+		List<MicrodataItem> actual = newBrowser().get(url(server()))
+			.getItems("x");
+		
+		assertThat("items", actual, is(empty()));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// getLink tests
 	// ----------------------------------------------------------------------------------------------------------------
 
