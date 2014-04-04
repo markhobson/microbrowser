@@ -224,6 +224,27 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		
 		assertThat("links", actual, contains(link("x", "http://y/")));
 	}
+	
+	@Test
+	public void getLinksWhenAnchorsReturnsLinks() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<a rel='x' href='http://y/'/>"
+			+ "<a rel='x' href='http://z/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getLinks("x");
+		
+		assertThat("links", actual, contains(
+			link("x", "http://y/"),
+			link("x", "http://z/")
+		));
+	}
 
 	@Test
 	public void getLinksWhenLinkReturnsLink() throws IOException
@@ -240,6 +261,27 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			.getLinks("x");
 		
 		assertThat("link", actual, contains(link("x", "http://y/")));
+	}
+	
+	@Test
+	public void getLinksWhenLinksReturnsLinks() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='i'>"
+			+ "<link rel='x' href='http://y/'/>"
+			+ "<link rel='x' href='http://z/'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().play();
+		
+		List<Link> actual = newBrowser().get(url(server()))
+			.getItem("i")
+			.getLinks("x");
+		
+		assertThat("link", actual, contains(
+			link("x", "http://y/"),
+			link("x", "http://z/")
+		));
 	}
 
 	@Test
