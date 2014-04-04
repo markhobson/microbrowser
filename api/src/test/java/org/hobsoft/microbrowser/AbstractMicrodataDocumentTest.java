@@ -14,7 +14,6 @@
 package org.hobsoft.microbrowser;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.hobsoft.microbrowser.support.FakeMicrodataDocument;
 import org.junit.Test;
@@ -24,6 +23,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests {@code AbstractMicrodataDocument}.
@@ -44,14 +44,8 @@ public class AbstractMicrodataDocumentTest
 	public void getItemWhenItemReturnsItem()
 	{
 		final MicrodataItem item = mock(MicrodataItem.class);
-		document = new FakeMicrodataDocument()
-		{
-			@Override
-			public List<MicrodataItem> getItems(String type)
-			{
-				return "x".equals(type) ? asList(item) : null;
-			}
-		};
+		document = mock(FakeMicrodataDocument.class);
+		when(document.getItems("x")).thenReturn(asList(item));
 		
 		assertThat(document.getItem("x"), is(item));
 	}
@@ -61,14 +55,8 @@ public class AbstractMicrodataDocumentTest
 	{
 		final MicrodataItem item1 = mock(MicrodataItem.class);
 		final MicrodataItem item2 = mock(MicrodataItem.class);
-		document = new FakeMicrodataDocument()
-		{
-			@Override
-			public List<MicrodataItem> getItems(String type)
-			{
-				return "x".equals(type) ? asList(item1, item2) : null;
-			}
-		};
+		document = mock(FakeMicrodataDocument.class);
+		when(document.getItems("x")).thenReturn(asList(item1, item2));
 		
 		assertThat(document.getItem("x"), is(item1));
 	}
@@ -76,14 +64,8 @@ public class AbstractMicrodataDocumentTest
 	@Test(expected = IllegalArgumentException.class)
 	public void getItemWhenNoItemsThrowsException()
 	{
-		document = new FakeMicrodataDocument()
-		{
-			@Override
-			public List<MicrodataItem> getItems(String type)
-			{
-				return "x".equals(type) ? Collections.<MicrodataItem>emptyList() : null;
-			}
-		};
+		document = mock(FakeMicrodataDocument.class);
+		when(document.getItems("x")).thenReturn(Collections.<MicrodataItem>emptyList());
 		
 		document.getItem("x");
 	}
