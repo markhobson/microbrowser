@@ -25,7 +25,6 @@ import org.junit.Test;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
@@ -235,7 +234,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		Form actual = newBrowser().get(url(server()))
 			.getForm("x");
 		
-		assertThat("form", actual, is(notNullValue()));
+		assertThat("form", actual.getName(), is("x"));
 	}
 
 	@Test
