@@ -13,6 +13,8 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Link;
@@ -51,6 +53,21 @@ class SeleniumMicrodataItem implements MicrodataItem
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataItem methods
 	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public URL getId()
+	{
+		try
+		{
+			return new URL(element.getAttribute("itemid"));
+		}
+		catch (MalformedURLException exception)
+		{
+			return null;
+		}
+	}
 	
 	/**
 	 * {@inheritDoc}

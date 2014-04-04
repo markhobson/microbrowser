@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
+import java.net.URL;
 
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -23,6 +24,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -32,9 +34,58 @@ import static org.junit.Assert.assertThat;
 public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// getType tests
+	// getId tests
 	// ----------------------------------------------------------------------------------------------------------------
 
+	@Test
+	public void getIdReturnsId() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='y' itemid='http://x'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		URL actual = newBrowser().get(url(server()))
+			.getItem("y")
+			.getId();
+		
+		assertThat("item id", actual, is(new URL("http://x")));
+	}
+	
+	@Test
+	public void getIdWhenInvalidReturnsNull() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='y' itemid='x'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		URL actual = newBrowser().get(url(server()))
+			.getItem("y")
+			.getId();
+		
+		assertThat("item id", actual, is(nullValue()));
+	}
+	
+	@Test
+	public void getIdWhenNotFoundReturnsNull() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='y'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		URL actual = newBrowser().get(url(server()))
+			.getItem("y")
+			.getId();
+		
+		assertThat("item id", actual, is(nullValue()));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getType tests
+	// ----------------------------------------------------------------------------------------------------------------
+	
 	@Test
 	public void getTypeReturnsType() throws IOException
 	{

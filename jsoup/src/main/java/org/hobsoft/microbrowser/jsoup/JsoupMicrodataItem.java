@@ -13,6 +13,9 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -48,6 +51,21 @@ class JsoupMicrodataItem implements MicrodataItem
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataItem methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public URL getId()
+	{
+		try
+		{
+			return new URL(element.attr("itemid"));
+		}
+		catch (MalformedURLException exception)
+		{
+			return null;
+		}
+	}
 	
 	/**
 	 * {@inheritDoc}

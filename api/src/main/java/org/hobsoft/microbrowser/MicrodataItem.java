@@ -13,11 +13,20 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.net.URL;
+
 /**
  * Defines an HTML microdata item.
  */
 public interface MicrodataItem
 {
+	/**
+	 * Gets the global identifier of this item.
+	 * 
+	 * @return the item's global identifier, or {@code null} if not a valid URL
+	 */
+	URL getId();
+	
 	/**
 	 * Gets the type of this item.
 	 * 
