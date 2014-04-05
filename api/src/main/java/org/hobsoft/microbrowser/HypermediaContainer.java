@@ -16,7 +16,7 @@ package org.hobsoft.microbrowser;
 import java.util.List;
 
 /**
- * Defines a container for links.
+ * Defines a container for HTML links and forms.
  */
 public interface HypermediaContainer
 {
