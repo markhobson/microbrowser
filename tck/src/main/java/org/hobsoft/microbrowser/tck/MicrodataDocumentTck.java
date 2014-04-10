@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import org.hobsoft.microbrowser.CookieNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
@@ -340,7 +341,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		assertThat("cookie", actual, is("y"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = CookieNotFoundException.class)
 	public void getCookieWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse());

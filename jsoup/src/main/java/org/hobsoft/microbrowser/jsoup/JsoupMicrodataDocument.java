@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
+import org.hobsoft.microbrowser.CookieNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
@@ -102,7 +103,11 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	public String getCookie(String name)
 	{
 		String value = cookies.get(name);
-		checkArgument(value != null, "Cannot find cookie: %s", name);
+		
+		if (value == null)
+		{
+			throw new CookieNotFoundException(name);
+		}
 
 		return value;
 	}

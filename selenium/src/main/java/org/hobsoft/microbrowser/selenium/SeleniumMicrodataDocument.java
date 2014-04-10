@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
+import org.hobsoft.microbrowser.CookieNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
@@ -77,7 +78,11 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	public String getCookie(String name)
 	{
 		Cookie cookie = driver.manage().getCookieNamed(name);
-		checkArgument(cookie != null, "Cannot find cookie: %s", name);
+		
+		if (cookie == null)
+		{
+			throw new CookieNotFoundException(name);
+		}
 		
 		return cookie.getValue();
 	}
