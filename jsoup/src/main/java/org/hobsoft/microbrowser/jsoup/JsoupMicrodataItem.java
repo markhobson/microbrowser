@@ -23,13 +23,13 @@ import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
+import org.hobsoft.microbrowser.MicrodataPropertyNotFoundException;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -81,7 +81,11 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	public MicrodataProperty getProperty(String name)
 	{
 		Elements elements = element.select(byItemProp(name));
-		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", name);
+		
+		if (elements.isEmpty())
+		{
+			throw new MicrodataPropertyNotFoundException(name);
+		}
 		
 		return new JsoupMicrodataProperty(elements.first());
 	}

@@ -23,6 +23,7 @@ import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
+import org.hobsoft.microbrowser.MicrodataPropertyNotFoundException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,7 +31,6 @@ import org.openqa.selenium.WebElement;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -82,7 +82,11 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	public MicrodataProperty getProperty(String name)
 	{
 		List<WebElement> elements = element.findElements(byItemProp(name));
-		checkArgument(!elements.isEmpty(), "Cannot find item property: %s", name);
+		
+		if (elements.isEmpty())
+		{
+			throw new MicrodataPropertyNotFoundException(name);
+		}
 		
 		return new SeleniumMicrodataProperty(elements.iterator().next());
 	}

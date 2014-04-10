@@ -23,6 +23,7 @@ import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.LinkNotFoundException;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
+import org.hobsoft.microbrowser.MicrodataPropertyNotFoundException;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -145,7 +146,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		assertThat("item property", actual.getName(), is("x"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = MicrodataPropertyNotFoundException.class)
 	public void getPropertyWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"

@@ -40,7 +40,7 @@ public interface MicrodataItem extends HypermediaContainer
 	 * @param name
 	 *            the name of the item property to get
 	 * @return the item property
-	 * @throws IllegalArgumentException
+	 * @throws MicrodataPropertyNotFoundException
 	 *             if the property cannot be found
 	 */
 	MicrodataProperty getProperty(String name);
