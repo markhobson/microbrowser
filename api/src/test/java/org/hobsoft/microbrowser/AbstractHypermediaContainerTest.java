@@ -13,7 +13,9 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import org.hobsoft.microbrowser.support.FakeHypermediaContainer;
 import org.junit.Test;
@@ -39,6 +41,37 @@ public class AbstractHypermediaContainerTest
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
 
+	@Test
+	public void getLinkReturnsFirstLink()
+	{
+		final Link link = mock(Link.class);
+		container = new FakeHypermediaContainer()
+		{
+			@Override
+			public List<Link> getLinks(String rel)
+			{
+				return "x".equals(rel) ? asList(link, mock(Link.class)) : null;
+			}
+		};
+		
+		assertThat(container.getLink("x"), is(link));
+	}
+	
+	@Test(expected = LinkNotFoundException.class)
+	public void getLinkWhenNotFoundThrowsException()
+	{
+		container = new FakeHypermediaContainer()
+		{
+			@Override
+			public List<Link> getLinks(String rel)
+			{
+				return "x".equals(rel) ? Collections.<Link>emptyList() : null;
+			}
+		};
+		
+		container.getLink("x");
+	}
+	
 	@Test
 	public void getFormReturnsForm()
 	{
