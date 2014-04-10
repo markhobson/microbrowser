@@ -31,7 +31,7 @@ public interface Form
 	 * @param name
 	 *            the name of the form control whose value to get
 	 * @return the form control value
-	 * @throws IllegalArgumentException
+	 * @throws ParameterNotFoundException
 	 *             if the form control cannot be found
 	 */
 	String getParameter(String name);

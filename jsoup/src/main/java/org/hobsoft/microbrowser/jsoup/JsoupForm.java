@@ -20,13 +20,13 @@ import java.util.Map;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.ParameterNotFoundException;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -141,7 +141,10 @@ class JsoupForm implements Form
 	
 	private void checkControl(String name)
 	{
-		checkArgument(parameterValuesByName.containsKey(name), "Cannot find form control: %s", name);
+		if (!parameterValuesByName.containsKey(name))
+		{
+			throw new ParameterNotFoundException(name);
+		}
 	}
 	
 	private Connection getConnection()

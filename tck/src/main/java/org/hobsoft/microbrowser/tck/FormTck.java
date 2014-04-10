@@ -18,6 +18,7 @@ import java.net.URL;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.ParameterNotFoundException;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -135,7 +136,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		assertThat("form parameter value", actual, is("y"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = ParameterNotFoundException.class)
 	public void getParameterWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -186,7 +187,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		assertThat("form parameter value", form.getParameter("p"), is("x"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = ParameterNotFoundException.class)
 	public void setParameterWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"

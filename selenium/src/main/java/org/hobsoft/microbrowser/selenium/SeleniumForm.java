@@ -17,11 +17,11 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.ParameterNotFoundException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -97,7 +97,11 @@ class SeleniumForm implements Form
 	private WebElement getControl(String name)
 	{
 		List<WebElement> elements = element.findElements(byControl(name));
-		checkArgument(!elements.isEmpty(), "Cannot find form control: %s", name);
+		
+		if (elements.isEmpty())
+		{
+			throw new ParameterNotFoundException(name);
+		}
 		
 		return elements.iterator().next();
 	}
