@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.LinkNotFoundException;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.Test;
@@ -194,7 +195,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		assertThat("link", actual, is(link("x", "http://y/")));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = LinkNotFoundException.class)
 	public void getLinkWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"

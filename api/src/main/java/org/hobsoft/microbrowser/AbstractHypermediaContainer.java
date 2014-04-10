@@ -50,7 +50,7 @@ public abstract class AbstractHypermediaContainer implements HypermediaContainer
 		
 		if (links.isEmpty())
 		{
-			throw new IllegalArgumentException("Cannot find link: " + rel);
+			throw new LinkNotFoundException(rel);
 		}
 		
 		return links.get(0);

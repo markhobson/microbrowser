@@ -26,7 +26,7 @@ public interface HypermediaContainer
 	 * @param rel
 	 *            the relationship of the link to get
 	 * @return the link
-	 * @throws IllegalArgumentException
+	 * @throws LinkNotFoundException
 	 *             if the link cannot be found
 	 */
 	Link getLink(String rel);
