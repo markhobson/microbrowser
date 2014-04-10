@@ -16,7 +16,7 @@ package org.hobsoft.microbrowser;
 /**
  * Base class for Microbrowser exceptions.
  */
-public final class MicrobrowserException extends RuntimeException
+public class MicrobrowserException extends RuntimeException
 {
 	// TODO: make abstract and introduce subtypes once exception policy thought through
 	

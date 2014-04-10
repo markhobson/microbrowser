@@ -21,6 +21,7 @@ import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
+import org.hobsoft.microbrowser.MicrodataItemNotFoundException;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -72,7 +73,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		assertThat("item", actual, is(item("http://y")));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = MicrodataItemNotFoundException.class)
 	public void getItemWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));

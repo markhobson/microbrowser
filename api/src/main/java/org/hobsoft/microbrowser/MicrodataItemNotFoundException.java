@@ -14,29 +14,18 @@
 package org.hobsoft.microbrowser;
 
 import java.net.URL;
-import java.util.List;
 
 /**
- * Base {@code MicrodataDocument} implementation.
+ * Indicates that a microdata item cannot be found.
  */
-public abstract class AbstractMicrodataDocument extends AbstractHypermediaContainer implements MicrodataDocument
+public final class MicrodataItemNotFoundException extends MicrobrowserException
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataDocument methods
+	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final MicrodataItem getItem(URL type)
+	public MicrodataItemNotFoundException(URL type)
 	{
-		List<MicrodataItem> items = getItems(type);
-		
-		if (items.isEmpty())
-		{
-			throw new MicrodataItemNotFoundException(type);
-		}
-		
-		return items.iterator().next();
+		super(type.toString());
 	}
 }

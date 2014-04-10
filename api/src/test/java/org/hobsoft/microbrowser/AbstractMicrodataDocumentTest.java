@@ -63,7 +63,7 @@ public class AbstractMicrodataDocumentTest
 		assertThat(document.getItem(new URL("http://x")), is(item1));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = MicrodataItemNotFoundException.class)
 	public void getItemWhenNoItemsThrowsException() throws MalformedURLException
 	{
 		document = mock(FakeMicrodataDocument.class);

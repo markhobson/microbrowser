@@ -27,7 +27,7 @@ public interface MicrodataDocument extends HypermediaContainer
 	 * @param type
 	 *            the item type to get
 	 * @return the item
-	 * @throws IllegalArgumentException
+	 * @throws MicrodataItemNotFoundException
 	 *             if the item cannot be found
 	 */
 	MicrodataItem getItem(URL type);
