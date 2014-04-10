@@ -47,6 +47,8 @@ public interface MicrodataDocument extends HypermediaContainer
 	 * @param name
 	 *            the name of the cookie to get
 	 * @return the cookie value
+	 * @throws IllegalArgumentException
+	 *             if the cookie cannot be found
 	 */
 	String getCookie(String name);
 }
