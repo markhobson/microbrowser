@@ -76,5 +76,9 @@ public abstract class AbstractHypermediaContainer implements HypermediaContainer
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	/**
+	 * @throws FormNotFoundException
+	 *             if the form cannot be found
+	 */
 	protected abstract Form newForm(String name);
 }

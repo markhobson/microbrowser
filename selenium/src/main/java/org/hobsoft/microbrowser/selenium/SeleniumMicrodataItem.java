@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractHypermediaContainer;
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -117,7 +118,11 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	protected Form newForm(String name)
 	{
 		List<WebElement> elements = element.findElements(byForm(name));
-		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
+		
+		if (elements.isEmpty())
+		{
+			throw new FormNotFoundException(name);
+		}
 		
 		return new SeleniumForm(driver, elements.iterator().next());
 	}

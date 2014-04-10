@@ -105,4 +105,24 @@ public class AbstractHypermediaContainerTest
 		container.getForm("x");
 		assertThat(container.getForm("x"), is(form));
 	}
+	
+	@Test(expected = FormNotFoundException.class)
+	public void getFormWhenNotFoundThrowsException()
+	{
+		container = new FakeHypermediaContainer()
+		{
+			@Override
+			protected Form newForm(String name)
+			{
+				if ("x".equals(name))
+				{
+					throw new FormNotFoundException(name);
+				}
+				
+				return null;
+			}
+		};
+		
+		container.getForm("x");
+	}
 }

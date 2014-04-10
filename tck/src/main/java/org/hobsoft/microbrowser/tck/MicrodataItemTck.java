@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.LinkNotFoundException;
 import org.hobsoft.microbrowser.MicrodataItem;
@@ -340,7 +341,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		assertThat("form", item.getForm("x"), is(sameInstance(item.getForm("x"))));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = FormNotFoundException.class)
 	public void getFormWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"

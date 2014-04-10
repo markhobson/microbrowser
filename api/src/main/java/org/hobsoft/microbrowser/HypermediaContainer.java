@@ -46,7 +46,7 @@ public interface HypermediaContainer
 	 * @param name
 	 *            the name of the form to get
 	 * @return the form
-	 * @throws IllegalArgumentException
+	 * @throws FormNotFoundException
 	 *             if the form cannot be found
 	 */
 	Form getForm(String name);

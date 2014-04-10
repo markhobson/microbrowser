@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.AbstractHypermediaContainer;
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
@@ -116,7 +117,11 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	protected Form newForm(String name)
 	{
 		Elements elements = element.select(byForm(name));
-		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
+		
+		if (elements.isEmpty())
+		{
+			throw new FormNotFoundException(name);
+		}
 		
 		return new JsoupForm(document, elements.first());
 	}

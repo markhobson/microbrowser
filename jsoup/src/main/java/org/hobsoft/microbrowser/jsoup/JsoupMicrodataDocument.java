@@ -23,6 +23,7 @@ import java.util.Map;
 import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.CookieNotFoundException;
 import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.jsoup.Connection.Response;
@@ -33,7 +34,6 @@ import org.jsoup.select.Elements;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -143,7 +143,11 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	protected Form newForm(String name)
 	{
 		Elements elements = document.select(byForm(name));
-		checkArgument(!elements.isEmpty(), "Cannot find form: %s", name);
+		
+		if (elements.isEmpty())
+		{
+			throw new FormNotFoundException(name);
+		}
 		
 		return new JsoupForm(this, elements.first());
 	}
