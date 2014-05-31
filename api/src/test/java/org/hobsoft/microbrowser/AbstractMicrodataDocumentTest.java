@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.Collections;
 
 import org.hobsoft.microbrowser.support.FakeMicrodataDocument;
+import org.junit.Before;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
@@ -39,6 +40,16 @@ public class AbstractMicrodataDocumentTest
 	private AbstractMicrodataDocument document;
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// test methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Before
+	public void setUp()
+	{
+		document = mock(FakeMicrodataDocument.class);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -46,7 +57,6 @@ public class AbstractMicrodataDocumentTest
 	public void getItemWhenItemReturnsItem()
 	{
 		final MicrodataItem item = mock(MicrodataItem.class);
-		document = mock(FakeMicrodataDocument.class);
 		when(document.getItems("http://x")).thenReturn(asList(item));
 		
 		assertThat(document.getItem("http://x"), is(item));
@@ -57,7 +67,6 @@ public class AbstractMicrodataDocumentTest
 	{
 		final MicrodataItem item1 = mock(MicrodataItem.class);
 		final MicrodataItem item2 = mock(MicrodataItem.class);
-		document = mock(FakeMicrodataDocument.class);
 		when(document.getItems("http://x")).thenReturn(asList(item1, item2));
 		
 		assertThat(document.getItem("http://x"), is(item1));
@@ -66,7 +75,6 @@ public class AbstractMicrodataDocumentTest
 	@Test(expected = MicrodataItemNotFoundException.class)
 	public void getItemWhenNoItemsThrowsException()
 	{
-		document = mock(FakeMicrodataDocument.class);
 		when(document.getItems("http://x")).thenReturn(Collections.<MicrodataItem>emptyList());
 		
 		document.getItem("http://x");
@@ -75,7 +83,6 @@ public class AbstractMicrodataDocumentTest
 	@Test(expected = IllegalArgumentException.class)
 	public void getItemWhenInvalidUrlThrowsException()
 	{
-		document = mock(FakeMicrodataDocument.class);
 		when(document.getItems("x")).thenThrow(new IllegalArgumentException());
 		
 		document.getItem("x");
@@ -84,16 +91,12 @@ public class AbstractMicrodataDocumentTest
 	@Test
 	public void urlWithUrlReturnsUrl() throws MalformedURLException
 	{
-		document = mock(FakeMicrodataDocument.class);
-		
 		assertThat(document.url("http://x"), is(new URL("http://x")));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void urlWithInvalidUrlThrowsException()
 	{
-		document = mock(FakeMicrodataDocument.class);
-		
 		document.url("x");
 	}
 }
