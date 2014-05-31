@@ -253,6 +253,6 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			.getLink("r")
 			.follow();
 		
-		assertThat("response", actual.getItem(new URL("http://i")), is(item("http://x")));
+		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
 	}
 }

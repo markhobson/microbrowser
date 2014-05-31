@@ -14,7 +14,6 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.CookieNotFoundException;
@@ -56,7 +55,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://x"));
+			.getItem("http://x");
 		
 		assertThat("item", actual, is(item("http://y")));
 	}
@@ -71,7 +70,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://x"));
+			.getItem("http://x");
 		
 		assertThat("item", actual, is(item("http://y")));
 	}
@@ -83,7 +82,17 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		newBrowser().get(url(server()))
-			.getItem(new URL("http://x"));
+			.getItem("http://x");
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void getItemWithInvalidUrlThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getItem("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -99,7 +108,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
-			.getItems(new URL("http://x"));
+			.getItems("http://x");
 		
 		assertThat("items", actual, contains(item("http://y")));
 	}
@@ -114,7 +123,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
-			.getItems(new URL("http://x"));
+			.getItems("http://x");
 		
 		assertThat("items", actual, contains(
 			item("http://y"),
@@ -129,9 +138,19 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
-			.getItems(new URL("http://x"));
+			.getItems("http://x");
 		
 		assertThat("items", actual, is(empty()));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void getItemsWithInvalidUrlThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().play();
+		
+		newBrowser().get(url(server()))
+			.getItems("x");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

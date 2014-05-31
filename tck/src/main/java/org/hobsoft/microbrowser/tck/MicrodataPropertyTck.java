@@ -14,7 +14,6 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
-import java.net.URL;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -47,7 +46,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("x")
 			.getName();
 		
@@ -69,7 +68,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -87,7 +86,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -105,7 +104,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -124,7 +123,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -142,7 +141,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -160,7 +159,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -179,7 +178,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -197,7 +196,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -215,7 +214,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -234,7 +233,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -252,7 +251,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -270,7 +269,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -289,7 +288,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -307,7 +306,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -325,7 +324,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -344,7 +343,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -362,7 +361,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -380,7 +379,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -401,7 +400,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -419,7 +418,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -437,7 +436,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -456,7 +455,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -474,7 +473,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -492,7 +491,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -510,7 +509,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -528,7 +527,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -546,7 +545,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -564,7 +563,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -582,7 +581,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -600,7 +599,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -618,7 +617,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -636,7 +635,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -656,7 +655,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -674,7 +673,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -692,7 +691,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -710,7 +709,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -728,7 +727,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -746,7 +745,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -764,7 +763,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -782,7 +781,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -800,7 +799,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -818,7 +817,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		
@@ -836,7 +835,7 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		String actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("p")
 			.getValue();
 		

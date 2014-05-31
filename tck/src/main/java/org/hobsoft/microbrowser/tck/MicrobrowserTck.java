@@ -14,7 +14,6 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
-import java.net.URL;
 
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.Test;
@@ -68,6 +67,6 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		
-		assertThat("response", actual.getItem(new URL("http://i")), is(item("http://x")));
+		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
 	}
 }

@@ -55,7 +55,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		URL actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://y"))
+			.getItem("http://y")
 			.getId();
 		
 		assertThat("item id", actual, is(new URL("http://x")));
@@ -70,7 +70,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		URL actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://y"))
+			.getItem("http://y")
 			.getId();
 		
 		assertThat("item id", actual, is(new URL("http://x")));
@@ -85,7 +85,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		URL actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://y"))
+			.getItem("http://y")
 			.getId();
 		
 		assertThat("item id", actual, is(nullValue()));
@@ -100,7 +100,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		URL actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://y"))
+			.getItem("http://y")
 			.getId();
 		
 		assertThat("item id", actual, is(nullValue()));
@@ -119,7 +119,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		URL actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://x"))
+			.getItem("http://x")
 			.getType();
 		
 		assertThat("item type", actual, is(new URL("http://x")));
@@ -140,7 +140,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		MicrodataProperty actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("x");
 		
 		assertThat("item property", actual.getName(), is("x"));
@@ -155,7 +155,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getProperty("x");
 	}
 	
@@ -174,7 +174,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		Link actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLink("x");
 		
 		assertThat("link", actual, is(link("x", "http://y/")));
@@ -191,7 +191,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		Link actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLink("x");
 		
 		assertThat("link", actual, is(link("x", "http://y/")));
@@ -206,7 +206,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLink("x");
 	}
 
@@ -225,7 +225,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<Link> actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLinks("x");
 		
 		assertThat("links", actual, contains(link("x", "http://y/")));
@@ -243,7 +243,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<Link> actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLinks("x");
 		
 		assertThat("links", actual, contains(
@@ -263,7 +263,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<Link> actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLinks("x");
 		
 		assertThat("link", actual, contains(link("x", "http://y/")));
@@ -281,7 +281,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<Link> actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLinks("x");
 		
 		assertThat("link", actual, contains(
@@ -299,7 +299,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		List<Link> actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getLinks("x");
 		
 		assertThat("link", actual, is(empty()));
@@ -320,7 +320,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		Form actual = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getForm("x");
 		
 		assertThat("form", actual.getName(), is("x"));
@@ -337,7 +337,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
-			.getItem(new URL("http://i"));
+			.getItem("http://i");
 		
 		assertThat("form", item.getForm("x"), is(sameInstance(item.getForm("x"))));
 	}
@@ -351,7 +351,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().play();
 		
 		newBrowser().get(url(server()))
-			.getItem(new URL("http://i"))
+			.getItem("http://i")
 			.getForm("x");
 	}
 }

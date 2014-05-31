@@ -43,32 +43,57 @@ public class AbstractMicrodataDocumentTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getItemWhenItemReturnsItem() throws MalformedURLException
+	public void getItemWhenItemReturnsItem()
 	{
 		final MicrodataItem item = mock(MicrodataItem.class);
 		document = mock(FakeMicrodataDocument.class);
-		when(document.getItems(new URL("http://x"))).thenReturn(asList(item));
+		when(document.getItems("http://x")).thenReturn(asList(item));
 		
-		assertThat(document.getItem(new URL("http://x")), is(item));
+		assertThat(document.getItem("http://x"), is(item));
 	}
 	
 	@Test
-	public void getItemWhenItemsReturnsFirstItem() throws MalformedURLException
+	public void getItemWhenItemsReturnsFirstItem()
 	{
 		final MicrodataItem item1 = mock(MicrodataItem.class);
 		final MicrodataItem item2 = mock(MicrodataItem.class);
 		document = mock(FakeMicrodataDocument.class);
-		when(document.getItems(new URL("http://x"))).thenReturn(asList(item1, item2));
+		when(document.getItems("http://x")).thenReturn(asList(item1, item2));
 		
-		assertThat(document.getItem(new URL("http://x")), is(item1));
+		assertThat(document.getItem("http://x"), is(item1));
 	}
 
 	@Test(expected = MicrodataItemNotFoundException.class)
-	public void getItemWhenNoItemsThrowsException() throws MalformedURLException
+	public void getItemWhenNoItemsThrowsException()
 	{
 		document = mock(FakeMicrodataDocument.class);
-		when(document.getItems(new URL("http://x"))).thenReturn(Collections.<MicrodataItem>emptyList());
+		when(document.getItems("http://x")).thenReturn(Collections.<MicrodataItem>emptyList());
 		
-		document.getItem(new URL("http://x"));
+		document.getItem("http://x");
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void getItemWhenInvalidUrlThrowsException()
+	{
+		document = mock(FakeMicrodataDocument.class);
+		when(document.getItems("x")).thenThrow(new IllegalArgumentException());
+		
+		document.getItem("x");
+	}
+	
+	@Test
+	public void urlWithUrlReturnsUrl() throws MalformedURLException
+	{
+		document = mock(FakeMicrodataDocument.class);
+		
+		assertThat(document.url("http://x"), is(new URL("http://x")));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void urlWithInvalidUrlThrowsException()
+	{
+		document = mock(FakeMicrodataDocument.class);
+		
+		document.url("x");
 	}
 }

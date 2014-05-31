@@ -59,9 +59,9 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<MicrodataItem> getItems(URL type)
+	public List<MicrodataItem> getItems(String type)
 	{
-		List<WebElement> elements = driver.findElements(byItemType(type));
+		List<WebElement> elements = driver.findElements(byItemType(url(type)));
 		
 		return Lists.transform(elements, new Function<WebElement, MicrodataItem>()
 		{

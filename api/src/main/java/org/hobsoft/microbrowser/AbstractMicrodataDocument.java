@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -28,15 +29,40 @@ public abstract class AbstractMicrodataDocument extends AbstractHypermediaContai
 	/**
 	 * {@inheritDoc}
 	 */
-	public final MicrodataItem getItem(URL type)
+	public final MicrodataItem getItem(String type)
 	{
 		List<MicrodataItem> items = getItems(type);
 		
 		if (items.isEmpty())
 		{
-			throw new MicrodataItemNotFoundException(type);
+			throw new MicrodataItemNotFoundException(url(type));
 		}
 		
 		return items.iterator().next();
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Creates a URL for the specified string representation.
+	 * 
+	 * @param spec
+	 *            the string representation
+	 * @return the URL
+	 * @throws IllegalArgumentException
+	 *             if the specified string representation is not a valid URL
+	 */
+	protected final URL url(String spec)
+	{
+		try
+		{
+			return new URL(spec);
+		}
+		catch (MalformedURLException exception)
+		{
+			throw new IllegalArgumentException("Invalid URL: " + spec);
+		}
 	}
 }

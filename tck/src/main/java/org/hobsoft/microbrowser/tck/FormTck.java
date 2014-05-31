@@ -14,7 +14,6 @@
 package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
-import java.net.URL;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
@@ -493,7 +492,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			.getForm("f")
 			.submit();
 		
-		assertThat("response", actual.getItem(new URL("http://i")), is(item("http://x")));
+		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
 	}
 
 	@Test
@@ -696,6 +695,6 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			.getForm("f")
 			.submit();
 		
-		assertThat("response", actual.getItem(new URL("http://i")), is(item("http://x")));
+		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
 	}
 }
