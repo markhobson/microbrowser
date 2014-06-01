@@ -13,7 +13,6 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -30,6 +29,8 @@ import org.openqa.selenium.WebElement;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+
+import static org.hobsoft.microbrowser.selenium.Urls.newUrl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -135,18 +136,6 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static URL newUrl(String spec)
-	{
-		try
-		{
-			return new URL(spec);
-		}
-		catch (MalformedURLException exception)
-		{
-			return null;
-		}
-	}
-	
 	private static By byItemProp(String itemProp)
 	{
 		return By.cssSelector(String.format("[itemprop='%s']", itemProp));

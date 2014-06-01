@@ -13,7 +13,6 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -29,6 +28,8 @@ import org.jsoup.select.Elements;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+
+import static org.hobsoft.microbrowser.jsoup.Urls.newUrl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -134,18 +135,6 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static URL newUrl(String spec)
-	{
-		try
-		{
-			return new URL(spec);
-		}
-		catch (MalformedURLException exception)
-		{
-			return null;
-		}
-	}
-	
 	private static String byItemProp(String itemProp)
 	{
 		return String.format("[itemprop=%s]", itemProp);

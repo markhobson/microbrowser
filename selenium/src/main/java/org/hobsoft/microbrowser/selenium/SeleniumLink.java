@@ -13,13 +13,14 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import static org.hobsoft.microbrowser.selenium.Urls.newUrl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -70,14 +71,7 @@ class SeleniumLink implements Link
 			return null;
 		}
 		
-		try
-		{
-			return new URL(href);
-		}
-		catch (MalformedURLException exception)
-		{
-			return null;
-		}
+		return newUrl(href);
 	}
 
 	/**

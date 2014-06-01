@@ -14,7 +14,6 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.hobsoft.microbrowser.Link;
@@ -24,6 +23,8 @@ import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+
+import static org.hobsoft.microbrowser.jsoup.Urls.newUrl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -67,14 +68,7 @@ class JsoupLink implements Link
 	 */
 	public URL getHref()
 	{
-		try
-		{
-			return new URL(element.absUrl("href"));
-		}
-		catch (MalformedURLException exception)
-		{
-			return null;
-		}
+		return newUrl(element.absUrl("href"));
 	}
 
 	/**
