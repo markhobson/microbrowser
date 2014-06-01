@@ -13,8 +13,6 @@
  */
 package org.hobsoft.microbrowser;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Collections;
 
 import org.hobsoft.microbrowser.support.FakeMicrodataDocument;
@@ -102,20 +100,5 @@ public class AbstractMicrodataDocumentTest
 		thrown.expectMessage("y");
 		
 		document.getItem("x");
-	}
-	
-	@Test
-	public void urlWithUrlReturnsUrl() throws MalformedURLException
-	{
-		assertThat(document.url("http://x"), is(new URL("http://x")));
-	}
-	
-	@Test
-	public void urlWithInvalidUrlThrowsException()
-	{
-		thrown.expect(IllegalArgumentException.class);
-		thrown.expectMessage("Invalid URL: x");
-		
-		document.url("x");
 	}
 }

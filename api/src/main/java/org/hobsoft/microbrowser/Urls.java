@@ -34,6 +34,27 @@ public final class Urls
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	/**
+	 * Creates a URL for the specified string representation.
+	 * 
+	 * @param spec
+	 *            the string representation
+	 * @return the URL
+	 * @throws IllegalArgumentException
+	 *             if the specified string representation is not a valid URL
+	 */
+	public static URL newUrl(String spec)
+	{
+		try
+		{
+			return new URL(spec);
+		}
+		catch (MalformedURLException exception)
+		{
+			throw new IllegalArgumentException("Invalid URL: " + spec);
+		}
+	}
+	
 	public static URL newUrlOrNull(String spec)
 	{
 		try

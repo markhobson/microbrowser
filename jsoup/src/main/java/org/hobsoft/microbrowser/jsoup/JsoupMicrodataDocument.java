@@ -34,6 +34,8 @@ import org.jsoup.select.Elements;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import static org.hobsoft.microbrowser.Urls.newUrl;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -86,7 +88,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public List<MicrodataItem> getItems(String type)
 	{
-		Elements elements = document.select(byItemType(url(type)));
+		Elements elements = document.select(byItemType(newUrl(type)));
 		
 		return Lists.transform(elements, new Function<Element, MicrodataItem>()
 		{

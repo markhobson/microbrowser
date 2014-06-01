@@ -30,6 +30,8 @@ import org.openqa.selenium.WebElement;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import static org.hobsoft.microbrowser.Urls.newUrl;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -61,7 +63,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	public List<MicrodataItem> getItems(String type)
 	{
-		List<WebElement> elements = driver.findElements(byItemType(url(type)));
+		List<WebElement> elements = driver.findElements(byItemType(newUrl(type)));
 		
 		return Lists.transform(elements, new Function<WebElement, MicrodataItem>()
 		{
