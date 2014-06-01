@@ -71,6 +71,15 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void getWithInvalidUrlThrowsException()
+	{
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid URL: x");
+		
+		newBrowser().get("x");
+	}
+	
+	@Test
 	public void getWhenNotFoundReturnsResponse() throws IOException
 	{
 		server().enqueue(new MockResponse().setResponseCode(404).setBody("<html><body>"

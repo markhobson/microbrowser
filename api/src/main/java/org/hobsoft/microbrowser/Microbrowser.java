@@ -26,6 +26,8 @@ public interface Microbrowser
 	 * @return the page as a microdata document
 	 * @throws MicrobrowserException
 	 *             if an error occurs
+	 * @throws IllegalArgumentException
+	 *             if the URL is not valid
 	 */
 	MicrodataDocument get(String url);
 }

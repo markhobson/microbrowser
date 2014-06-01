@@ -23,6 +23,8 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 
+import static org.hobsoft.microbrowser.Urls.newUrl;
+
 /**
  * {@code Microbrowser} implementation that uses jsoup.
  */
@@ -37,6 +39,8 @@ public class JsoupMicrobrowser implements Microbrowser
 	 */
 	public MicrodataDocument get(String url)
 	{
+		newUrl(url);
+		
 		try
 		{
 			Response response = Jsoup.connect(url)
