@@ -24,7 +24,7 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -68,7 +68,7 @@ class JsoupLink implements Link
 	 */
 	public URL getHref()
 	{
-		return newUrl(element.absUrl("href"));
+		return newUrlOrNull(element.absUrl("href"));
 	}
 
 	/**

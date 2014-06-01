@@ -29,7 +29,7 @@ import org.jsoup.select.Elements;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -65,7 +65,7 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	 */
 	public URL getId()
 	{
-		return newUrl(element.attr("itemid"));
+		return newUrlOrNull(element.attr("itemid"));
 	}
 
 	/**
@@ -73,7 +73,7 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	 */
 	public URL getType()
 	{
-		return newUrl(element.attr("itemtype"));
+		return newUrlOrNull(element.attr("itemtype"));
 	}
 
 	/**

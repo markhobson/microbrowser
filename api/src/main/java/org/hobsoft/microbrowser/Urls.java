@@ -34,7 +34,7 @@ public final class Urls
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public static URL newUrl(String spec)
+	public static URL newUrlOrNull(String spec)
 	{
 		try
 		{

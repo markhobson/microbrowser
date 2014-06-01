@@ -20,7 +20,7 @@ import org.hobsoft.microbrowser.MicrodataDocument;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -71,7 +71,7 @@ class SeleniumLink implements Link
 			return null;
 		}
 		
-		return newUrl(href);
+		return newUrlOrNull(href);
 	}
 
 	/**

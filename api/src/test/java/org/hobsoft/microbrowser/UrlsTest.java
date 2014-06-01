@@ -32,14 +32,14 @@ public class UrlsTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void newUrlReturnsUrl() throws MalformedURLException
+	public void newUrlOrNullReturnsUrl() throws MalformedURLException
 	{
-		assertThat(Urls.newUrl("http://x"), is(new URL("http://x")));
+		assertThat(Urls.newUrlOrNull("http://x"), is(new URL("http://x")));
 	}
 	
 	@Test
-	public void newUrlWithInvalidUrlReturnsNull()
+	public void newUrlOrNullWithInvalidUrlReturnsNull()
 	{
-		assertThat(Urls.newUrl("x"), is(nullValue()));
+		assertThat(Urls.newUrlOrNull("x"), is(nullValue()));
 	}
 }

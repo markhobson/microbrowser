@@ -30,7 +30,7 @@ import org.openqa.selenium.WebElement;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -66,7 +66,7 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	 */
 	public URL getId()
 	{
-		return newUrl(element.getAttribute("itemid"));
+		return newUrlOrNull(element.getAttribute("itemid"));
 	}
 
 	/**
@@ -74,7 +74,7 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	 */
 	public URL getType()
 	{
-		return newUrl(element.getAttribute("itemtype"));
+		return newUrlOrNull(element.getAttribute("itemtype"));
 	}
 
 	/**
