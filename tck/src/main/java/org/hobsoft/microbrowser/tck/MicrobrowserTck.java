@@ -69,4 +69,17 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		
 		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
 	}
+	
+	@Test
+	public void getWhenInternalErrorReturnsResponse() throws IOException
+	{
+		server().enqueue(new MockResponse().setResponseCode(500).setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
+			+ "</body></html>"));
+		server().play();
+		
+		MicrodataDocument actual = newBrowser().get(url(server()));
+		
+		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
+	}
 }

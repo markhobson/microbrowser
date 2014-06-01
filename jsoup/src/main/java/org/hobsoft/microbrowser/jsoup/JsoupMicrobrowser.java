@@ -41,6 +41,7 @@ public class JsoupMicrobrowser implements Microbrowser
 		{
 			Response response = Jsoup.connect(url)
 				.method(Method.GET)
+				.ignoreHttpErrors(true)
 				.execute();
 			
 			return new JsoupMicrodataDocument(Collections.<String, String>emptyMap(), response);
