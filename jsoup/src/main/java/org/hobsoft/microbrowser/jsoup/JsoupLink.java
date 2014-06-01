@@ -24,7 +24,7 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 
-import static org.hobsoft.microbrowser.jsoup.Urls.newUrl;
+import static org.hobsoft.microbrowser.Urls.newUrl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

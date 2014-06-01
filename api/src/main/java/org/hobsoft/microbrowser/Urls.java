@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.jsoup;
+package org.hobsoft.microbrowser;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,7 +19,7 @@ import java.net.URL;
 /**
  * Utility methods for working with {@code URL}s.
  */
-final class Urls
+public final class Urls
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
