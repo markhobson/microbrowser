@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.tck;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerRule;
 import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
@@ -30,6 +31,8 @@ public abstract class AbstractMicrobrowserTest
 
 	private MockWebServerRule serverRule = new MockWebServerRule();
 	
+	private ExpectedException thrown = ExpectedException.none();
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// test case methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -38,6 +41,12 @@ public abstract class AbstractMicrobrowserTest
 	public final MockWebServerRule getServerRule()
 	{
 		return serverRule;
+	}
+	
+	@Rule
+	public final ExpectedException thrown()
+	{
+		return thrown;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

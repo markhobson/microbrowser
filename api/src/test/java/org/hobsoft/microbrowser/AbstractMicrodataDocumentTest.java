@@ -19,7 +19,9 @@ import java.util.Collections;
 
 import org.hobsoft.microbrowser.support.FakeMicrodataDocument;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static java.util.Arrays.asList;
 
@@ -39,6 +41,8 @@ public class AbstractMicrodataDocumentTest
 
 	private AbstractMicrodataDocument document;
 	
+	private ExpectedException thrown = ExpectedException.none();
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// test methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -47,6 +51,12 @@ public class AbstractMicrodataDocumentTest
 	public void setUp()
 	{
 		document = mock(FakeMicrodataDocument.class);
+	}
+
+	@Rule
+	public ExpectedException getThrown()
+	{
+		return thrown;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -72,18 +82,24 @@ public class AbstractMicrodataDocumentTest
 		assertThat(document.getItem("http://x"), is(item1));
 	}
 
-	@Test(expected = MicrodataItemNotFoundException.class)
+	@Test
 	public void getItemWhenNoItemsThrowsException()
 	{
 		when(document.getItems("http://x")).thenReturn(Collections.<MicrodataItem>emptyList());
 		
+		thrown.expect(MicrodataItemNotFoundException.class);
+		thrown.expectMessage("http://x");
+		
 		document.getItem("http://x");
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void getItemWhenInvalidUrlThrowsException()
 	{
-		when(document.getItems("x")).thenThrow(new IllegalArgumentException());
+		when(document.getItems("x")).thenThrow(new IllegalArgumentException("y"));
+		
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("y");
 		
 		document.getItem("x");
 	}
@@ -94,9 +110,12 @@ public class AbstractMicrodataDocumentTest
 		assertThat(document.url("http://x"), is(new URL("http://x")));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void urlWithInvalidUrlThrowsException()
 	{
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Invalid URL: x");
+		
 		document.url("x");
 	}
 }

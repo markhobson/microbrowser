@@ -18,7 +18,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hobsoft.microbrowser.support.FakeHypermediaContainer;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static java.util.Arrays.asList;
 
@@ -36,6 +38,18 @@ public class AbstractHypermediaContainerTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	private AbstractHypermediaContainer container;
+	
+	private ExpectedException thrown = ExpectedException.none();
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// test methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Rule
+	public ExpectedException getThrown()
+	{
+		return thrown;
+	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// tests
@@ -57,7 +71,7 @@ public class AbstractHypermediaContainerTest
 		assertThat(container.getLink("x"), is(link));
 	}
 	
-	@Test(expected = LinkNotFoundException.class)
+	@Test
 	public void getLinkWhenNotFoundThrowsException()
 	{
 		container = new FakeHypermediaContainer()
@@ -68,6 +82,9 @@ public class AbstractHypermediaContainerTest
 				return "x".equals(rel) ? Collections.<Link>emptyList() : null;
 			}
 		};
+		
+		thrown.expect(LinkNotFoundException.class);
+		thrown.expectMessage("x");
 		
 		container.getLink("x");
 	}
@@ -106,7 +123,7 @@ public class AbstractHypermediaContainerTest
 		assertThat(container.getForm("x"), is(form));
 	}
 	
-	@Test(expected = FormNotFoundException.class)
+	@Test
 	public void getFormWhenNotFoundThrowsException()
 	{
 		container = new FakeHypermediaContainer()
@@ -122,6 +139,9 @@ public class AbstractHypermediaContainerTest
 				return null;
 			}
 		};
+		
+		thrown.expect(FormNotFoundException.class);
+		thrown.expectMessage("x");
 		
 		container.getForm("x");
 	}

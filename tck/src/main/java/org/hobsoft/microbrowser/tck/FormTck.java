@@ -135,7 +135,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		assertThat("form parameter value", actual, is("y"));
 	}
 
-	@Test(expected = ParameterNotFoundException.class)
+	@Test
 	public void getParameterWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -143,9 +143,13 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.getParameter("x");
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(ParameterNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		form.getParameter("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -186,7 +190,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		assertThat("form parameter value", form.getParameter("p"), is("x"));
 	}
 
-	@Test(expected = ParameterNotFoundException.class)
+	@Test
 	public void setParameterWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -194,9 +198,13 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.setParameter("p", "x");
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(ParameterNotFoundException.class);
+		thrown().expectMessage("p");
+		
+		form.setParameter("p", "x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -260,7 +268,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		assertThat("request", takeRequest(server()).getPath(), is("/x"));
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void submitWhenNoSubmitButtonThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -268,9 +276,13 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(IllegalStateException.class);
+		thrown().expectMessage("Missing form submit button");
+		
+		form.submit();
 	}
 
 	@Test

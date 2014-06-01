@@ -75,24 +75,32 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		assertThat("item", actual, is(item("http://y")));
 	}
 
-	@Test(expected = MicrodataItemNotFoundException.class)
+	@Test
 	public void getItemWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getItem("http://x");
+		MicrodataDocument document = newBrowser().get(url(server()));
+		
+		thrown().expect(MicrodataItemNotFoundException.class);
+		thrown().expectMessage("http://x");
+		
+		document.getItem("http://x");
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void getItemWithInvalidUrlThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
+
+		MicrodataDocument document = newBrowser().get(url(server()));
 		
-		newBrowser().get(url(server()))
-			.getItem("x");
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("x");
+		
+		document.getItem("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -143,14 +151,18 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		assertThat("items", actual, is(empty()));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void getItemsWithInvalidUrlThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getItems("x");
+		MicrodataDocument document = newBrowser().get(url(server()));
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("x");
+		
+		document.getItems("x");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -215,14 +227,18 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		assertThat("link", actual, is(link("x", "http://y/")));
 	}
 
-	@Test(expected = LinkNotFoundException.class)
+	@Test
 	public void getLinkWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getLink("x");
+		MicrodataDocument document = newBrowser().get(url(server()));
+
+		thrown().expect(LinkNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		document.getLink("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -336,14 +352,18 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		assertThat("form", document.getForm("x"), is(sameInstance(document.getForm("x"))));
 	}
 
-	@Test(expected = FormNotFoundException.class)
+	@Test
 	public void getFormWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getForm("x");
+		MicrodataDocument document = newBrowser().get(url(server()));
+		
+		thrown().expect(FormNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		document.getForm("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -362,13 +382,17 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		assertThat("cookie", actual, is("y"));
 	}
 
-	@Test(expected = CookieNotFoundException.class)
+	@Test
 	public void getCookieWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse());
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getCookie("x");
+		MicrodataDocument document = newBrowser().get(url(server()));
+		
+		thrown().expect(CookieNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		document.getCookie("x");
 	}
 }

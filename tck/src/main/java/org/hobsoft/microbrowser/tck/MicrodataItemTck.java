@@ -146,7 +146,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		assertThat("item property", actual.getName(), is("x"));
 	}
 
-	@Test(expected = MicrodataPropertyNotFoundException.class)
+	@Test
 	public void getPropertyWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -154,9 +154,13 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getItem("http://i")
-			.getProperty("x");
+		MicrodataItem item = newBrowser().get(url(server()))
+			.getItem("http://i");
+		
+		thrown().expect(MicrodataPropertyNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		item.getProperty("x");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -197,7 +201,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		assertThat("link", actual, is(link("x", "http://y/")));
 	}
 
-	@Test(expected = LinkNotFoundException.class)
+	@Test
 	public void getLinkWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -205,9 +209,13 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getItem("http://i")
-			.getLink("x");
+		MicrodataItem item = newBrowser().get(url(server()))
+			.getItem("http://i");
+		
+		thrown().expect(LinkNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		item.getLink("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -342,7 +350,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		assertThat("form", item.getForm("x"), is(sameInstance(item.getForm("x"))));
 	}
 
-	@Test(expected = FormNotFoundException.class)
+	@Test
 	public void getFormWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -350,8 +358,12 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "</body></html>"));
 		server().play();
 		
-		newBrowser().get(url(server()))
-			.getItem("http://i")
-			.getForm("x");
+		MicrodataItem item = newBrowser().get(url(server()))
+			.getItem("http://i");
+		
+		thrown().expect(FormNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		item.getForm("x");
 	}
 }
