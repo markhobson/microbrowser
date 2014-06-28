@@ -14,8 +14,9 @@ body, h1
 .header
 {
 	margin-bottom: 75px;
-	background: #ff9800;
+	background: #ff5722;
 	padding: 25px 100px;
+	color: #fff;
 }
 
 .header h1
