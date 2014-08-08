@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,8 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -149,15 +152,15 @@ class JsoupForm implements Form
 	
 	private Connection getConnection()
 	{
-		return Jsoup.connect(getAction())
+		return Jsoup.connect(getAction().toString())
 			.method(getMethod())
 			.data(parameterValuesByName)
 			.cookies(document.getCookies());
 	}
 	
-	private String getAction()
+	private URL getAction()
 	{
-		return element.absUrl("action");
+		return newUrlOrNull(element.absUrl("action"));
 	}
 
 	private Method getMethod()
