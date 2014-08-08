@@ -40,6 +40,8 @@ public interface Link
 	 * @return the response as a microdata document
 	 * @throws MicrobrowserException
 	 *             if an error occurs
+	 * @throws IllegalArgumentException
+	 *             if the href is not a valid URL
 	 */
 	MicrodataDocument follow();
 }

@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.tck;
 import java.io.IOException;
 import java.net.URL;
 
+import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.Test;
 
@@ -254,5 +255,22 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			.follow();
 		
 		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
+	}
+	
+	@Test
+	public void followWhenInvalidUrlThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='r' href='x:/a'>a</a>"
+			+ "</body></html>"));
+		server().play();
+		
+		Link link = newBrowser().get(url(server()))
+			.getLink("r");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid URL: x:/a");
+		
+		link.follow();
 	}
 }

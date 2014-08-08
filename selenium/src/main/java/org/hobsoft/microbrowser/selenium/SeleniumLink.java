@@ -22,6 +22,7 @@ import org.openqa.selenium.WebElement;
 
 import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -79,6 +80,8 @@ class SeleniumLink implements Link
 	 */
 	public MicrodataDocument follow()
 	{
+		checkArgument(getHref() != null, "Invalid URL: " + element.getAttribute("href"));
+
 		element.click();
 		
 		return new SeleniumMicrodataDocument(driver);

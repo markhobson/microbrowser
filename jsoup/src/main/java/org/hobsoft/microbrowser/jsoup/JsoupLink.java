@@ -26,6 +26,7 @@ import org.jsoup.nodes.Element;
 
 import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -96,7 +97,10 @@ class JsoupLink implements Link
 
 	private Connection getConnection()
 	{
-		return Jsoup.connect(getHref().toString())
+		URL href = getHref();
+		checkArgument(href != null, "Invalid URL: " + element.attr("href"));
+		
+		return Jsoup.connect(href.toString())
 			.method(Method.GET)
 			.cookies(document.getCookies());
 	}
