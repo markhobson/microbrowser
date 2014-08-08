@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
@@ -22,6 +23,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
+
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -85,7 +89,10 @@ class SeleniumForm implements Form
 	 */
 	public MicrodataDocument submit()
 	{
-		getSubmit().click();
+		WebElement submit = getSubmit();
+		checkArgument(getAction() != null, "Invalid action: " + element.getAttribute("action"));
+		
+		submit.click();
 		
 		return new SeleniumMicrodataDocument(driver);
 	}
@@ -93,6 +100,11 @@ class SeleniumForm implements Form
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	private URL getAction()
+	{
+		return newUrlOrNull(element.getAttribute("action"));
+	}
 	
 	private WebElement getControl(String name)
 	{

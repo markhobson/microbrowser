@@ -30,6 +30,7 @@ import org.jsoup.select.Elements;
 
 import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -103,6 +104,7 @@ class JsoupForm implements Form
 	public MicrodataDocument submit()
 	{
 		getSubmit();
+		checkArgument(getAction() != null, "Invalid action: " + element.attr("action"));
 		
 		JsoupMicrodataDocument nextDocument;
 		

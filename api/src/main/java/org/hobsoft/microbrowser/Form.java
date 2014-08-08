@@ -57,6 +57,8 @@ public interface Form
 	 *             if an error occurs
 	 * @throws IllegalStateException
 	 *             if the form is missing a submit button
+	 * @throws IllegalArgumentException
+	 *             if the action is not a valid URL
 	 */
 	MicrodataDocument submit();
 }
