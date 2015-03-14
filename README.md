@@ -1,4 +1,4 @@
 Microbrowser
 ============
 
-Programmatic web browser for HTML Microdata.
+A programmatic web browser for HTML Microdata.
