@@ -39,6 +39,9 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>selenium-maven-plugin</artifactId>
+				<configuration>
+					<display>${display}</display>
+				</configuration>
 				<executions>
 					<execution>
 						<id>xvfb</id>
@@ -46,9 +49,6 @@
 						<goals>
 							<goal>xvfb</goal>
 						</goals>
-						<configuration>
-							<display>${display}</display>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -56,6 +56,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*ITSuite.java</include>
+					</includes>
+					<environmentVariables>
+						<DISPLAY>${display}</DISPLAY>
+					</environmentVariables>
+				</configuration>
 				<executions>
 					<execution>
 						<id>integration-test</id>
@@ -65,14 +73,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<includes>
-						<include>**/*ITSuite.java</include>
-					</includes>
-					<environmentVariables>
-						<DISPLAY>${display}</DISPLAY>
-					</environmentVariables>
-				</configuration>
 			</plugin>
 	
 		</plugins>
