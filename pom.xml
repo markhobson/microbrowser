@@ -64,6 +64,11 @@
 		<url>https://github.com/markhobson/microbrowser/issues</url>
 	</issueManagement>
 	
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/markhobson/microbrowser</url>
+	</ciManagement>
+	
 	<build>
 	
 		<pluginManagement>
