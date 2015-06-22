@@ -63,6 +63,10 @@ public class MockWebServerRule extends ExternalResource
 		{
 			server.shutdown();
 		}
+		catch (IllegalStateException exception)
+		{
+			// server not started
+		}
 		catch (IOException exception)
 		{
 			LOG.log(Level.WARNING, "Error shutting down server", exception);

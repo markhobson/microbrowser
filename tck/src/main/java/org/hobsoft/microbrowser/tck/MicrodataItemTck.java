@@ -52,7 +52,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -67,7 +67,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y' itemid=' http://x '/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -82,7 +82,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y' itemid='x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -97,7 +97,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -116,7 +116,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://x")
@@ -137,7 +137,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataProperty actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -152,7 +152,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
@@ -175,7 +175,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<a rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -192,7 +192,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<link rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -207,7 +207,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
@@ -230,7 +230,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<a rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -248,7 +248,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<a rel='x' href='http://z/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -268,7 +268,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<link rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -286,7 +286,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<link rel='x' href='http://z/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -304,7 +304,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -325,7 +325,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<form name='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -342,7 +342,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 			+ "<form name='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
@@ -356,7 +356,7 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");

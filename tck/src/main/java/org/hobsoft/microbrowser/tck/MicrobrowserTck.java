@@ -38,7 +38,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	public void getRequestsPath() throws IOException, InterruptedException
 	{
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server(), "/x"));
 		
@@ -49,7 +49,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	public void getSetsCookie() throws IOException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getCookie("x");
@@ -63,7 +63,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		
@@ -85,7 +85,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setResponseCode(404).setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		
@@ -98,7 +98,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setResponseCode(500).setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		

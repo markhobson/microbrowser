@@ -44,7 +44,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -59,7 +59,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -78,7 +78,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='http://x/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -93,7 +93,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -108,7 +108,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -123,7 +123,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='http://x/'/>"
 			+ "</head></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -138,7 +138,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='x'/>"
 			+ "</head></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -153,7 +153,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='r'/>"
 			+ "</head></html>"));
-		server().play();
+		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -173,7 +173,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			+ "<a rel='r' href='/x'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -190,7 +190,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			+ "<a rel='r' href='/a'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -207,7 +207,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			+ "<a rel='r' href='/a'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -227,7 +227,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 			+ "<a rel='r2' href='/a'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r1")
@@ -248,7 +248,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -263,7 +263,7 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='x:/a'>a</a>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Link link = newBrowser().get(url(server()))
 			.getLink("r");

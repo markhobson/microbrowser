@@ -52,7 +52,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
 			.getItem("http://x");
@@ -67,7 +67,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
 			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://z'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataItem actual = newBrowser().get(url(server()))
 			.getItem("http://x");
@@ -79,7 +79,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument document = newBrowser().get(url(server()));
 		
@@ -93,7 +93,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemWithInvalidUrlThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
+		server().start();
 
 		MicrodataDocument document = newBrowser().get(url(server()));
 		
@@ -113,7 +113,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
 			.getItems("http://x");
@@ -128,7 +128,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://y'/>"
 			+ "<div itemscope='itemscope' itemtype='http://x' itemid='http://z'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
 			.getItems("http://x");
@@ -143,7 +143,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemsWhenNotFoundReturnsEmptyList() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
+		server().start();
 		
 		List<MicrodataItem> actual = newBrowser().get(url(server()))
 			.getItems("http://x");
@@ -155,7 +155,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getItemsWithInvalidUrlThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument document = newBrowser().get(url(server()));
 
@@ -175,7 +175,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x' href='http://y/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
@@ -190,7 +190,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 			+ "<a rel='x' href='http://y/'/>"
 			+ "<a rel='x' href='http://z/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
@@ -204,7 +204,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x' href='http://y/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
@@ -219,7 +219,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 			+ "<link rel='x' href='http://y/'/>"
 			+ "<link rel='x' href='http://z/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getLink("x");
@@ -231,7 +231,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getLinkWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument document = newBrowser().get(url(server()));
 
@@ -251,7 +251,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x' href='http://y/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getLinks("x");
@@ -266,7 +266,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 			+ "<a rel='x' href='http://y/'/>"
 			+ "<a rel='x' href='http://z/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getLinks("x");
@@ -283,7 +283,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x' href='http://y/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getLinks("x");
@@ -298,7 +298,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 			+ "<link rel='x' href='http://y/'/>"
 			+ "<link rel='x' href='http://z/'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getLinks("x");
@@ -313,7 +313,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getLinksWhenNotFoundReturnsEmptyList() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
+		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getLinks("x");
@@ -331,7 +331,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form actual = newBrowser().get(url(server()))
 			.getForm("x");
@@ -345,7 +345,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument document = newBrowser().get(url(server()));
 		
@@ -356,7 +356,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getFormWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument document = newBrowser().get(url(server()));
 		
@@ -374,7 +374,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getCookieReturnsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getCookie("x");
@@ -386,7 +386,7 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 	public void getCookieWhenNotFoundThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		MicrodataDocument document = newBrowser().get(url(server()));
 		

@@ -37,6 +37,6 @@ public final class RecordedRequestUtils
 
 	public static String body(RecordedRequest request)
 	{
-		return new String(request.getBody(), Charset.forName("ISO-8859-1"));
+		return request.getBody().readString(Charset.forName("ISO-8859-1"));
 	}
 }

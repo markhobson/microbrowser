@@ -45,7 +45,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("x")
@@ -65,7 +65,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<form name='f'/>"
 			+ "<input type='text' name='x' value='y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -80,7 +80,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<form name='f'/>"
 			+ "<input type='text' name='x' value='y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -96,7 +96,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<form name='f'/>"
 			+ "<input type='password' name='x' value='y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -111,7 +111,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<form name='f'/>"
 			+ "<input type='password' name='x' value='y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -127,7 +127,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<form name='f'/>"
 			+ "<input type='hidden' name='x' value='y'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -141,7 +141,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -164,7 +164,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<input type='text' name='p'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -181,7 +181,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<input type='password' name='p'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -196,7 +196,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -220,7 +220,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -239,7 +239,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -258,7 +258,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -274,7 +274,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -294,7 +294,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -312,7 +312,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -332,7 +332,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -352,7 +352,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -372,7 +372,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -393,7 +393,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -413,7 +413,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -434,7 +434,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -453,7 +453,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -472,7 +472,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -494,7 +494,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -517,7 +517,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -535,7 +535,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -555,7 +555,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -575,7 +575,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -596,7 +596,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -616,7 +616,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -637,7 +637,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -656,7 +656,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().play();
+		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -675,7 +675,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -697,7 +697,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().play();
+		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -720,7 +720,7 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().play();
+		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getForm("f")
