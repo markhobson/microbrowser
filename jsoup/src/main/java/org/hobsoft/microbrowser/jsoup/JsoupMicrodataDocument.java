@@ -83,9 +83,6 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// MicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<MicrodataItem> getItems(String type)
 	{
 		Elements elements = document.select(byItemType(newUrl(type)));
@@ -99,9 +96,6 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 		});
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getCookie(String name)
 	{
 		String value = cookies.get(name);
@@ -118,9 +112,6 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<Link> getLinks(String rel)
 	{
 		Elements elements = document.select(byLink(rel));
@@ -138,9 +129,6 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// AbstractHypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Form newForm(String name)
 	{

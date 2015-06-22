@@ -54,9 +54,6 @@ public class SeleniumLinkIT extends LinkTck
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Microbrowser newBrowser()
 	{

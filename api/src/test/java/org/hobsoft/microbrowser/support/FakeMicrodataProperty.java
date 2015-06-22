@@ -51,9 +51,6 @@ public class FakeMicrodataProperty extends AbstractMicrodataProperty
 	// MicrodataProperty methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public <T> T unwrap(Class<T> type)
 	{
 		return null;
@@ -63,27 +60,18 @@ public class FakeMicrodataProperty extends AbstractMicrodataProperty
 	// AbstractMicrodataProperty methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getElementName()
 	{
 		return elementName;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getAttribute(String name, boolean absoluteUrl)
 	{
 		return absoluteUrl ? absoluteUrlAttributeValuesByName.get(name) : attributeValuesByName.get(name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getText()
 	{

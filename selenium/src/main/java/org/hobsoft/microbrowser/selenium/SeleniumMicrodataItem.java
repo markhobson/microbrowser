@@ -61,25 +61,16 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	// MicrodataItem methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public URL getId()
 	{
 		return newUrlOrNull(element.getAttribute("itemid"));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public URL getType()
 	{
 		return newUrlOrNull(element.getAttribute("itemtype"));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataProperty getProperty(String name)
 	{
 		List<WebElement> elements = element.findElements(byItemProp(name));
@@ -96,9 +87,6 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<Link> getLinks(String rel)
 	{
 		List<WebElement> elements = element.findElements(byLink(rel));
@@ -116,9 +104,6 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	// AbstractHypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Form newForm(String name)
 	{

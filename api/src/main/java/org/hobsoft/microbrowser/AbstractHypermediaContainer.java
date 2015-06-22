@@ -41,9 +41,6 @@ public abstract class AbstractHypermediaContainer implements HypermediaContainer
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public final Link getLink(String rel)
 	{
 		List<Link> links = getLinks(rel);
@@ -56,9 +53,6 @@ public abstract class AbstractHypermediaContainer implements HypermediaContainer
 		return links.get(0);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public final Form getForm(String name)
 	{
 		Form form = formsByName.get(name);

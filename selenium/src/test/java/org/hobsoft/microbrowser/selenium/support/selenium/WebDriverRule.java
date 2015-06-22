@@ -52,9 +52,6 @@ public final class WebDriverRule extends ExternalResource
 	// ExternalResource methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void before() throws InstantiationException, IllegalAccessException
 	{
@@ -66,9 +63,6 @@ public final class WebDriverRule extends ExternalResource
 		statements++;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void after()
 	{

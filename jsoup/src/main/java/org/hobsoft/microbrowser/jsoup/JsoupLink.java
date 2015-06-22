@@ -56,25 +56,16 @@ class JsoupLink implements Link
 	// Link methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getRel()
 	{
 		return element.attr("rel");
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public URL getHref()
 	{
 		return newUrlOrNull(element.absUrl("href"));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataDocument follow()
 	{
 		JsoupMicrodataDocument nextDocument;

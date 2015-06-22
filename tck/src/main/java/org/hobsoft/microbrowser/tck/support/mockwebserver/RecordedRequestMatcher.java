@@ -46,9 +46,6 @@ public class RecordedRequestMatcher extends TypeSafeMatcher<RecordedRequest>
 	// SelfDescribing methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void describeTo(Description description)
 	{
 		description.appendValue(expectedMethod)
@@ -60,9 +57,6 @@ public class RecordedRequestMatcher extends TypeSafeMatcher<RecordedRequest>
 	// TypeSafeMatcher methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected boolean matchesSafely(RecordedRequest actual)
 	{

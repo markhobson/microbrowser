@@ -29,17 +29,11 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	// MicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<MicrodataItem> getItems(String type)
 	{
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getCookie(String name)
 	{
 		return null;
@@ -49,9 +43,6 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<Link> getLinks(String rel)
 	{
 		return null;
@@ -61,9 +52,6 @@ public class FakeMicrodataDocument extends AbstractMicrodataDocument
 	// AbstractMicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Form newForm(String name)
 	{

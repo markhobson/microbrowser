@@ -54,9 +54,6 @@ public class SeleniumMicrodataItemIT extends MicrodataItemTck
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Microbrowser newBrowser()
 	{

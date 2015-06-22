@@ -42,9 +42,6 @@ class JsoupMicrodataProperty extends AbstractMicrodataProperty
 	// MicrodataProperty methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public <T> T unwrap(Class<T> type)
 	{
 		T instance;
@@ -65,27 +62,18 @@ class JsoupMicrodataProperty extends AbstractMicrodataProperty
 	// AbstractMicrodataProperty methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getElementName()
 	{
 		return element.nodeName();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getAttribute(String name, boolean absoluteUrl)
 	{
 		return absoluteUrl ? element.absUrl(name) : element.attr(name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getText()
 	{

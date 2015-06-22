@@ -45,9 +45,6 @@ public class SeleniumMicrobrowser implements Microbrowser
 	// Microbrowser methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataDocument get(String url)
 	{
 		newUrl(url);

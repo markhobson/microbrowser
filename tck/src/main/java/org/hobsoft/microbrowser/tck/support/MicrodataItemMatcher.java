@@ -60,9 +60,6 @@ public final class MicrodataItemMatcher extends TypeSafeMatcher<MicrodataItem>
 	// TypeSafeMatcher methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected boolean matchesSafely(MicrodataItem item)
 	{
@@ -73,9 +70,6 @@ public final class MicrodataItemMatcher extends TypeSafeMatcher<MicrodataItem>
 	// SelfDescribing methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void describeTo(Description description)
 	{
 		description.appendText("id=").appendValue(expectedId);

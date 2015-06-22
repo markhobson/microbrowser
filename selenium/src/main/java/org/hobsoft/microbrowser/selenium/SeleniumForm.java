@@ -56,25 +56,16 @@ class SeleniumForm implements Form
 	// Form methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getName()
 	{
 		return element.getAttribute("name");
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getParameter(String name)
 	{
 		return getControl(name).getAttribute("value");
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public Form setParameter(String name, String value)
 	{
 		WebElement control = getControl(name);
@@ -84,9 +75,6 @@ class SeleniumForm implements Form
 		return this;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataDocument submit()
 	{
 		WebElement submit = getSubmit();

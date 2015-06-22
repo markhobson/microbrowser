@@ -65,17 +65,11 @@ class JsoupForm implements Form
 	// Form methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getName()
 	{
 		return element.attr("name");
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");
@@ -84,9 +78,6 @@ class JsoupForm implements Form
 		return parameterValuesByName.get(name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public Form setParameter(String name, String value)
 	{
 		checkNotNull(name, "name");
@@ -98,9 +89,6 @@ class JsoupForm implements Form
 		return this;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataDocument submit()
 	{
 		getSubmit();

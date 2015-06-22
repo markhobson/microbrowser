@@ -54,9 +54,6 @@ public class SeleniumMicrobrowserIT extends MicrobrowserTck
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Microbrowser newBrowser()
 	{

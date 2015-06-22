@@ -25,9 +25,6 @@ public class JsoupMicrodataDocumentIT extends MicrodataDocumentTck
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Microbrowser newBrowser()
 	{

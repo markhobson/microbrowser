@@ -26,9 +26,6 @@ public abstract class AbstractMicrodataDocument extends AbstractHypermediaContai
 	// MicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public final MicrodataItem getItem(String type)
 	{
 		List<MicrodataItem> items = getItems(type);

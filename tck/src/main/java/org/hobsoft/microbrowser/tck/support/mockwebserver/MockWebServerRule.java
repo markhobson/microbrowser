@@ -42,9 +42,6 @@ public class MockWebServerRule extends ExternalResource
 	// ExternalResource methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void before()
 	{
@@ -53,9 +50,6 @@ public class MockWebServerRule extends ExternalResource
 		server = new MockWebServer();
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void after()
 	{

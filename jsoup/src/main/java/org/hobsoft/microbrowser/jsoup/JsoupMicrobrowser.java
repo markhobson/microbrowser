@@ -34,9 +34,6 @@ public class JsoupMicrobrowser implements Microbrowser
 	// Microbrowser methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataDocument get(String url)
 	{
 		newUrl(url);

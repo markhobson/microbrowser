@@ -60,25 +60,16 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	// MicrodataItem methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public URL getId()
 	{
 		return newUrlOrNull(element.attr("itemid"));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public URL getType()
 	{
 		return newUrlOrNull(element.attr("itemtype"));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataProperty getProperty(String name)
 	{
 		Elements elements = element.select(byItemProp(name));
@@ -95,9 +86,6 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<Link> getLinks(String rel)
 	{
 		Elements elements = element.select(byLink(rel));
@@ -115,9 +103,6 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	// AbstractHypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Form newForm(String name)
 	{

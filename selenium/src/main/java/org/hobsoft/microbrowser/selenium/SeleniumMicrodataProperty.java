@@ -42,9 +42,6 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 	// MicrodataItemValue methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public <T> T unwrap(Class<T> type)
 	{
 		T instance;
@@ -65,27 +62,18 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 	// AbstractMicrodataProperty methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getElementName()
 	{
 		return element.getTagName();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getAttribute(String name, boolean absoluteUrl)
 	{
 		return element.getAttribute(name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getText()
 	{

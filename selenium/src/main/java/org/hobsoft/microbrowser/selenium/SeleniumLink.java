@@ -52,17 +52,11 @@ class SeleniumLink implements Link
 	// Link methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getRel()
 	{
 		return element.getAttribute("rel");
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public URL getHref()
 	{
 		String href = element.getAttribute("href");
@@ -75,9 +69,6 @@ class SeleniumLink implements Link
 		return newUrlOrNull(href);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public MicrodataDocument follow()
 	{
 		checkArgument(getHref() != null, "Invalid URL: " + element.getAttribute("href"));

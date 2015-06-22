@@ -58,9 +58,6 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	// MicrodataDocument methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<MicrodataItem> getItems(String type)
 	{
 		List<WebElement> elements = driver.findElements(byItemType(newUrl(type)));
@@ -74,9 +71,6 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 		});
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getCookie(String name)
 	{
 		Cookie cookie = driver.manage().getCookieNamed(name);
@@ -93,9 +87,6 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<Link> getLinks(String rel)
 	{
 		List<WebElement> elements = driver.findElements(byLink(rel));
@@ -113,9 +104,6 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	// AbstractHypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Form newForm(String name)
 	{

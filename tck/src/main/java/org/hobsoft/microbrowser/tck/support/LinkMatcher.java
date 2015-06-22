@@ -63,9 +63,6 @@ public final class LinkMatcher extends TypeSafeMatcher<Link>
 	// TypeSafeMatcher methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected boolean matchesSafely(Link link)
 	{
@@ -77,9 +74,6 @@ public final class LinkMatcher extends TypeSafeMatcher<Link>
 	// SelfDescribing methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void describeTo(Description description)
 	{
 		description.appendText("rel=").appendValue(expectedRel).appendText(" ");

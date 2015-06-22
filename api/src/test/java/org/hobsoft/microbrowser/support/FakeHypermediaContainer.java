@@ -28,9 +28,6 @@ public class FakeHypermediaContainer extends AbstractHypermediaContainer
 	// HypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public List<Link> getLinks(String rel)
 	{
 		return null;
@@ -40,9 +37,6 @@ public class FakeHypermediaContainer extends AbstractHypermediaContainer
 	// AbstractHypermediaContainer methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected Form newForm(String name)
 	{
