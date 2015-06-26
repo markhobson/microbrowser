@@ -3,6 +3,11 @@ Microbrowser
 
 A programmatic web browser for HTML Microdata.
 
+Links
+-----
+
+* [Dive Into HTML5: "Distributed," "Extensibility," And Other Fancy Words](http://diveintohtml5.info/extensibility.html)
+
 License
 -------
 
