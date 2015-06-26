@@ -305,6 +305,25 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void submitWhenNoActionSubmitsRequest() throws IOException, InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server(), "/x"))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()).getPath(), is("/x"));
+	}
+	
+	@Test
 	public void submitWhenInvalidActionThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"

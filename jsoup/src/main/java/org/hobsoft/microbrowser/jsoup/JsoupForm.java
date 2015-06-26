@@ -150,7 +150,18 @@ class JsoupForm implements Form
 	
 	private URL getAction()
 	{
-		return newUrlOrNull(element.absUrl("action"));
+		String action;
+		
+		if (element.hasAttr("action"))
+		{
+			action = element.absUrl("action");
+		}
+		else
+		{
+			action = element.ownerDocument().baseUri();
+		}
+		
+		return newUrlOrNull(action);
 	}
 
 	private Method getMethod()

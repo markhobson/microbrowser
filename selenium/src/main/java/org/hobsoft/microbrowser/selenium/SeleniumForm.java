@@ -91,7 +91,14 @@ class SeleniumForm implements Form
 	
 	private URL getAction()
 	{
-		return newUrlOrNull(element.getAttribute("action"));
+		String action = element.getAttribute("action");
+		
+		if (action.isEmpty())
+		{
+			action = driver.getCurrentUrl();
+		}
+		
+		return newUrlOrNull(action);
 	}
 	
 	private WebElement getControl(String name)
