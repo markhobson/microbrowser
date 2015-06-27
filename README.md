@@ -3,6 +3,12 @@ Microbrowser
 
 A programmatic web browser for HTML Microdata.
 
+Background
+----------
+
+Inspired by Jon Moore's [Building Hypermedia APIs with HTML](http://www.infoq.com/presentations/web-api-html) talk at
+QCon 2013, Microbrowser aims to provide a production ready Java implementation of his [Python prototype](https://github.com/Comcast/htmlapi-client-python).
+
 Further reading
 ---------------
 
