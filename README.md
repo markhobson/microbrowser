@@ -6,6 +6,7 @@ A programmatic web browser for HTML Microdata.
 Further reading
 ---------------
 
+* [HTML5 Microdata Specification](https://html.spec.whatwg.org/multipage/microdata.html)
 * [Dive Into HTML5 - Microdata](http://diveintohtml5.info/extensibility.html)
 
 License
