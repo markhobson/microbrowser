@@ -100,6 +100,18 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		return nullToEmpty(value);
 	}
 	
+	public final int getIntValue()
+	{
+		try
+		{
+			return Integer.parseInt(getValue());
+		}
+		catch (NumberFormatException exception)
+		{
+			return 0;
+		}
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------

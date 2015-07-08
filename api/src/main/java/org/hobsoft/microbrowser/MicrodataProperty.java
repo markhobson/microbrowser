@@ -32,5 +32,12 @@ public interface MicrodataProperty
 	 */
 	String getValue();
 
+	/**
+	 * Gets the value of this item property as an integer.
+	 * 
+	 * @return the item property value, or zero if not specified or the value cannot be parsed
+	 */
+	int getIntValue();
+	
 	<T> T unwrap(Class<T> type);
 }
