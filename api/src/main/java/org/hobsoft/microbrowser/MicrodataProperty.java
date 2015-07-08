@@ -25,6 +25,11 @@ public interface MicrodataProperty
 	 */
 	String getName();
 
+	/**
+	 * Gets the value of this item property.
+	 * 
+	 * @return the item property value, or the empty string if not specified
+	 */
 	String getValue();
 
 	<T> T unwrap(Class<T> type);
