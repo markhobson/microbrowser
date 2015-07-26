@@ -112,6 +112,18 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		}
 	}
 	
+	public final long getLongValue()
+	{
+		try
+		{
+			return Long.parseLong(getValue());
+		}
+		catch (NumberFormatException exception)
+		{
+			return 0;
+		}
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------

@@ -39,5 +39,12 @@ public interface MicrodataProperty
 	 */
 	int getIntValue();
 	
+	/**
+	 * Gets the value of this item property as a long.
+	 * 
+	 * @return the item property value, or zero if not specified or the value cannot be parsed
+	 */
+	long getLongValue();
+	
 	<T> T unwrap(Class<T> type);
 }

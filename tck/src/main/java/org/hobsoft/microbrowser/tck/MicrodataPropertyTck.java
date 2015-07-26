@@ -895,4 +895,58 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		
 		assertThat("item property value", actual, is(0));
 	}
+	
+	@Test
+	public void getLongValueReturnsLong() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'>1</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		long actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getLongValue();
+		
+		assertThat("item property value", actual, is(1L));
+	}
+	
+	@Test
+	public void getLongValueWhenEmptyReturnsZero() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		long actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getLongValue();
+		
+		assertThat("item property value", actual, is(0L));
+	}
+	
+	@Test
+	public void getLongValueWhenInvalidReturnsZero() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		long actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getLongValue();
+		
+		assertThat("item property value", actual, is(0L));
+	}
 }
