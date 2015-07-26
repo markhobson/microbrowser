@@ -53,5 +53,12 @@ public interface MicrodataProperty
 	 */
 	float getFloatValue();
 	
+	/**
+	 * Gets the value of this item property as a double.
+	 * 
+	 * @return the item property value, or zero if not specified or the value cannot be parsed
+	 */
+	double getDoubleValue();
+	
 	<T> T unwrap(Class<T> type);
 }

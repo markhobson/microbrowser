@@ -136,6 +136,18 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		}
 	}
 	
+	public final double getDoubleValue()
+	{
+		try
+		{
+			return Double.parseDouble(getValue());
+		}
+		catch (NumberFormatException exception)
+		{
+			return 0;
+		}
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------
