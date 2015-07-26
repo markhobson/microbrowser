@@ -14,6 +14,8 @@
 package org.hobsoft.microbrowser.selenium;
 
 import org.hobsoft.microbrowser.AbstractMicrodataProperty;
+import org.hobsoft.microbrowser.MicrodataItem;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -27,14 +29,17 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private final WebDriver driver;
+	
 	private final WebElement element;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumMicrodataProperty(WebElement element)
+	public SeleniumMicrodataProperty(WebDriver driver, WebElement element)
 	{
+		this.driver = checkNotNull(driver, "driver");
 		this.element = checkNotNull(element, "element");
 	}
 
@@ -42,6 +47,16 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 	// MicrodataProperty methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	public MicrodataItem getItemValue()
+	{
+		if (element.getAttribute("itemscope") == null)
+		{
+			return null;
+		}
+		
+		return new SeleniumMicrodataItem(driver, element);
+	}
+	
 	public <T> T unwrap(Class<T> type)
 	{
 		T instance;

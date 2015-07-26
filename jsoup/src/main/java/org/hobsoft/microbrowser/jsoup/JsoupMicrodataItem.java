@@ -31,6 +31,7 @@ import com.google.common.collect.Lists;
 
 import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -52,6 +53,8 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 
 	public JsoupMicrodataItem(JsoupMicrodataDocument document, Element element)
 	{
+		checkArgument(element.hasAttr("itemscope"), "Missing itemscope attribute: %s", element);
+		
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
 	}
@@ -79,7 +82,7 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 			throw new MicrodataPropertyNotFoundException(name);
 		}
 		
-		return new JsoupMicrodataProperty(elements.first());
+		return new JsoupMicrodataProperty(document, elements.first());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

@@ -15,14 +15,17 @@ package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
 
+import org.hobsoft.microbrowser.MicrodataItem;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.isEmptyString;
+import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -1128,5 +1131,41 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 			.getDoubleValue();
 		
 		assertThat("item property value", actual, is(0d));
+	}
+
+	@Test
+	public void getItemValueReturnsItem() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p' itemscope='itemscope' itemid='http://x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		MicrodataItem actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getItemValue();
+		
+		assertThat("item property value", actual, is(item("http://x")));
+	}
+	
+	@Test
+	public void getItemValueWhenInvalidReturnsNull() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		MicrodataItem actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getItemValue();
+		
+		assertThat("item property value", actual, is(nullValue()));
 	}
 }
