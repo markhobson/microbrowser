@@ -15,7 +15,6 @@ package org.hobsoft.microbrowser;
 
 import java.util.Collections;
 
-import org.hobsoft.microbrowser.support.FakeMicrodataDocument;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,7 +47,7 @@ public class AbstractMicrodataDocumentTest
 	@Before
 	public void setUp()
 	{
-		document = mock(FakeMicrodataDocument.class);
+		document = mock(AbstractMicrodataDocument.class);
 	}
 
 	@Rule
