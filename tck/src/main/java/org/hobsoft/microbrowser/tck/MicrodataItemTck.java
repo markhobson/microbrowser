@@ -124,6 +124,25 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		
 		assertThat("item type", actual, is(new URL("http://x")));
 	}
+	
+	@Test
+	public void getTypeWhenNotFoundReturnsNull() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p' itemscope='itemscope'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		URL actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getItemValue()
+			.getType();
+		
+		assertThat("item type", actual, is(nullValue()));
+	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// getProperty tests
