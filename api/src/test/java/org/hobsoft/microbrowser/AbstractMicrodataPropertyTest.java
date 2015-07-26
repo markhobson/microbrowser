@@ -17,6 +17,7 @@ import org.hobsoft.microbrowser.support.FakeMicrodataProperty;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -42,7 +43,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("meta");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -59,7 +60,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("audio");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -76,7 +77,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("embed");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -93,7 +94,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("iframe");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -110,7 +111,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("img");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -127,7 +128,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("source");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -144,7 +145,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("track");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -161,7 +162,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("video");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -178,7 +179,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("a");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -195,7 +196,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("area");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -212,7 +213,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("link");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -229,7 +230,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("object");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -246,7 +247,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("data");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -289,7 +290,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("time");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
@@ -306,7 +307,7 @@ public class AbstractMicrodataPropertyTest
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
 		
-		assertThat(property.getValue(), is(""));
+		assertThat(property.getValue(), isEmptyString());
 	}
 	
 	@Test
