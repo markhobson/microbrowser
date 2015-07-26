@@ -362,4 +362,31 @@ public class AbstractMicrodataPropertyTest
 		
 		assertThat(property.getLongValue(), is(0L));
 	}
+
+	@Test
+	public void getFloatValueReturnsFloat()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
+		property.setText("1");
+		
+		assertThat(property.getFloatValue(), is(1f));
+	}
+	
+	@Test
+	public void getFloatValueWhenEmptyReturnsZero()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
+		property.setText("");
+		
+		assertThat(property.getFloatValue(), is(0f));
+	}
+	
+	@Test
+	public void getFloatValueWhenInvalidReturnsZero()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
+		property.setText("x");
+		
+		assertThat(property.getFloatValue(), is(0f));
+	}
 }

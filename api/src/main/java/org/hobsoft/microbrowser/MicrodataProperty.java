@@ -46,5 +46,12 @@ public interface MicrodataProperty
 	 */
 	long getLongValue();
 	
+	/**
+	 * Gets the value of this item property as a float.
+	 * 
+	 * @return the item property value, or zero if not specified or the value cannot be parsed
+	 */
+	float getFloatValue();
+	
 	<T> T unwrap(Class<T> type);
 }

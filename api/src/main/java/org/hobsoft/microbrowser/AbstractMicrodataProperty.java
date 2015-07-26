@@ -124,6 +124,18 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		}
 	}
 	
+	public final float getFloatValue()
+	{
+		try
+		{
+			return Float.parseFloat(getValue());
+		}
+		catch (NumberFormatException exception)
+		{
+			return 0;
+		}
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------

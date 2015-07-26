@@ -949,4 +949,58 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		
 		assertThat("item property value", actual, is(0L));
 	}
+	
+	@Test
+	public void getFloatValueReturnsFloat() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'>1</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		float actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getFloatValue();
+		
+		assertThat("item property value", actual, is(1f));
+	}
+	
+	@Test
+	public void getFloatValueWhenEmptyReturnsZero() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		float actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getFloatValue();
+		
+		assertThat("item property value", actual, is(0f));
+	}
+	
+	@Test
+	public void getFloatValueWhenInvalidReturnsZero() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		float actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getFloatValue();
+		
+		assertThat("item property value", actual, is(0f));
+	}
 }
