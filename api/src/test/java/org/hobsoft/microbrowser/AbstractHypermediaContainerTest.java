@@ -15,7 +15,6 @@ package org.hobsoft.microbrowser;
 
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
 import org.hobsoft.microbrowser.support.FakeHypermediaContainer;
 import org.junit.Rule;
@@ -27,6 +26,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests {@code AbstractHypermediaContainer}.
@@ -58,15 +58,9 @@ public class AbstractHypermediaContainerTest
 	@Test
 	public void getLinkReturnsFirstLink()
 	{
-		final Link link = mock(Link.class);
-		container = new FakeHypermediaContainer()
-		{
-			@Override
-			public List<Link> getLinks(String rel)
-			{
-				return "x".equals(rel) ? asList(link, mock(Link.class)) : null;
-			}
-		};
+		Link link = mock(Link.class);
+		container = mock(AbstractHypermediaContainer.class);
+		when(container.getLinks("x")).thenReturn(asList(link, mock(Link.class)));
 		
 		assertThat(container.getLink("x"), is(link));
 	}
@@ -74,14 +68,8 @@ public class AbstractHypermediaContainerTest
 	@Test
 	public void getLinkWhenNotFoundThrowsException()
 	{
-		container = new FakeHypermediaContainer()
-		{
-			@Override
-			public List<Link> getLinks(String rel)
-			{
-				return "x".equals(rel) ? Collections.<Link>emptyList() : null;
-			}
-		};
+		container = mock(AbstractHypermediaContainer.class);
+		when(container.getLinks("x")).thenReturn(Collections.<Link>emptyList());
 		
 		thrown.expect(LinkNotFoundException.class);
 		thrown.expectMessage("x");
