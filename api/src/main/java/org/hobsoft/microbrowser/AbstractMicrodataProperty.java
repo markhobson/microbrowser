@@ -100,6 +100,11 @@ public abstract class AbstractMicrodataProperty implements MicrodataProperty
 		return nullToEmpty(value);
 	}
 	
+	public final boolean getBooleanValue()
+	{
+		return Boolean.parseBoolean(getValue());
+	}
+	
 	public final int getIntValue()
 	{
 		try

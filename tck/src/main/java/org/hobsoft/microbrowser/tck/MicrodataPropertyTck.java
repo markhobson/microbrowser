@@ -843,6 +843,78 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void getBooleanValueWhenTrueReturnsTrue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'>true</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		boolean actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getBooleanValue();
+		
+		assertThat("item property value", actual, is(true));
+	}
+	
+	@Test
+	public void getBooleanValueWhenFalseReturnsFalse() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'>false</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		boolean actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getBooleanValue();
+		
+		assertThat("item property value", actual, is(false));
+	}
+	
+	@Test
+	public void getBooleanValueWhenEmptyReturnsFalse() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		boolean actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getBooleanValue();
+		
+		assertThat("item property value", actual, is(false));
+	}
+	
+	@Test
+	public void getBooleanValueWhenInvalidReturnsFalse() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='p'>x</p>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		boolean actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("p")
+			.getBooleanValue();
+		
+		assertThat("item property value", actual, is(false));
+	}
+	
+	@Test
 	public void getIntValueReturnsInteger() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"

@@ -311,6 +311,42 @@ public class AbstractMicrodataPropertyTest
 	}
 	
 	@Test
+	public void getBooleanValueWhenTrueReturnsTrue()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
+		property.setText("true");
+		
+		assertThat(property.getBooleanValue(), is(true));
+	}
+	
+	@Test
+	public void getBooleanValueWhenFalseReturnsFalse()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
+		property.setText("false");
+		
+		assertThat(property.getBooleanValue(), is(false));
+	}
+	
+	@Test
+	public void getBooleanValueWhenEmptyReturnsFalse()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
+		property.setText("");
+		
+		assertThat(property.getBooleanValue(), is(false));
+	}
+	
+	@Test
+	public void getBooleanValueWhenInvalidReturnsFalse()
+	{
+		FakeMicrodataProperty property = new FakeMicrodataProperty("div");
+		property.setText("x");
+		
+		assertThat(property.getBooleanValue(), is(false));
+	}
+	
+	@Test
 	public void getIntValueReturnsInteger()
 	{
 		FakeMicrodataProperty property = new FakeMicrodataProperty("div");

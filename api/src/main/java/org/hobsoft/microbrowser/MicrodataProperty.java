@@ -33,6 +33,13 @@ public interface MicrodataProperty
 	String getValue();
 
 	/**
+	 * Gets the value of this item property as a boolean.
+	 * 
+	 * @return the item property value, or false if not specified or the value cannot be parsed
+	 */
+	boolean getBooleanValue();
+	
+	/**
 	 * Gets the value of this item property as an integer.
 	 * 
 	 * @return the item property value, or zero if not specified or the value cannot be parsed
