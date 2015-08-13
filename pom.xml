@@ -110,6 +110,12 @@
 		
 			<dependency>
 				<groupId>org.hobsoft.microbrowser</groupId>
+				<artifactId>microbrowser-spi</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.hobsoft.microbrowser</groupId>
 				<artifactId>microbrowser-tck</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -178,6 +184,7 @@
 		<module>api</module>
 		<module>jsoup</module>
 		<module>selenium</module>
+		<module>spi</module>
 		<module>tck</module>
 	</modules>
 	

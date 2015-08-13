@@ -13,7 +13,7 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
-import org.hobsoft.microbrowser.AbstractMicrodataProperty;
+import org.hobsoft.microbrowser.spi.AbstractMicrodataProperty;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;

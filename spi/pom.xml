@@ -22,33 +22,11 @@
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>microbrowser-jsoup</artifactId>
+	<artifactId>microbrowser-spi</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>Microbrowser jsoup</name>
-	<description>Microbrowser implementation for jsoup.</description>
-	
-	<build>
-	
-		<plugins>
-	
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>integration-test</id>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-	
-		</plugins>
-		
-	</build>
+	<name>Microbrowser SPI</name>
+	<description>Service Provider Interface for the Microbrowser API.</description>
 	
 	<dependencies>
 	
@@ -56,27 +34,31 @@
 	
 		<dependency>
 			<groupId>org.hobsoft.microbrowser</groupId>
-			<artifactId>microbrowser-spi</artifactId>
+			<artifactId>microbrowser-api</artifactId>
 		</dependency>
 	
+		<!-- JUnit -->
+		
 		<dependency>
-			<groupId>org.hobsoft.microbrowser</groupId>
-			<artifactId>microbrowser-tck</artifactId>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-	
-		<!-- Guava -->
+		
+		<!-- Hamcrest -->
 		
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<scope>test</scope>
 		</dependency>
 		
-		<!-- jsoup -->
+		<!-- Mockito -->
 		
 		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 		
 	</dependencies>

@@ -11,12 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser;
+package org.hobsoft.microbrowser.spi;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.hobsoft.microbrowser.MicrodataProperty;
 
 import static java.util.Arrays.asList;
 
