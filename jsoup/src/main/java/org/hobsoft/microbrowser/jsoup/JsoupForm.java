@@ -28,7 +28,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
+import static org.hobsoft.microbrowser.spi.Urls.newUrlOrNull;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;

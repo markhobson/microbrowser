@@ -23,7 +23,7 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.spi.Urls.newUrl;
 
 /**
  * {@code Microbrowser} implementation that uses jsoup.

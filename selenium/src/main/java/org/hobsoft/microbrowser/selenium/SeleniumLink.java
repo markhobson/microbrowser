@@ -20,7 +20,7 @@ import org.hobsoft.microbrowser.MicrodataDocument;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
+import static org.hobsoft.microbrowser.spi.Urls.newUrlOrNull;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;

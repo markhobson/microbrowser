@@ -17,7 +17,7 @@ import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.openqa.selenium.WebDriver;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.spi.Urls.newUrl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

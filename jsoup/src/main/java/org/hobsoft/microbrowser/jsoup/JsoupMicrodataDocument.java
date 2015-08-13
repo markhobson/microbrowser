@@ -34,7 +34,7 @@ import org.jsoup.select.Elements;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.spi.Urls.newUrl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

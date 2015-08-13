@@ -19,7 +19,7 @@ import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataItemNotFoundException;
 
-import static org.hobsoft.microbrowser.Urls.newUrl;
+import static org.hobsoft.microbrowser.spi.Urls.newUrl;
 
 /**
  * Base {@code MicrodataDocument} implementation.
