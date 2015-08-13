@@ -16,12 +16,12 @@ package org.hobsoft.microbrowser.selenium;
 import java.net.URL;
 import java.util.List;
 
-import org.hobsoft.microbrowser.AbstractMicrodataDocument;
 import org.hobsoft.microbrowser.CookieNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
+import org.hobsoft.microbrowser.spi.AbstractMicrodataDocument;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;

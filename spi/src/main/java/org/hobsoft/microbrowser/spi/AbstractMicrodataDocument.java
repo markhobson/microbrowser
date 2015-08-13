@@ -11,9 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser;
+package org.hobsoft.microbrowser.spi;
 
 import java.util.List;
+
+import org.hobsoft.microbrowser.AbstractHypermediaContainer;
+import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.MicrodataItem;
+import org.hobsoft.microbrowser.MicrodataItemNotFoundException;
 
 import static org.hobsoft.microbrowser.Urls.newUrl;
 
