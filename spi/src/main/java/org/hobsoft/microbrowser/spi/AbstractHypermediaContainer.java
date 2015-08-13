@@ -11,11 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser;
+package org.hobsoft.microbrowser.spi;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.HypermediaContainer;
+import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.LinkNotFoundException;
 
 /**
  * Base {@code HypermediaContainer} implementation.
@@ -71,7 +76,7 @@ public abstract class AbstractHypermediaContainer implements HypermediaContainer
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * @throws FormNotFoundException
+	 * @throws org.hobsoft.microbrowser.FormNotFoundException
 	 *             if the form cannot be found
 	 */
 	protected abstract Form newForm(String name);

@@ -16,13 +16,13 @@ package org.hobsoft.microbrowser.selenium;
 import java.net.URL;
 import java.util.List;
 
-import org.hobsoft.microbrowser.AbstractHypermediaContainer;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.hobsoft.microbrowser.MicrodataPropertyNotFoundException;
+import org.hobsoft.microbrowser.spi.AbstractHypermediaContainer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

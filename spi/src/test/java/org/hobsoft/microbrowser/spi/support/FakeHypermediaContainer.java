@@ -11,13 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.support;
+package org.hobsoft.microbrowser.spi.support;
 
 import java.util.List;
 
-import org.hobsoft.microbrowser.AbstractHypermediaContainer;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.spi.AbstractHypermediaContainer;
 
 /**
  * Fake {@code AbstractHypermediaContainer} for testing.

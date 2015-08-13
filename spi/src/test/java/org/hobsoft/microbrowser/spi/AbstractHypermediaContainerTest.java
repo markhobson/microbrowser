@@ -11,12 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser;
+package org.hobsoft.microbrowser.spi;
 
 import java.util.Collections;
 import java.util.Iterator;
 
-import org.hobsoft.microbrowser.support.FakeHypermediaContainer;
+import org.hobsoft.microbrowser.Form;
+import org.hobsoft.microbrowser.FormNotFoundException;
+import org.hobsoft.microbrowser.Link;
+import org.hobsoft.microbrowser.LinkNotFoundException;
+import org.hobsoft.microbrowser.spi.support.FakeHypermediaContainer;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

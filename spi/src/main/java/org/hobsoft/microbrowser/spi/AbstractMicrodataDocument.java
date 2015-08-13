@@ -15,7 +15,6 @@ package org.hobsoft.microbrowser.spi;
 
 import java.util.List;
 
-import org.hobsoft.microbrowser.AbstractHypermediaContainer;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataItemNotFoundException;
