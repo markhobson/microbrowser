@@ -30,7 +30,7 @@ public interface MicrodataItem extends HypermediaContainer
 	/**
 	 * Gets the type of this item.
 	 * 
-	 * @return the item type, or {@code null} if not specified
+	 * @return the item type
 	 */
 	URL getType();
 	
