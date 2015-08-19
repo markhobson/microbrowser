@@ -25,7 +25,7 @@
 	<groupId>org.hobsoft.microbrowser</groupId>
 	<artifactId>microbrowser-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.1</version>
 	
 	<name>Microbrowser Parent POM</name>
 	<description>Parent POM for Microbrowser modules.</description>
@@ -55,7 +55,7 @@
 	<scm>
 		<connection>scm:git:git@github.com:markhobson/microbrowser.git</connection>
 		<developerConnection>scm:git:git@github.com:markhobson/microbrowser.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>0.1.1</tag>
 		<url>https://github.com/markhobson/microbrowser</url>
 	</scm>
 	
