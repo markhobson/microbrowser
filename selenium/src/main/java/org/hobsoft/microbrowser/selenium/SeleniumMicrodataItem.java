@@ -32,7 +32,6 @@ import com.google.common.collect.Lists;
 
 import static org.hobsoft.microbrowser.Urls.newUrlOrNull;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -54,8 +53,6 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 
 	public SeleniumMicrodataItem(WebDriver driver, WebElement element)
 	{
-		checkArgument(element.getAttribute("itemscope") != null, "Missing itemscope attribute: %s", element);
-		
 		this.driver = checkNotNull(driver, "driver");
 		this.element = checkNotNull(element, "element");
 	}
@@ -83,7 +80,7 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 			throw new MicrodataPropertyNotFoundException(name);
 		}
 		
-		return new SeleniumMicrodataProperty(driver, elements.iterator().next());
+		return new SeleniumMicrodataProperty(elements.iterator().next());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

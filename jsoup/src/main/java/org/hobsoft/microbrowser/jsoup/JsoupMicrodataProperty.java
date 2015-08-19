@@ -14,7 +14,6 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.AbstractMicrodataProperty;
-import org.hobsoft.microbrowser.MicrodataItem;
 import org.jsoup.nodes.Element;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -28,17 +27,14 @@ class JsoupMicrodataProperty extends AbstractMicrodataProperty
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private final JsoupMicrodataDocument document;
-	
 	private final Element element;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupMicrodataProperty(JsoupMicrodataDocument document, Element element)
+	public JsoupMicrodataProperty(Element element)
 	{
-		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
 	}
 	
@@ -46,16 +42,6 @@ class JsoupMicrodataProperty extends AbstractMicrodataProperty
 	// MicrodataProperty methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public MicrodataItem getItemValue()
-	{
-		if (!element.hasAttr("itemscope"))
-		{
-			return null;
-		}
-		
-		return new JsoupMicrodataItem(document, element);
-	}
-	
 	public <T> T unwrap(Class<T> type)
 	{
 		T instance;

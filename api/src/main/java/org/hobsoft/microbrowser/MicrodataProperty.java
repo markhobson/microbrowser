@@ -67,12 +67,5 @@ public interface MicrodataProperty
 	 */
 	double getDoubleValue();
 	
-	/**
-	 * Gets the value of this item property as a nested item.
-	 * 
-	 * @return the item property value, or {@code null} if not an item
-	 */
-	MicrodataItem getItemValue();
-
 	<T> T unwrap(Class<T> type);
 }
