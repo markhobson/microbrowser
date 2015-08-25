@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.contains;
@@ -39,8 +40,11 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code MicrodataDocument}.
+ * 
+ * @param <T>
+ *            the provider-specific document type
  */
-public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
+public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getItem tests
@@ -395,4 +399,40 @@ public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 		
 		document.getCookie("x");
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapReturnsProvider() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().start();
+		
+		T actual = newBrowser().get(url(server()))
+			.unwrap(getProviderType());
+		
+		assertThat("document provider", actual, is(instanceOf(getProviderType())));
+	}
+
+	@Test
+	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		server().start();
+		
+		MicrodataDocument document = newBrowser().get(url(server()));
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot unwrap to: class java.lang.Void");
+		
+		document.unwrap(Void.class);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Class<T> getProviderType();
 }

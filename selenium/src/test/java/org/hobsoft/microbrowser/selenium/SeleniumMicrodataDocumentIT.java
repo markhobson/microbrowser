@@ -19,12 +19,13 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.MicrodataDocumentTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Integration test that executes the {@code MicrodataDocument} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumMicrodataDocumentIT extends MicrodataDocumentTck
+public class SeleniumMicrodataDocumentIT extends MicrodataDocumentTck<WebDriver>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -58,5 +59,15 @@ public class SeleniumMicrodataDocumentIT extends MicrodataDocumentTck
 	protected Microbrowser newBrowser()
 	{
 		return new SeleniumMicrobrowser(driverRule.getDriver());
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataDocumentTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<WebDriver> getProviderType()
+	{
+		return WebDriver.class;
 	}
 }

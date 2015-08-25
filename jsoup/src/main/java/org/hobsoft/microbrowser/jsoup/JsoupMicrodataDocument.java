@@ -36,6 +36,7 @@ import com.google.common.collect.Lists;
 
 import static org.hobsoft.microbrowser.spi.Urls.newUrl;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -123,6 +124,17 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 				return new JsoupLink(JsoupMicrodataDocument.this, element);
 			}
 		});
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Unwrappable methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public <T> T unwrap(Class<T> type)
+	{
+		checkArgument(Document.class.equals(type), "Cannot unwrap to: %s", type);
+		
+		return type.cast(document);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

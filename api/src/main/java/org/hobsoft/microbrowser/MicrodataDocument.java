@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Defines an HTML microdata document.
  */
-public interface MicrodataDocument extends Hypermedia
+public interface MicrodataDocument extends Hypermedia, Unwrappable
 {
 	/**
 	 * Gets the item with the specified type.
