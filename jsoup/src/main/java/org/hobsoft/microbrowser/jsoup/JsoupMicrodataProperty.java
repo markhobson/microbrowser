@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.jsoup;
 import org.hobsoft.microbrowser.spi.AbstractMicrodataProperty;
 import org.jsoup.nodes.Element;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -44,18 +45,9 @@ class JsoupMicrodataProperty extends AbstractMicrodataProperty
 
 	public <T> T unwrap(Class<T> type)
 	{
-		T instance;
+		checkArgument(Element.class.equals(type), "Cannot unwrap to: %s", type);
 		
-		if (Element.class.equals(type))
-		{
-			instance = type.cast(element);
-		}
-		else
-		{
-			throw new IllegalArgumentException("Cannot unwrap to: " + type);
-		}
-		
-		return instance;
+		return type.cast(element);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

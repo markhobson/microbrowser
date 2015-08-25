@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.selenium;
 import org.hobsoft.microbrowser.spi.AbstractMicrodataProperty;
 import org.openqa.selenium.WebElement;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -44,18 +45,9 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 
 	public <T> T unwrap(Class<T> type)
 	{
-		T instance;
+		checkArgument(WebElement.class.equals(type), "Cannot unwrap to: %s", type);
 		
-		if (WebElement.class.equals(type))
-		{
-			instance = type.cast(element);
-		}
-		else
-		{
-			throw new IllegalArgumentException("Cannot unwrap to: " + type);
-		}
-		
-		return instance;
+		return type.cast(element);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
