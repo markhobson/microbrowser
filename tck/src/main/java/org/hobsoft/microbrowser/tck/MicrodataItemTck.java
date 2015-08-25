@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -39,8 +40,11 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code MicrodataItem}.
+ * 
+ * @param <T>
+ *            the provider-specific item type
  */
-public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
+public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getId tests
@@ -366,4 +370,46 @@ public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 		
 		item.getForm("x");
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapReturnsProvider() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'/>"
+			+ "</body></html>"));
+		server().start();
+		
+		T actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.unwrap(getProviderType());
+		
+		assertThat("item provider", actual, is(instanceOf(getProviderType())));
+	}
+
+	@Test
+	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'/>"
+			+ "</body></html>"));
+		server().start();
+		
+		MicrodataItem item = newBrowser().get(url(server()))
+			.getItem("http://i");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot unwrap to: class java.lang.Void");
+		
+		item.unwrap(Void.class);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Class<T> getProviderType();
 }

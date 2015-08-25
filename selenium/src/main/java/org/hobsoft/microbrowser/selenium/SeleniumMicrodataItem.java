@@ -32,6 +32,7 @@ import com.google.common.collect.Lists;
 
 import static org.hobsoft.microbrowser.spi.Urls.newUrlOrNull;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -98,6 +99,17 @@ class SeleniumMicrodataItem extends AbstractHypermedia implements MicrodataItem
 				return new SeleniumLink(driver, element);
 			}
 		});
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Unwrappable methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public <T> T unwrap(Class<T> type)
+	{
+		checkArgument(WebElement.class.equals(type), "Cannot unwrap to: %s", type);
+		
+		return type.cast(element);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

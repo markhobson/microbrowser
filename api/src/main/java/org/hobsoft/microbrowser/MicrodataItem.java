@@ -18,7 +18,7 @@ import java.net.URL;
 /**
  * Defines an HTML microdata item.
  */
-public interface MicrodataItem extends Hypermedia
+public interface MicrodataItem extends Hypermedia, Unwrappable
 {
 	/**
 	 * Gets the global identifier of this item.

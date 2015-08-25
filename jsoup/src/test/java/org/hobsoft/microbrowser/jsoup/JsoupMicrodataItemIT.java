@@ -15,11 +15,12 @@ package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.MicrodataItemTck;
+import org.jsoup.nodes.Element;
 
 /**
  * Integration test that executes the {@code MicrodataItem} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupMicrodataItemIT extends MicrodataItemTck
+public class JsoupMicrodataItemIT extends MicrodataItemTck<Element>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
@@ -29,5 +30,15 @@ public class JsoupMicrodataItemIT extends MicrodataItemTck
 	protected Microbrowser newBrowser()
 	{
 		return new JsoupMicrobrowser();
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataItemTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<Element> getProviderType()
+	{
+		return Element.class;
 	}
 }
