@@ -67,5 +67,16 @@ public interface MicrodataProperty
 	 */
 	double getDoubleValue();
 	
+	/**
+	 * Gets this item property as the specified type to allow access to the provider-specific API.
+	 * 
+	 * @param <T>
+	 *            the type of the provider-specific API
+	 * @param type
+	 *            the type of the provider-specific API required
+	 * @return an instance of the provider-specific API
+	 * @throws IllegalArgumentException
+	 *             if the provider does not support the specific type
+	 */
 	<T> T unwrap(Class<T> type);
 }
