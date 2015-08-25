@@ -18,7 +18,7 @@ import java.net.URL;
 /**
  * Defines an HTML link.
  */
-public interface Link
+public interface Link extends Unwrappable
 {
 	/**
 	 * Gets the relationship of this link.

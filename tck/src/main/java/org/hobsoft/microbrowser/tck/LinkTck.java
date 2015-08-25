@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
@@ -31,8 +32,11 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code Link}.
+ * 
+ * @param <T>
+ *            the provider-specific link type
  */
-public abstract class LinkTck extends AbstractMicrobrowserTest
+public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getRel tests
@@ -273,4 +277,46 @@ public abstract class LinkTck extends AbstractMicrobrowserTest
 		
 		link.follow();
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapReturnsProvider() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='x'/>"
+			+ "</body></html>"));
+		server().start();
+		
+		T actual = newBrowser().get(url(server()))
+			.getLink("x")
+			.unwrap(getProviderType());
+		
+		assertThat("link provider", actual, is(instanceOf(getProviderType())));
+	}
+
+	@Test
+	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<a rel='x'/>"
+			+ "</body></html>"));
+		server().start();
+		
+		Link link = newBrowser().get(url(server()))
+			.getLink("x");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot unwrap to: class java.lang.Void");
+		
+		link.unwrap(Void.class);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Class<T> getProviderType();
 }

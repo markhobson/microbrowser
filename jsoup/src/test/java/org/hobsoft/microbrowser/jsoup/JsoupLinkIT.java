@@ -15,11 +15,12 @@ package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.LinkTck;
+import org.jsoup.nodes.Element;
 
 /**
  * Integration test that executes the {@code Link} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupLinkIT extends LinkTck
+public class JsoupLinkIT extends LinkTck<Element>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
@@ -29,5 +30,15 @@ public class JsoupLinkIT extends LinkTck
 	protected Microbrowser newBrowser()
 	{
 		return new JsoupMicrobrowser();
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// LinkTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<Element> getProviderType()
+	{
+		return Element.class;
 	}
 }
