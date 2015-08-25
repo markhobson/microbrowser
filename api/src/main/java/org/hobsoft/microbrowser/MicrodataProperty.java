@@ -16,7 +16,7 @@ package org.hobsoft.microbrowser;
 /**
  * Defines an HTML microdata property.
  */
-public interface MicrodataProperty
+public interface MicrodataProperty extends Unwrappable
 {
 	/**
 	 * Gets the name of this item property.
@@ -66,17 +66,4 @@ public interface MicrodataProperty
 	 * @return the item property value, or zero if not specified or the value cannot be parsed
 	 */
 	double getDoubleValue();
-	
-	/**
-	 * Gets this item property as the specified type to allow access to the provider-specific API.
-	 * 
-	 * @param <T>
-	 *            the type of the provider-specific API
-	 * @param type
-	 *            the type of the provider-specific API required
-	 * @return an instance of the provider-specific API
-	 * @throws IllegalArgumentException
-	 *             if the provider does not support the specific type
-	 */
-	<T> T unwrap(Class<T> type);
 }

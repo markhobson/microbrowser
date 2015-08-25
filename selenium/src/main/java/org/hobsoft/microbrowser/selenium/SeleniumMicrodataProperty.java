@@ -39,7 +39,7 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataProperty methods
+	// Unwrappable methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	public <T> T unwrap(Class<T> type)
