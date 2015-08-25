@@ -19,12 +19,13 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.MicrodataPropertyTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Integration test that executes the {@code MicrodataProperty} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumMicrodataPropertyIT extends MicrodataPropertyTck
+public class SeleniumMicrodataPropertyIT extends MicrodataPropertyTck<WebElement>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -58,5 +59,15 @@ public class SeleniumMicrodataPropertyIT extends MicrodataPropertyTck
 	protected Microbrowser newBrowser()
 	{
 		return new SeleniumMicrobrowser(driverRule.getDriver());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataPropertyTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<WebElement> getProviderType()
+	{
+		return WebElement.class;
 	}
 }

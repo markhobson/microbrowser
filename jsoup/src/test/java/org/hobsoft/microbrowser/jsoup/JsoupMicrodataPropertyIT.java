@@ -15,11 +15,12 @@ package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.MicrodataPropertyTck;
+import org.jsoup.nodes.Element;
 
 /**
  * Integration test that executes the {@code MicrodataProperty} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupMicrodataPropertyIT extends MicrodataPropertyTck
+public class JsoupMicrodataPropertyIT extends MicrodataPropertyTck<Element>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
@@ -29,5 +30,15 @@ public class JsoupMicrodataPropertyIT extends MicrodataPropertyTck
 	protected Microbrowser newBrowser()
 	{
 		return new JsoupMicrobrowser();
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// MicrodataPropertyTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<Element> getProviderType()
+	{
+		return Element.class;
 	}
 }

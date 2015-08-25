@@ -15,11 +15,13 @@ package org.hobsoft.microbrowser.tck;
 
 import java.io.IOException;
 
+import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.isEmptyString;
@@ -28,8 +30,11 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code MicrodataProperty}.
+ * 
+ * @param <T>
+ *            the provider-specific property type
  */
-public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
+public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getName tests
@@ -1149,4 +1154,52 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		
 		assertThat("item property value", actual, is(0d));
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapReturnsProvider() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		T actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("x")
+			.unwrap(getProviderType());
+		
+		assertThat("item property provider", actual, is(instanceOf(getProviderType())));
+	}
+
+	@Test
+	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		server().start();
+		
+		MicrodataProperty property = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("x");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot unwrap to: class java.lang.Void");
+		
+		property.unwrap(Void.class);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Class<T> getProviderType();
 }
