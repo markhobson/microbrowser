@@ -84,7 +84,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// HypermediaContainer methods
+	// Hypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	public List<Link> getLinks(String rel)
@@ -101,7 +101,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermediaContainer methods
+	// AbstractHypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	@Override

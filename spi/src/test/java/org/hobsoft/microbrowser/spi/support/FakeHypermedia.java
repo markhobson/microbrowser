@@ -17,15 +17,15 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Link;
-import org.hobsoft.microbrowser.spi.AbstractHypermediaContainer;
+import org.hobsoft.microbrowser.spi.AbstractHypermedia;
 
 /**
- * Fake {@code AbstractHypermediaContainer} for testing.
+ * Fake {@code AbstractHypermedia} for testing.
  */
-public class FakeHypermediaContainer extends AbstractHypermediaContainer
+public class FakeHypermedia extends AbstractHypermedia
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// HypermediaContainer methods
+	// Hypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	public List<Link> getLinks(String rel)
@@ -34,7 +34,7 @@ public class FakeHypermediaContainer extends AbstractHypermediaContainer
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermediaContainer methods
+	// AbstractHypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Override

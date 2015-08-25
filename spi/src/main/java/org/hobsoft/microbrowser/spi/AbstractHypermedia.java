@@ -18,14 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.hobsoft.microbrowser.Form;
-import org.hobsoft.microbrowser.HypermediaContainer;
+import org.hobsoft.microbrowser.Hypermedia;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.LinkNotFoundException;
 
 /**
- * Base {@code HypermediaContainer} implementation.
+ * Base {@code Hypermedia} implementation.
  */
-public abstract class AbstractHypermediaContainer implements HypermediaContainer
+public abstract class AbstractHypermedia implements Hypermedia
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -37,13 +37,13 @@ public abstract class AbstractHypermediaContainer implements HypermediaContainer
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public AbstractHypermediaContainer()
+	public AbstractHypermedia()
 	{
 		formsByName = new HashMap<String, Form>();
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// HypermediaContainer methods
+	// Hypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	public final Link getLink(String rel)

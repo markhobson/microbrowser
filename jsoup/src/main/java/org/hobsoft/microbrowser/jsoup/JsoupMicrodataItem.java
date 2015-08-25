@@ -22,7 +22,7 @@ import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.hobsoft.microbrowser.MicrodataPropertyNotFoundException;
-import org.hobsoft.microbrowser.spi.AbstractHypermediaContainer;
+import org.hobsoft.microbrowser.spi.AbstractHypermedia;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -36,7 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItem} adapter to a jsoup {@code Element}.
  */
-class JsoupMicrodataItem extends AbstractHypermediaContainer implements MicrodataItem
+class JsoupMicrodataItem extends AbstractHypermedia implements MicrodataItem
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -83,7 +83,7 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// HypermediaContainer methods
+	// Hypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	public List<Link> getLinks(String rel)
@@ -100,7 +100,7 @@ class JsoupMicrodataItem extends AbstractHypermediaContainer implements Microdat
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermediaContainer methods
+	// AbstractHypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	@Override

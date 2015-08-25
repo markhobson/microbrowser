@@ -22,7 +22,7 @@ import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.hobsoft.microbrowser.MicrodataPropertyNotFoundException;
-import org.hobsoft.microbrowser.spi.AbstractHypermediaContainer;
+import org.hobsoft.microbrowser.spi.AbstractHypermedia;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,7 +37,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@code MicrodataItem} adapter to a Selenium {@code WebElement}.
  */
-class SeleniumMicrodataItem extends AbstractHypermediaContainer implements MicrodataItem
+class SeleniumMicrodataItem extends AbstractHypermedia implements MicrodataItem
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -84,7 +84,7 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// HypermediaContainer methods
+	// Hypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	public List<Link> getLinks(String rel)
@@ -101,7 +101,7 @@ class SeleniumMicrodataItem extends AbstractHypermediaContainer implements Micro
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermediaContainer methods
+	// AbstractHypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	@Override

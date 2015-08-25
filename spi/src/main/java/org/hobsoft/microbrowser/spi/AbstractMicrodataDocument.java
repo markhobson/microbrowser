@@ -24,7 +24,7 @@ import static org.hobsoft.microbrowser.spi.Urls.newUrl;
 /**
  * Base {@code MicrodataDocument} implementation.
  */
-public abstract class AbstractMicrodataDocument extends AbstractHypermediaContainer implements MicrodataDocument
+public abstract class AbstractMicrodataDocument extends AbstractHypermedia implements MicrodataDocument
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// MicrodataDocument methods

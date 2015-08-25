@@ -109,7 +109,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// HypermediaContainer methods
+	// Hypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	public List<Link> getLinks(String rel)
@@ -126,7 +126,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermediaContainer methods
+	// AbstractHypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	@Override

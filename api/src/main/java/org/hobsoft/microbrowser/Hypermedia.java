@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Defines a container for HTML links and forms.
  */
-public interface HypermediaContainer
+public interface Hypermedia
 {
 	/**
 	 * Gets the link with the specified relationship.

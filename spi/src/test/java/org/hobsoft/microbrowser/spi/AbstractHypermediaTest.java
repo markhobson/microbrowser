@@ -20,7 +20,7 @@ import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.LinkNotFoundException;
-import org.hobsoft.microbrowser.spi.support.FakeHypermediaContainer;
+import org.hobsoft.microbrowser.spi.support.FakeHypermedia;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -33,15 +33,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests {@code AbstractHypermediaContainer}.
+ * Tests {@code AbstractHypermedia}.
  */
-public class AbstractHypermediaContainerTest
+public class AbstractHypermediaTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private AbstractHypermediaContainer container;
+	private AbstractHypermedia hypermedia;
 	
 	private ExpectedException thrown = ExpectedException.none();
 	
@@ -63,29 +63,29 @@ public class AbstractHypermediaContainerTest
 	public void getLinkReturnsFirstLink()
 	{
 		Link link = mock(Link.class);
-		container = mock(AbstractHypermediaContainer.class);
-		when(container.getLinks("x")).thenReturn(asList(link, mock(Link.class)));
+		hypermedia = mock(AbstractHypermedia.class);
+		when(hypermedia.getLinks("x")).thenReturn(asList(link, mock(Link.class)));
 		
-		assertThat(container.getLink("x"), is(link));
+		assertThat(hypermedia.getLink("x"), is(link));
 	}
 	
 	@Test
 	public void getLinkWhenNotFoundThrowsException()
 	{
-		container = mock(AbstractHypermediaContainer.class);
-		when(container.getLinks("x")).thenReturn(Collections.<Link>emptyList());
+		hypermedia = mock(AbstractHypermedia.class);
+		when(hypermedia.getLinks("x")).thenReturn(Collections.<Link>emptyList());
 		
 		thrown.expect(LinkNotFoundException.class);
 		thrown.expectMessage("x");
 		
-		container.getLink("x");
+		hypermedia.getLink("x");
 	}
 	
 	@Test
 	public void getFormReturnsForm()
 	{
 		final Form form = mock(Form.class);
-		container = new FakeHypermediaContainer()
+		hypermedia = new FakeHypermedia()
 		{
 			@Override
 			protected Form newForm(String name)
@@ -94,7 +94,7 @@ public class AbstractHypermediaContainerTest
 			}
 		};
 		
-		assertThat(container.getForm("x"), is(form));
+		assertThat(hypermedia.getForm("x"), is(form));
 	}
 	
 	@Test
@@ -102,7 +102,7 @@ public class AbstractHypermediaContainerTest
 	{
 		Form form = mock(Form.class);
 		final Iterator<Form> forms = asList(form, mock(Form.class)).iterator();
-		container = new FakeHypermediaContainer()
+		hypermedia = new FakeHypermedia()
 		{
 			@Override
 			protected Form newForm(String name)
@@ -111,14 +111,14 @@ public class AbstractHypermediaContainerTest
 			}
 		};
 		
-		container.getForm("x");
-		assertThat(container.getForm("x"), is(form));
+		hypermedia.getForm("x");
+		assertThat(hypermedia.getForm("x"), is(form));
 	}
 	
 	@Test
 	public void getFormWhenNotFoundThrowsException()
 	{
-		container = new FakeHypermediaContainer()
+		hypermedia = new FakeHypermedia()
 		{
 			@Override
 			protected Form newForm(String name)
@@ -135,6 +135,6 @@ public class AbstractHypermediaContainerTest
 		thrown.expect(FormNotFoundException.class);
 		thrown.expectMessage("x");
 		
-		container.getForm("x");
+		hypermedia.getForm("x");
 	}
 }
