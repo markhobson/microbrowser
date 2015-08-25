@@ -15,11 +15,12 @@ package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.FormTck;
+import org.jsoup.nodes.Element;
 
 /**
  * Integration test that executes the {@code Form} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupFormIT extends FormTck
+public class JsoupFormIT extends FormTck<Element>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
@@ -29,5 +30,15 @@ public class JsoupFormIT extends FormTck
 	protected Microbrowser newBrowser()
 	{
 		return new JsoupMicrobrowser();
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// FormTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<Element> getProviderType()
+	{
+		return Element.class;
 	}
 }

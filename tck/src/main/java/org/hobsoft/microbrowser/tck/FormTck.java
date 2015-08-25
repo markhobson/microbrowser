@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
@@ -33,8 +34,11 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code Form}.
+ * 
+ * @param <T>
+ *            the provider-specific form type
  */
-public abstract class FormTck extends AbstractMicrobrowserTest
+public abstract class FormTck<T> extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getName tests
@@ -747,4 +751,46 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		
 		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapReturnsProvider() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='x'/>"
+			+ "</body></html>"));
+		server().start();
+		
+		T actual = newBrowser().get(url(server()))
+			.getForm("x")
+			.unwrap(getProviderType());
+		
+		assertThat("form provider", actual, is(instanceOf(getProviderType())));
+	}
+
+	@Test
+	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='x'/>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("x");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot unwrap to: class java.lang.Void");
+		
+		form.unwrap(Void.class);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Class<T> getProviderType();
 }

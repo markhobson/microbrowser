@@ -107,6 +107,17 @@ class JsoupForm implements Form
 		
 		return nextDocument;
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Unwrappable methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public <T> T unwrap(Class<T> type)
+	{
+		checkArgument(Element.class.equals(type), "Cannot unwrap to: %s", type);
+		
+		return type.cast(element);
+	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods

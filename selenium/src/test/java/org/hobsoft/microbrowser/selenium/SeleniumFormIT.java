@@ -19,12 +19,13 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.FormTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Integration test that executes the {@code Form} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumFormIT extends FormTck
+public class SeleniumFormIT extends FormTck<WebElement>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -58,5 +59,15 @@ public class SeleniumFormIT extends FormTck
 	protected Microbrowser newBrowser()
 	{
 		return new SeleniumMicrobrowser(driverRule.getDriver());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// FormTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<WebElement> getProviderType()
+	{
+		return WebElement.class;
 	}
 }
