@@ -842,6 +842,10 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		assertThat("item property value", actual, isEmptyString());
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getBooleanValue tests
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Test
 	public void getBooleanValueWhenTrueReturnsTrue() throws IOException
 	{
@@ -914,6 +918,10 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		assertThat("item property value", actual, is(false));
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getIntValue tests
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Test
 	public void getIntValueReturnsInteger() throws IOException
 	{
@@ -968,6 +976,10 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		assertThat("item property value", actual, is(0));
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getLongValue tests
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Test
 	public void getLongValueReturnsLong() throws IOException
 	{
@@ -1022,6 +1034,10 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		assertThat("item property value", actual, is(0L));
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getFloatValue tests
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Test
 	public void getFloatValueReturnsFloat() throws IOException
 	{
@@ -1076,6 +1092,10 @@ public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 		assertThat("item property value", actual, is(0f));
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getDoubleValue tests
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Test
 	public void getDoubleValueReturnsDouble() throws IOException
 	{
