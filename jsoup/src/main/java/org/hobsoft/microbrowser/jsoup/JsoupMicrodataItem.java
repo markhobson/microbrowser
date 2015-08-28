@@ -24,6 +24,7 @@ import org.hobsoft.microbrowser.MicrodataProperty;
 import org.hobsoft.microbrowser.MicrodataPropertyNotFoundException;
 import org.hobsoft.microbrowser.spi.AbstractHypermedia;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
 import org.jsoup.select.Elements;
 
 import com.google.common.base.Function;
@@ -125,7 +126,7 @@ class JsoupMicrodataItem extends AbstractHypermedia implements MicrodataItem
 			throw new FormNotFoundException(name);
 		}
 		
-		return new JsoupForm(document, elements.first());
+		return new JsoupForm(document, (FormElement) elements.first());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

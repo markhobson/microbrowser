@@ -29,6 +29,7 @@ import org.hobsoft.microbrowser.spi.AbstractMicrodataDocument;
 import org.jsoup.Connection.Response;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
 import org.jsoup.select.Elements;
 
 import com.google.common.base.Function;
@@ -151,7 +152,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 			throw new FormNotFoundException(name);
 		}
 		
-		return new JsoupForm(this, elements.first());
+		return new JsoupForm(this, (FormElement) elements.first());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

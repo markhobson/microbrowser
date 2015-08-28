@@ -26,6 +26,7 @@ import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
 import org.jsoup.select.Elements;
 
 import static org.hobsoft.microbrowser.spi.Urls.newUrlOrNull;
@@ -45,7 +46,7 @@ class JsoupForm implements Form
 
 	private final JsoupMicrodataDocument document;
 	
-	private final Element element;
+	private final FormElement element;
 	
 	private final Map<String, JsoupControl> controlsByName;
 
@@ -53,7 +54,7 @@ class JsoupForm implements Form
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupForm(JsoupMicrodataDocument document, Element element)
+	public JsoupForm(JsoupMicrodataDocument document, FormElement element)
 	{
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
@@ -154,22 +155,10 @@ class JsoupForm implements Form
 	{
 		return Jsoup.connect(getAction().toString())
 			.method(getMethod())
-			.data(getControlValuesByName())
+			.data(element.formData())
 			.cookies(document.getCookies());
 	}
 	
-	private Map<String, String> getControlValuesByName()
-	{
-		Map<String, String> controlValuesByName = new HashMap<String, String>();
-		
-		for (JsoupControl control : controlsByName.values())
-		{
-			controlValuesByName.put(control.getName(), control.getValue());
-		}
-		
-		return controlValuesByName;
-	}
-
 	private URL getAction()
 	{
 		String action;
