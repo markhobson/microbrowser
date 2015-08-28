@@ -29,8 +29,6 @@ class JsoupControl
 
 	private final Element element;
 	
-	private String value;
-
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
@@ -38,8 +36,6 @@ class JsoupControl
 	public JsoupControl(Element element)
 	{
 		this.element = checkNotNull(element, "element");
-		
-		value = element.val();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -53,14 +49,15 @@ class JsoupControl
 
 	public String getValue()
 	{
-		return value;
+		return element.val();
 	}
 
 	public void setValue(String value)
 	{
 		checkArgument(!isHidden(), "Cannot set hidden control value: %s", getName());
+		checkNotNull(value, "value");
 		
-		this.value = checkNotNull(value, "value");
+		element.val(value);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
