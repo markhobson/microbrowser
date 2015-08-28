@@ -47,7 +47,7 @@ class JsoupForm implements Form
 	
 	private final Element element;
 	
-	private final Map<String, String> parameterValuesByName;
+	private final Map<String, JsoupControl> controlsByName;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
@@ -58,7 +58,7 @@ class JsoupForm implements Form
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
 		
-		parameterValuesByName = getInitialParameters(element);
+		controlsByName = getControlsByName(element);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -73,18 +73,16 @@ class JsoupForm implements Form
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");
-		checkControl(name);
 		
-		return parameterValuesByName.get(name);
+		return getControl(name).getValue();
 	}
 
 	public Form setParameter(String name, String value)
 	{
 		checkNotNull(name, "name");
 		checkNotNull(value, "value");
-		checkControl(name);
 		
-		parameterValuesByName.put(name, value);
+		getControl(name).setValue(value);
 		
 		return this;
 	}
@@ -123,42 +121,55 @@ class JsoupForm implements Form
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	private static Map<String, String> getInitialParameters(Element element)
+	private static Map<String, JsoupControl> getControlsByName(Element element)
 	{
-		Map<String, String> parameterValuesByName = new HashMap<String, String>();
+		Map<String, JsoupControl> controlsByName = new HashMap<String, JsoupControl>();
 		
-		for (Element control : element.select(byControls()))
+		for (Element controlElement : element.select(byControls()))
 		{
-			String name = control.attr("name");
-			String value = control.val();
+			JsoupControl control = new JsoupControl(controlElement);
 			
-			parameterValuesByName.put(name, value);
+			controlsByName.put(control.getName(), control);
 		}
 		
-		return parameterValuesByName;
+		return controlsByName;
 	}
 	
-	private static String byControls()
+	private JsoupControl getControl(String name)
 	{
-		return "input[type=hidden], input[type=text], input[type=password]";
-	}
-	
-	private void checkControl(String name)
-	{
-		if (!parameterValuesByName.containsKey(name))
+		if (!controlsByName.containsKey(name))
 		{
 			throw new ParameterNotFoundException(name);
 		}
+		
+		return controlsByName.get(name);
+	}
+
+	private static String byControls()
+	{
+		return "input[type=hidden], input[type=text], input[type=password]";
 	}
 	
 	private Connection getConnection()
 	{
 		return Jsoup.connect(getAction().toString())
 			.method(getMethod())
-			.data(parameterValuesByName)
+			.data(getControlValuesByName())
 			.cookies(document.getCookies());
 	}
 	
+	private Map<String, String> getControlValuesByName()
+	{
+		Map<String, String> controlValuesByName = new HashMap<String, String>();
+		
+		for (JsoupControl control : controlsByName.values())
+		{
+			controlValuesByName.put(control.getName(), control.getValue());
+		}
+		
+		return controlValuesByName;
+	}
+
 	private URL getAction()
 	{
 		String action;
