@@ -93,22 +93,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getParameterWhenTextControlReturnsSetValue() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f'/>"
-			+ "<input type='text' name='x' value='y'/>"
-			+ "</body></html>"));
-		server().start();
-		
-		String actual = newBrowser().get(url(server()))
-			.getForm("f")
-			.setParameter("x", "z")
-			.getParameter("x");
-		assertThat("form parameter value", actual, is("z"));
-	}
-
-	@Test
 	public void getParameterWhenPasswordControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -121,22 +105,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.getForm("f")
 			.getParameter("x");
 		assertThat("form parameter value", actual, is("y"));
-	}
-
-	@Test
-	public void getParameterWhenPasswordControlReturnsSetValue() throws IOException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f'/>"
-			+ "<input type='password' name='x' value='y'/>"
-			+ "</body></html>"));
-		server().start();
-		
-		String actual = newBrowser().get(url(server()))
-			.getForm("f")
-			.setParameter("x", "z")
-			.getParameter("x");
-		assertThat("form parameter value", actual, is("z"));
 	}
 
 	@Test
@@ -165,16 +133,16 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
-			+ "<input type='text' name='p'/>"
+			+ "<input type='text' name='p' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
-		form.setParameter("p", "x");
+		form.setParameter("p", "y");
 		
-		assertThat("form parameter value", form.getParameter("p"), is("x"));
+		assertThat("form parameter value", form.getParameter("p"), is("y"));
 	}
 
 	@Test
@@ -182,16 +150,16 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
-			+ "<input type='password' name='p'/>"
+			+ "<input type='password' name='p' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
-		form.setParameter("p", "x");
+		form.setParameter("p", "y");
 		
-		assertThat("form parameter value", form.getParameter("p"), is("x"));
+		assertThat("form parameter value", form.getParameter("p"), is("y"));
 	}
 
 	@Test
