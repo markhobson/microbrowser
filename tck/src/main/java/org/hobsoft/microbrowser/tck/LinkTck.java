@@ -171,7 +171,7 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void followWhenAnchorSubmitsRequest() throws IOException, InterruptedException
+	public void followWhenAnchorSubmitsRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/x'>a</a>"
@@ -205,7 +205,7 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void followWhenAnchorSendsCookie() throws IOException, InterruptedException
+	public void followWhenAnchorSendsCookie() throws Exception
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
@@ -222,7 +222,7 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void followWhenAnchorSendsPreviousCookie() throws IOException, InterruptedException
+	public void followWhenAnchorSendsPreviousCookie() throws Exception
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r1' href='/a'>a</a>"

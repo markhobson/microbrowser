@@ -203,7 +203,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void submitWhenSubmitInputSubmitsRequest() throws IOException, InterruptedException
+	public void submitWhenSubmitInputSubmitsRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -222,7 +222,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenSubmitButtonSubmitsRequest() throws IOException, InterruptedException
+	public void submitWhenSubmitButtonSubmitsRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -241,7 +241,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenDefaultButtonSubmitsRequest() throws IOException, InterruptedException
+	public void submitWhenDefaultButtonSubmitsRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -277,7 +277,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenNoMethodSubmitsGetRequest() throws IOException, InterruptedException
+	public void submitWhenNoMethodSubmitsGetRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -296,7 +296,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenNoActionSubmitsRequest() throws IOException, InterruptedException
+	public void submitWhenNoActionSubmitsRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -334,7 +334,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsGetRequest() throws IOException, InterruptedException
+	public void submitWhenGetSubmitsGetRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/x'>"
@@ -353,7 +353,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsHiddenControlInitialValue() throws IOException, InterruptedException
+	public void submitWhenGetSubmitsHiddenControlInitialValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -373,7 +373,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsTextControlInitialValue() throws IOException, InterruptedException
+	public void submitWhenGetSubmitsTextControlInitialValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -393,7 +393,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsTextControlSetValue() throws IOException, InterruptedException
+	public void submitWhenGetSubmitsTextControlSetValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -414,7 +414,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsPasswordControlInitialValue() throws IOException, InterruptedException
+	public void submitWhenGetSubmitsPasswordControlInitialValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -434,7 +434,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsPasswordControlSetValue() throws IOException, InterruptedException
+	public void submitWhenGetSubmitsPasswordControlSetValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -474,7 +474,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSendsCookie() throws IOException, InterruptedException
+	public void submitWhenGetSendsCookie() throws Exception
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -493,7 +493,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSendsPreviousCookie() throws IOException, InterruptedException
+	public void submitWhenGetSendsPreviousCookie() throws Exception
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
@@ -537,7 +537,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsPostRequest() throws IOException, InterruptedException
+	public void submitWhenPostSubmitsPostRequest() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/x'>"
@@ -556,7 +556,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsHiddenControlInitialValue() throws IOException, InterruptedException
+	public void submitWhenPostSubmitsHiddenControlInitialValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -576,7 +576,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsTextControlInitialValue() throws IOException, InterruptedException
+	public void submitWhenPostSubmitsTextControlInitialValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -596,7 +596,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsTextControlSetValue() throws IOException, InterruptedException
+	public void submitWhenPostSubmitsTextControlSetValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -617,7 +617,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsPasswordControlInitialValue() throws IOException, InterruptedException
+	public void submitWhenPostSubmitsPasswordControlInitialValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -637,7 +637,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsPasswordControlSetValue() throws IOException, InterruptedException
+	public void submitWhenPostSubmitsPasswordControlSetValue() throws Exception
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -677,7 +677,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSendsCookie() throws IOException, InterruptedException
+	public void submitWhenPostSendsCookie() throws Exception
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -696,7 +696,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSendsPreviousCookie() throws IOException, InterruptedException
+	public void submitWhenPostSendsPreviousCookie() throws Exception
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"

@@ -35,7 +35,7 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getRequestsPath() throws IOException, InterruptedException
+	public void getRequestsPath() throws Exception
 	{
 		server().enqueue(new MockResponse());
 		server().start();
