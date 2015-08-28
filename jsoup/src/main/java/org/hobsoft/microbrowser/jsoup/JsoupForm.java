@@ -165,7 +165,7 @@ class JsoupForm implements Form
 		}
 		else
 		{
-			action = element.ownerDocument().baseUri();
+			action = element.baseUri();
 		}
 		
 		return newUrlOrNull(action);
