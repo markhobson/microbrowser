@@ -15,8 +15,6 @@ package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
@@ -46,8 +44,6 @@ class JsoupForm implements Form
 	
 	private final FormElement element;
 	
-	private final Map<String, JsoupControl> controlsByName;
-
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
@@ -56,8 +52,6 @@ class JsoupForm implements Form
 	{
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");
-		
-		controlsByName = getControlsByName(element);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -120,33 +114,21 @@ class JsoupForm implements Form
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	private static Map<String, JsoupControl> getControlsByName(Element element)
-	{
-		Map<String, JsoupControl> controlsByName = new HashMap<String, JsoupControl>();
-		
-		for (Element controlElement : element.select(byControls()))
-		{
-			JsoupControl control = new JsoupControl(controlElement);
-			
-			controlsByName.put(control.getName(), control);
-		}
-		
-		return controlsByName;
-	}
-	
 	private JsoupControl getControl(String name)
 	{
-		if (!controlsByName.containsKey(name))
+		Elements elements = element.select(byControl(name));
+		
+		if (elements.isEmpty())
 		{
 			throw new ParameterNotFoundException(name);
 		}
 		
-		return controlsByName.get(name);
+		return new JsoupControl(elements.first());
 	}
 
-	private static String byControls()
+	private static String byControl(String name)
 	{
-		return "input[type=hidden], input[type=text], input[type=password]";
+		return String.format("input[name=%s]", name);
 	}
 	
 	private Connection getConnection()
