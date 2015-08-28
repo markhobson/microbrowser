@@ -23,8 +23,6 @@ import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.ParameterNotFoundException;
 import org.jsoup.Connection;
-import org.jsoup.Connection.Method;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.FormElement;
 import org.jsoup.select.Elements;
@@ -153,9 +151,7 @@ class JsoupForm implements Form
 	
 	private Connection getConnection()
 	{
-		return Jsoup.connect(getAction().toString())
-			.method(getMethod())
-			.data(element.formData())
+		return element.submit()
 			.cookies(document.getCookies());
 	}
 	
@@ -175,18 +171,6 @@ class JsoupForm implements Form
 		return newUrlOrNull(action);
 	}
 
-	private Method getMethod()
-	{
-		String value = element.attr("method").toUpperCase();
-		
-		if (value.isEmpty())
-		{
-			return Method.GET;
-		}
-		
-		return Method.valueOf(value);
-	}
-	
 	private Element getSubmit()
 	{
 		Elements elements = element.select(bySubmit());
