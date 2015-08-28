@@ -69,6 +69,8 @@ class SeleniumForm implements Form
 	public Form setParameter(String name, String value)
 	{
 		WebElement control = getControl(name);
+		checkArgument(!"hidden".equals(control.getAttribute("type")), "Cannot set hidden control value: %s", name);
+		
 		control.clear();
 		control.sendKeys(value);
 		

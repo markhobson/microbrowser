@@ -15,6 +15,7 @@ package org.hobsoft.microbrowser.jsoup;
 
 import org.jsoup.nodes.Element;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -57,6 +58,22 @@ class JsoupControl
 
 	public void setValue(String value)
 	{
+		checkArgument(!isHidden(), "Cannot set hidden control value: %s", getName());
+		
 		this.value = checkNotNull(value, "value");
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private boolean isHidden()
+	{
+		return "hidden".equals(getType());
+	}
+
+	private String getType()
+	{
+		return element.attr("type");
 	}
 }

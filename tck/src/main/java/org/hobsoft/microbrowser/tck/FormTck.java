@@ -129,6 +129,25 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
+	public void setParameterWhenHiddenControlThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='hidden' name='p' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot set hidden control value: p");
+		
+		form.setParameter("p", "y");
+	}
+	
+	@Test
 	public void setParameterWhenTextControlSetsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
