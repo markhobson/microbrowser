@@ -24,6 +24,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 class JsoupControl
 {
 	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static final String DEFAULT_CHECKED_VALUE = "on";
+
+	private static final String UNCHECKED_VALUE = "";
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -49,7 +57,18 @@ class JsoupControl
 
 	public String getValue()
 	{
-		return element.val();
+		String value;
+		
+		if (isCheckbox())
+		{
+			value = getCheckboxValue();
+		}
+		else
+		{
+			value = element.val();
+		}
+		
+		return value;
 	}
 
 	public void setValue(String value)
@@ -57,7 +76,14 @@ class JsoupControl
 		checkArgument(!isHidden(), "Cannot set hidden control value: %s", getName());
 		checkNotNull(value, "value");
 		
-		element.val(value);
+		if (isCheckbox())
+		{
+			setCheckboxValue(value);
+		}
+		else
+		{
+			element.val(value);
+		}
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -69,8 +95,35 @@ class JsoupControl
 		return "hidden".equals(getType());
 	}
 
+	private boolean isCheckbox()
+	{
+		return "checkbox".equals(getType());
+	}
+	
 	private String getType()
 	{
 		return element.attr("type");
+	}
+
+	private String getCheckboxValue()
+	{
+		return element.hasAttr("checked") ? getCheckedValue() : UNCHECKED_VALUE;
+	}
+
+	private String getCheckedValue()
+	{
+		return element.hasAttr("value") ? element.attr("value") : DEFAULT_CHECKED_VALUE;
+	}
+
+	private boolean isCheckboxValue(String value)
+	{
+		return getCheckedValue().equals(value) || UNCHECKED_VALUE.equals(value);
+	}
+
+	private void setCheckboxValue(String value)
+	{
+		checkArgument(isCheckboxValue(value), "Invalid checkbox value: %s", value);
+		
+		element.attr("checked", !UNCHECKED_VALUE.equals(value));
 	}
 }

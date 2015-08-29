@@ -24,6 +24,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
@@ -111,6 +112,70 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void getParameterWithCheckedCheckboxControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='x' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, is("on"));
+	}
+
+	@Test
+	public void getParameterWithUncheckedCheckboxControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, isEmptyString());
+	}
+	
+	@Test
+	public void getParameterWithValuedCheckedCheckboxControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='x' value='y' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, is("y"));
+	}
+	
+	@Test
+	public void getParameterWithValuedUncheckedCheckboxControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='x' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, isEmptyString());
+	}
+	
+	@Test
 	public void getParameterWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -184,6 +249,112 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		assertThat("form parameter value", form.getParameter("p"), is("y"));
 	}
 
+	@Test
+	public void setParameterWithCheckboxControlAndCheckedSetsValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='p'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		form.setParameter("p", "on");
+		
+		assertThat("form parameter value", form.getParameter("p"), is("on"));
+	}
+
+	@Test
+	public void setParameterWithCheckboxControlAndUncheckedSetsValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='p' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		form.setParameter("p", "");
+		
+		assertThat("form parameter value", form.getParameter("p"), isEmptyString());
+	}
+	
+	@Test
+	public void setParameterWithCheckboxControlAndInvalidValueThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='p'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid checkbox value: x");
+		
+		form.setParameter("p", "x");
+	}
+	
+	@Test
+	public void setParameterWithValuedCheckboxControlAndCheckedSetsValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		form.setParameter("p", "x");
+		
+		assertThat("form parameter value", form.getParameter("p"), is("x"));
+	}
+	
+	@Test
+	public void setParameterWithValuedCheckboxControlAndUncheckedSetsValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		form.setParameter("p", "");
+		
+		assertThat("form parameter value", form.getParameter("p"), isEmptyString());
+	}
+	
+	@Test
+	public void setParameterWithValuedCheckboxControlAndInvalidValueThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid checkbox value: y");
+		
+		form.setParameter("p", "y");
+	}
+	
 	@Test
 	public void setParameterWithUnknownNameThrowsException() throws IOException
 	{
@@ -458,6 +629,170 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void submitWhenGetSubmitsCheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+	}
+	
+	@Test
+	public void submitWhenGetSubmitsCheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "on")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+	}
+
+	@Test
+	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a")));
+	}
+	
+	@Test
+	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a")));
+	}
+
+	@Test
+	public void submitWhenGetSubmitsValuedCheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+	}
+	
+	@Test
+	public void submitWhenGetSubmitsValuedCheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+	}
+
+	@Test
+	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a")));
+	}
+	
+	@Test
+	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a")));
+	}
+	
+	@Test
 	public void submitWhenGetSetsCookie() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -660,6 +995,170 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		assertThat("request body", body(takeRequest(server())), is("p=x"));
 	}
 
+	@Test
+	public void submitWhenPostSubmitsCheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request body", body(takeRequest(server())), is("p=on"));
+	}
+
+	@Test
+	public void submitWhenPostSubmitsCheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "on")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("p=on"));
+	}
+
+	@Test
+	public void submitWhenPostDoesNotSubmitUncheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), isEmptyString());
+	}
+	
+	@Test
+	public void submitWhenPostDoesNotSubmitUncheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), isEmptyString());
+	}
+
+	@Test
+	public void submitWhenPostSubmitsValuedCheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("p=x"));
+	}
+	
+	@Test
+	public void submitWhenPostSubmitsValuedCheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("p=x"));
+	}
+
+	@Test
+	public void submitWhenPostDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), isEmptyString());
+	}
+	
+	@Test
+	public void submitWhenPostDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), isEmptyString());
+	}
+	
 	@Test
 	public void submitWhenPostSetsCookie() throws IOException
 	{

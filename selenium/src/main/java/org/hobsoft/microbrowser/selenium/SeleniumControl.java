@@ -24,6 +24,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 class SeleniumControl
 {
 	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static final String UNCHECKED_VALUE = "";
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -49,7 +55,18 @@ class SeleniumControl
 
 	public String getValue()
 	{
-		return element.getAttribute("value");
+		String value;
+		
+		if (isCheckbox())
+		{
+			value = getCheckboxValue();
+		}
+		else
+		{
+			value = element.getAttribute("value");
+		}
+		
+		return value;
 	}
 
 	public void setValue(String value)
@@ -57,8 +74,15 @@ class SeleniumControl
 		checkArgument(!isHidden(), "Cannot set hidden control value: %s", getName());
 		checkNotNull(value, "value");
 		
-		element.clear();
-		element.sendKeys(value);
+		if (isCheckbox())
+		{
+			setCheckboxValue(value);
+		}
+		else
+		{
+			element.clear();
+			element.sendKeys(value);
+		}
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -73,5 +97,37 @@ class SeleniumControl
 	private boolean isHidden()
 	{
 		return "hidden".equals(getType());
+	}
+
+	private boolean isCheckbox()
+	{
+		return "checkbox".equals(getType());
+	}
+
+	private String getCheckboxValue()
+	{
+		return element.isSelected() ? getCheckedValue() : UNCHECKED_VALUE;
+	}
+
+	private String getCheckedValue()
+	{
+		return element.getAttribute("value");
+	}
+
+	private boolean isCheckboxValue(String value)
+	{
+		return getCheckedValue().equals(value) || UNCHECKED_VALUE.equals(value);
+	}
+
+	private void setCheckboxValue(String value)
+	{
+		checkArgument(isCheckboxValue(value), "Invalid checkbox value: %s", value);
+		
+		boolean checked = !UNCHECKED_VALUE.equals(value);
+		
+		if (element.isSelected() != checked)
+		{
+			element.click();
+		}
 	}
 }
