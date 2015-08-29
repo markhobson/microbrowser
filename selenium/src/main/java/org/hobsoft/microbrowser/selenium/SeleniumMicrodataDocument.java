@@ -101,23 +101,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 		});
 	}
 	
-	// ----------------------------------------------------------------------------------------------------------------
-	// Unwrappable methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	public <T> T unwrap(Class<T> type)
-	{
-		checkArgument(WebDriver.class.equals(type), "Cannot unwrap to: %s", type);
-		
-		return type.cast(driver);
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermedia methods
-	// ----------------------------------------------------------------------------------------------------------------
-	
-	@Override
-	protected Form newForm(String name)
+	public Form getForm(String name)
 	{
 		List<WebElement> elements = driver.findElements(byForm(name));
 		
@@ -127,6 +111,17 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 		}
 		
 		return new SeleniumForm(driver, elements.iterator().next());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Unwrappable methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public <T> T unwrap(Class<T> type)
+	{
+		checkArgument(WebDriver.class.equals(type), "Cannot unwrap to: %s", type);
+		
+		return type.cast(driver);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

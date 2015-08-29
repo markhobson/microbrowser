@@ -101,23 +101,7 @@ class JsoupMicrodataItem extends AbstractHypermedia implements MicrodataItem
 		});
 	}
 	
-	// ----------------------------------------------------------------------------------------------------------------
-	// Unwrappable methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	public <T> T unwrap(Class<T> type)
-	{
-		checkArgument(Element.class.equals(type), "Cannot unwrap to: %s", type);
-		
-		return type.cast(element);
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermedia methods
-	// ----------------------------------------------------------------------------------------------------------------
-	
-	@Override
-	protected Form newForm(String name)
+	public Form getForm(String name)
 	{
 		Elements elements = element.select(byForm(name));
 		
@@ -127,6 +111,17 @@ class JsoupMicrodataItem extends AbstractHypermedia implements MicrodataItem
 		}
 		
 		return new JsoupForm(document, (FormElement) elements.first());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Unwrappable methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public <T> T unwrap(Class<T> type)
+	{
+		checkArgument(Element.class.equals(type), "Cannot unwrap to: %s", type);
+		
+		return type.cast(element);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

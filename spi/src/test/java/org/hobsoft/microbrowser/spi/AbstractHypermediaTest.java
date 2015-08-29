@@ -14,13 +14,9 @@
 package org.hobsoft.microbrowser.spi;
 
 import java.util.Collections;
-import java.util.Iterator;
 
-import org.hobsoft.microbrowser.Form;
-import org.hobsoft.microbrowser.FormNotFoundException;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.LinkNotFoundException;
-import org.hobsoft.microbrowser.spi.support.FakeHypermedia;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -79,62 +75,5 @@ public class AbstractHypermediaTest
 		thrown.expectMessage("x");
 		
 		hypermedia.getLink("x");
-	}
-	
-	@Test
-	public void getFormReturnsForm()
-	{
-		final Form form = mock(Form.class);
-		hypermedia = new FakeHypermedia()
-		{
-			@Override
-			protected Form newForm(String name)
-			{
-				return "x".equals(name) ? form : null;
-			}
-		};
-		
-		assertThat(hypermedia.getForm("x"), is(form));
-	}
-	
-	@Test
-	public void getFormCachesForm()
-	{
-		Form form = mock(Form.class);
-		final Iterator<Form> forms = asList(form, mock(Form.class)).iterator();
-		hypermedia = new FakeHypermedia()
-		{
-			@Override
-			protected Form newForm(String name)
-			{
-				return "x".equals(name) ? forms.next() : null;
-			}
-		};
-		
-		hypermedia.getForm("x");
-		assertThat(hypermedia.getForm("x"), is(form));
-	}
-	
-	@Test
-	public void getFormWhenNotFoundThrowsException()
-	{
-		hypermedia = new FakeHypermedia()
-		{
-			@Override
-			protected Form newForm(String name)
-			{
-				if ("x".equals(name))
-				{
-					throw new FormNotFoundException(name);
-				}
-				
-				return null;
-			}
-		};
-		
-		thrown.expect(FormNotFoundException.class);
-		thrown.expectMessage("x");
-		
-		hypermedia.getForm("x");
 	}
 }

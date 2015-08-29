@@ -13,11 +13,8 @@
  */
 package org.hobsoft.microbrowser.spi;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.Hypermedia;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.LinkNotFoundException;
@@ -27,21 +24,6 @@ import org.hobsoft.microbrowser.LinkNotFoundException;
  */
 public abstract class AbstractHypermedia implements Hypermedia
 {
-	// ----------------------------------------------------------------------------------------------------------------
-	// fields
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private final Map<String, Form> formsByName;
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// constructors
-	// ----------------------------------------------------------------------------------------------------------------
-
-	public AbstractHypermedia()
-	{
-		formsByName = new HashMap<String, Form>();
-	}
-
 	// ----------------------------------------------------------------------------------------------------------------
 	// Hypermedia methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -57,27 +39,4 @@ public abstract class AbstractHypermedia implements Hypermedia
 		
 		return links.get(0);
 	}
-	
-	public final Form getForm(String name)
-	{
-		Form form = formsByName.get(name);
-		
-		if (form == null)
-		{
-			form = newForm(name);
-			formsByName.put(name, form);
-		}
-		
-		return form;
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	/**
-	 * @throws org.hobsoft.microbrowser.FormNotFoundException
-	 *             if the form cannot be found
-	 */
-	protected abstract Form newForm(String name);
 }

@@ -32,13 +32,8 @@ public class FakeHypermedia extends AbstractHypermedia
 	{
 		return null;
 	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermedia methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected Form newForm(String name)
+	
+	public Form getForm(String name)
 	{
 		return null;
 	}

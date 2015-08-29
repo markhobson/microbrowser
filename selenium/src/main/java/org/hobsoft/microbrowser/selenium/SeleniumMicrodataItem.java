@@ -100,6 +100,18 @@ class SeleniumMicrodataItem extends AbstractHypermedia implements MicrodataItem
 			}
 		});
 	}
+
+	public Form getForm(String name)
+	{
+		List<WebElement> elements = element.findElements(byForm(name));
+		
+		if (elements.isEmpty())
+		{
+			throw new FormNotFoundException(name);
+		}
+		
+		return new SeleniumForm(driver, elements.iterator().next());
+	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// Unwrappable methods
@@ -110,23 +122,6 @@ class SeleniumMicrodataItem extends AbstractHypermedia implements MicrodataItem
 		checkArgument(WebElement.class.equals(type), "Cannot unwrap to: %s", type);
 		
 		return type.cast(element);
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermedia methods
-	// ----------------------------------------------------------------------------------------------------------------
-	
-	@Override
-	protected Form newForm(String name)
-	{
-		List<WebElement> elements = element.findElements(byForm(name));
-		
-		if (elements.isEmpty())
-		{
-			throw new FormNotFoundException(name);
-		}
-		
-		return new SeleniumForm(driver, elements.iterator().next());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

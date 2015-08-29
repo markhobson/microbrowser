@@ -31,7 +31,6 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
@@ -339,19 +338,23 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getFormCachesForm() throws IOException
+	public void getFormRetainsSetParameterValues() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
-			+ "<form name='x'/>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='p'/>"
+			+ "</form>"
 			+ "</div>"
 			+ "</body></html>"));
 		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
+		item.getForm("f")
+			.setParameter("p", "x");
 		
-		assertThat("form", item.getForm("x"), is(sameInstance(item.getForm("x"))));
+		assertThat("form parameter value", item.getForm("f").getParameter("p"), is("x"));
 	}
 
 	@Test

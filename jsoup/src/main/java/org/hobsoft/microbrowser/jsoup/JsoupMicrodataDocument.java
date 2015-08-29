@@ -126,6 +126,18 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 			}
 		});
 	}
+
+	public Form getForm(String name)
+	{
+		Elements elements = document.select(byForm(name));
+		
+		if (elements.isEmpty())
+		{
+			throw new FormNotFoundException(name);
+		}
+		
+		return new JsoupForm(this, (FormElement) elements.first());
+	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// Unwrappable methods
@@ -136,23 +148,6 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 		checkArgument(Document.class.equals(type), "Cannot unwrap to: %s", type);
 		
 		return type.cast(document);
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// AbstractHypermedia methods
-	// ----------------------------------------------------------------------------------------------------------------
-	
-	@Override
-	protected Form newForm(String name)
-	{
-		Elements elements = document.select(byForm(name));
-		
-		if (elements.isEmpty())
-		{
-			throw new FormNotFoundException(name);
-		}
-		
-		return new JsoupForm(this, (FormElement) elements.first());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
