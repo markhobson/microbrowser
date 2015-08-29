@@ -303,7 +303,7 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinkWhenNotFoundReturnsEmptyList() throws IOException
+	public void getLinksWhenNotFoundReturnsEmptyList() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
