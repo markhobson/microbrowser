@@ -44,8 +44,10 @@ public interface Form extends Unwrappable
 	 * @param value
 	 *            the form control value to set
 	 * @return this form
+	 * @throws ParameterNotFoundException
+	 *             if the form control cannot be found
 	 * @throws IllegalArgumentException
-	 *             if the form control cannot be found, is read-only, or the value is invalid
+	 *             if the form control is read-only or the value is invalid
 	 */
 	Form setParameter(String name, String value);
 
