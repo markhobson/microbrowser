@@ -63,16 +63,12 @@ class SeleniumForm implements Form
 	
 	public String getParameter(String name)
 	{
-		return getControl(name).getAttribute("value");
+		return getControl(name).getValue();
 	}
 
 	public Form setParameter(String name, String value)
 	{
-		WebElement control = getControl(name);
-		checkArgument(!"hidden".equals(control.getAttribute("type")), "Cannot set hidden control value: %s", name);
-		
-		control.clear();
-		control.sendKeys(value);
+		getControl(name).setValue(value);
 		
 		return this;
 	}
@@ -114,7 +110,7 @@ class SeleniumForm implements Form
 		return newUrlOrNull(action);
 	}
 	
-	private WebElement getControl(String name)
+	private SeleniumControl getControl(String name)
 	{
 		List<WebElement> elements = element.findElements(byControl(name));
 		
@@ -123,7 +119,7 @@ class SeleniumForm implements Form
 			throw new ParameterNotFoundException(name);
 		}
 		
-		return elements.iterator().next();
+		return new SeleniumControl(elements.iterator().next());
 	}
 	
 	private static By byControl(String name)
