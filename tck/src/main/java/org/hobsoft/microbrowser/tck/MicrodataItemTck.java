@@ -151,7 +151,7 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getPropertyWhenNotFoundThrowsException() throws IOException
+	public void getPropertyWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
@@ -206,7 +206,7 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinkWhenNotFoundThrowsException() throws IOException
+	public void getLinkWithUnknownRelThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
@@ -303,7 +303,7 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinksWhenNotFoundReturnsEmptyList() throws IOException
+	public void getLinksWithUnknownRelReturnsEmptyList() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"

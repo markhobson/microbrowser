@@ -63,7 +63,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getParameterWhenHiddenControlReturnsInitialValue() throws IOException
+	public void getParameterWithHiddenControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -79,7 +79,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getParameterWhenTextControlReturnsInitialValue() throws IOException
+	public void getParameterWithTextControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -95,7 +95,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getParameterWhenPasswordControlReturnsInitialValue() throws IOException
+	public void getParameterWithPasswordControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -111,7 +111,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getParameterWhenNotFoundThrowsException() throws IOException
+	public void getParameterWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -132,7 +132,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void setParameterWhenHiddenControlThrowsException() throws IOException
+	public void setParameterWithHiddenControlThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -151,7 +151,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setParameterWhenTextControlSetsValue() throws IOException
+	public void setParameterWithTextControlSetsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -168,7 +168,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setParameterWhenPasswordControlSetsValue() throws IOException
+	public void setParameterWithPasswordControlSetsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -185,7 +185,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setParameterWhenNotFoundThrowsException() throws IOException
+	public void setParameterWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"

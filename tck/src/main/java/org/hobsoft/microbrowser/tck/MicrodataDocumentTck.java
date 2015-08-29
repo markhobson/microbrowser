@@ -80,7 +80,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getItemWhenNotFoundThrowsException() throws IOException
+	public void getItemWithUnknownTypeThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().start();
@@ -94,7 +94,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getItemWithInvalidUrlThrowsException() throws IOException
+	public void getItemWithInvalidTypeThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().start();
@@ -144,7 +144,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getItemsWhenNotFoundReturnsEmptyList() throws IOException
+	public void getItemsWithUnknownTypeReturnsEmptyList() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().start();
@@ -156,7 +156,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getItemsWithInvalidUrlThrowsException() throws IOException
+	public void getItemsWithInvalidTypeThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().start();
@@ -232,7 +232,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinkWhenNotFoundThrowsException() throws IOException
+	public void getLinkWithUnknownRelThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().start();
@@ -314,7 +314,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinksWhenNotFoundReturnsEmptyList() throws IOException
+	public void getLinksWithUnknownRelReturnsEmptyList() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().start();
@@ -357,7 +357,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getFormWhenNotFoundThrowsException() throws IOException
+	public void getFormWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
 		server().start();
@@ -387,7 +387,7 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getCookieWhenNotFoundThrowsException() throws IOException
+	public void getCookieWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse());
 		server().start();
