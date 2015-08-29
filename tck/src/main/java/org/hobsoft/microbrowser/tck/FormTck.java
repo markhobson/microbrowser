@@ -66,8 +66,9 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	public void getParameterWhenHiddenControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f'/>"
+			+ "<form name='f'>"
 			+ "<input type='hidden' name='x' value='y'/>"
+			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
@@ -81,8 +82,9 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	public void getParameterWhenTextControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f'/>"
+			+ "<form name='f'>"
 			+ "<input type='text' name='x' value='y'/>"
+			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
@@ -96,8 +98,9 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	public void getParameterWhenPasswordControlReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f'/>"
+			+ "<form name='f'>"
 			+ "<input type='password' name='x' value='y'/>"
+			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
