@@ -110,7 +110,7 @@ class SeleniumForm implements Form
 		return newUrlOrNull(action);
 	}
 	
-	private SeleniumControl getControl(String name)
+	private Control getControl(String name)
 	{
 		List<WebElement> elements = element.findElements(byControl(name));
 		
@@ -119,12 +119,37 @@ class SeleniumForm implements Form
 			throw new ParameterNotFoundException(name);
 		}
 		
-		return new SeleniumControl(elements.iterator().next());
+		return newControl(elements.iterator().next());
 	}
 	
 	private static By byControl(String name)
 	{
 		return By.cssSelector(String.format("input[name='%s']", name));
+	}
+
+	private static Control newControl(WebElement element)
+	{
+		Control control;
+		String type = element.getAttribute("type");
+		
+		if ("hidden".equals(type))
+		{
+			control = new SeleniumHiddenControl(element);
+		}
+		else if ("checkbox".equals(type))
+		{
+			control = new SeleniumCheckboxControl(element);
+		}
+		else if ("radio".equals(type))
+		{
+			control = new SeleniumRadioControl(element);
+		}
+		else
+		{
+			control = new SeleniumTextControl(element);
+		}
+		
+		return control;
 	}
 
 	private WebElement getSubmit()
