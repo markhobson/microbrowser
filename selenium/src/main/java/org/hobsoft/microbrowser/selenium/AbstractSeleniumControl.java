@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import org.hobsoft.microbrowser.Control;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkNotNull;

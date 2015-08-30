@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.selenium;
 import java.net.URL;
 import java.util.List;
 
+import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.hobsoft.microbrowser.ParameterNotFoundException;

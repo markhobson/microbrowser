@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.jsoup;
 import java.io.IOException;
 import java.net.URL;
 
+import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;

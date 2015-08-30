@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
+import org.hobsoft.microbrowser.Control;
 import org.jsoup.nodes.Element;
 
 import static com.google.common.base.Preconditions.checkNotNull;

@@ -11,12 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.selenium;
+package org.hobsoft.microbrowser;
 
 /**
  * Defines an HTML form control.
  */
-interface Control
+public interface Control
 {
 	String getName();
 
