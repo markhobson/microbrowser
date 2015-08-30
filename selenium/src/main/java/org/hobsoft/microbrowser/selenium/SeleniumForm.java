@@ -17,9 +17,9 @@ import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
-import org.hobsoft.microbrowser.ParameterNotFoundException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -68,7 +68,7 @@ class SeleniumForm implements Form
 		
 		if (elements.isEmpty())
 		{
-			throw new ParameterNotFoundException(name);
+			throw new ControlNotFoundException(name);
 		}
 		
 		return newControl(elements.iterator().next());

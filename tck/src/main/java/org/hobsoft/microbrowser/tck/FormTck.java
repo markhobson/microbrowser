@@ -16,9 +16,9 @@ package org.hobsoft.microbrowser.tck;
 import java.io.IOException;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
-import org.hobsoft.microbrowser.ParameterNotFoundException;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -92,7 +92,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
 		
-		thrown().expect(ParameterNotFoundException.class);
+		thrown().expect(ControlNotFoundException.class);
 		thrown().expectMessage("x");
 		
 		form.getControl("x");
@@ -130,7 +130,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
 		
-		thrown().expect(ParameterNotFoundException.class);
+		thrown().expect(ControlNotFoundException.class);
 		thrown().expectMessage("x");
 		
 		form.getControlValue("x");
@@ -168,7 +168,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
 		
-		thrown().expect(ParameterNotFoundException.class);
+		thrown().expect(ControlNotFoundException.class);
 		thrown().expectMessage("c");
 		
 		form.setControlValue("c", "x");

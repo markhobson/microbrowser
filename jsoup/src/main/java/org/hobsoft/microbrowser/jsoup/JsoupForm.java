@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
-import org.hobsoft.microbrowser.ParameterNotFoundException;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.FormElement;
@@ -70,7 +70,7 @@ class JsoupForm implements Form
 		
 		if (elements.isEmpty())
 		{
-			throw new ParameterNotFoundException(name);
+			throw new ControlNotFoundException(name);
 		}
 		
 		return newControl(elements.first());

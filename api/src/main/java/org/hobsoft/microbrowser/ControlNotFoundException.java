@@ -16,13 +16,13 @@ package org.hobsoft.microbrowser;
 /**
  * Indicates that a form control cannot be found.
  */
-public final class ParameterNotFoundException extends MicrobrowserException
+public final class ControlNotFoundException extends MicrobrowserException
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public ParameterNotFoundException(String name)
+	public ControlNotFoundException(String name)
 	{
 		super(name.toString());
 	}

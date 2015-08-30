@@ -31,7 +31,7 @@ public interface Form extends Unwrappable
 	 * @param name
 	 *            the name of the form control to get
 	 * @return the form control
-	 * @throws ParameterNotFoundException
+	 * @throws ControlNotFoundException
 	 *             if the form control cannot be found
 	 */
 	Control getControl(String name);
@@ -42,7 +42,7 @@ public interface Form extends Unwrappable
 	 * @param name
 	 *            the name of the form control whose value to get
 	 * @return the form control value
-	 * @throws ParameterNotFoundException
+	 * @throws ControlNotFoundException
 	 *             if the form control cannot be found
 	 */
 	String getControlValue(String name);
@@ -55,7 +55,7 @@ public interface Form extends Unwrappable
 	 * @param value
 	 *            the form control value to set
 	 * @return this form
-	 * @throws ParameterNotFoundException
+	 * @throws ControlNotFoundException
 	 *             if the form control cannot be found
 	 * @throws IllegalArgumentException
 	 *             if the form control is read-only or the value is invalid
