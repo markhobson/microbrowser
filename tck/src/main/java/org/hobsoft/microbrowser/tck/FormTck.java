@@ -145,16 +145,16 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
-			+ "<input type='text' name='c' value='x'/>"
+			+ "<input type='text' name='x' value='y'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
-		form.setControlValue("c", "y");
+		form.setControlValue("x", "y");
 		
-		assertThat("form control value", form.getControlValue("c"), is("y"));
+		assertThat("form control value", form.getControlValue("x"), is("y"));
 	}
 
 	@Test
@@ -169,9 +169,9 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.getForm("f");
 		
 		thrown().expect(ControlNotFoundException.class);
-		thrown().expectMessage("c");
+		thrown().expectMessage("x");
 		
-		form.setControlValue("c", "x");
+		form.setControlValue("x", "y");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
