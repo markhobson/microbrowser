@@ -99,11 +99,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// getParameter tests
+	// getControlValue tests
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getParameterReturnsInitialValue() throws IOException
+	public void getControlValueReturnsInitialValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -114,13 +114,13 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
-			.getParameter("x");
+			.getControlValue("x");
 		
-		assertThat("form parameter value", actual, is("y"));
+		assertThat("form control value", actual, is("y"));
 	}
 	
 	@Test
-	public void getParameterWithUnknownNameThrowsException() throws IOException
+	public void getControlValueWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -133,32 +133,32 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		thrown().expect(ParameterNotFoundException.class);
 		thrown().expectMessage("x");
 		
-		form.getParameter("x");
+		form.getControlValue("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// setParameter tests
+	// setControlValue tests
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void setParameterSetsValue() throws IOException
+	public void setControlValueSetsValue() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
-			+ "<input type='text' name='p' value='x'/>"
+			+ "<input type='text' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
-		form.setParameter("p", "y");
+		form.setControlValue("c", "y");
 		
-		assertThat("form parameter value", form.getParameter("p"), is("y"));
+		assertThat("form control value", form.getControlValue("c"), is("y"));
 	}
 
 	@Test
-	public void setParameterWithUnknownNameThrowsException() throws IOException
+	public void setControlValueWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
@@ -169,9 +169,9 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.getForm("f");
 		
 		thrown().expect(ParameterNotFoundException.class);
-		thrown().expectMessage("p");
+		thrown().expectMessage("c");
 		
-		form.setParameter("p", "x");
+		form.setControlValue("c", "x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
@@ -333,7 +333,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='hidden' name='p' value='x'/>"
+			+ "<input type='hidden' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -345,7 +345,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
 	@Test
@@ -353,7 +353,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='text' name='p' value='x'/>"
+			+ "<input type='text' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -365,7 +365,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
 	@Test
@@ -373,7 +373,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='text' name='p'/>"
+			+ "<input type='text' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -382,11 +382,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
 	@Test
@@ -394,7 +394,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='password' name='p' value='x'/>"
+			+ "<input type='password' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -406,7 +406,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
 	@Test
@@ -414,7 +414,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='password' name='p'/>"
+			+ "<input type='password' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -423,11 +423,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
 	@Test
@@ -435,7 +435,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='checkbox' name='c' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -447,7 +447,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=on")));
 	}
 	
 	@Test
@@ -455,7 +455,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='checkbox' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -464,11 +464,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "on")
+			.setControlValue("c", "on")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=on")));
 	}
 
 	@Test
@@ -476,7 +476,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='checkbox' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -496,7 +496,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='checkbox' name='c' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -505,7 +505,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "")
+			.setControlValue("c", "")
 			.submit();
 		
 		server().takeRequest();
@@ -517,7 +517,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -529,7 +529,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 	
 	@Test
@@ -537,7 +537,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='checkbox' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -546,11 +546,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
 	@Test
@@ -558,7 +558,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='checkbox' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -578,7 +578,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -587,7 +587,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "")
+			.setControlValue("c", "")
 			.submit();
 		
 		server().takeRequest();
@@ -599,7 +599,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='radio' name='p' checked/>"
+			+ "<input type='radio' name='c' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -611,7 +611,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=on")));
 	}
 	
 	@Test
@@ -619,7 +619,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='radio' name='p'/>"
+			+ "<input type='radio' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -628,11 +628,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "on")
+			.setControlValue("c", "on")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=on")));
 	}
 
 	@Test
@@ -640,7 +640,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='radio' name='p'/>"
+			+ "<input type='radio' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -660,7 +660,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='radio' name='p' value='x' checked/>"
+			+ "<input type='radio' name='c' value='x' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -672,7 +672,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 	
 	@Test
@@ -680,7 +680,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='radio' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -689,11 +689,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
 	@Test
@@ -701,7 +701,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='radio' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -822,7 +822,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='hidden' name='p' value='x'/>"
+			+ "<input type='hidden' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -834,7 +834,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("p=x"));
+		assertThat("request body", body(takeRequest(server())), is("c=x"));
 	}
 
 	@Test
@@ -842,7 +842,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='text' name='p' value='x'/>"
+			+ "<input type='text' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -854,7 +854,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("p=x"));
+		assertThat("request body", body(takeRequest(server())), is("c=x"));
 	}
 
 	@Test
@@ -862,7 +862,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='text' name='p'/>"
+			+ "<input type='text' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -871,11 +871,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("p=x"));
+		assertThat("request body", body(takeRequest(server())), is("c=x"));
 	}
 
 	@Test
@@ -883,7 +883,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='password' name='p' value='x'/>"
+			+ "<input type='password' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -895,7 +895,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("p=x"));
+		assertThat("request body", body(takeRequest(server())), is("c=x"));
 	}
 
 	@Test
@@ -903,7 +903,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='password' name='p'/>"
+			+ "<input type='password' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -912,11 +912,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("p=x"));
+		assertThat("request body", body(takeRequest(server())), is("c=x"));
 	}
 
 	@Test
@@ -924,7 +924,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='checkbox' name='c' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -936,7 +936,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("p=on"));
+		assertThat("request body", body(takeRequest(server())), is("c=on"));
 	}
 
 	@Test
@@ -944,7 +944,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='checkbox' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -953,11 +953,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "on")
+			.setControlValue("c", "on")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("p=on"));
+		assertThat("request", body(takeRequest(server())), is("c=on"));
 	}
 
 	@Test
@@ -965,7 +965,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p'/>"
+			+ "<input type='checkbox' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -985,7 +985,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p' checked/>"
+			+ "<input type='checkbox' name='c' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -994,7 +994,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "")
+			.setControlValue("c", "")
 			.submit();
 		
 		server().takeRequest();
@@ -1006,7 +1006,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1018,7 +1018,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("p=x"));
+		assertThat("request", body(takeRequest(server())), is("c=x"));
 	}
 	
 	@Test
@@ -1026,7 +1026,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='checkbox' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1035,11 +1035,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("p=x"));
+		assertThat("request", body(takeRequest(server())), is("c=x"));
 	}
 
 	@Test
@@ -1047,7 +1047,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "<input type='checkbox' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1067,7 +1067,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='checkbox' name='p' value='x' checked/>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1076,7 +1076,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "")
+			.setControlValue("c", "")
 			.submit();
 		
 		server().takeRequest();
@@ -1088,7 +1088,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='radio' name='p' checked/>"
+			+ "<input type='radio' name='c' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1100,7 +1100,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("p=on"));
+		assertThat("request", body(takeRequest(server())), is("c=on"));
 	}
 	
 	@Test
@@ -1108,7 +1108,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='radio' name='p'/>"
+			+ "<input type='radio' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1117,11 +1117,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "on")
+			.setControlValue("c", "on")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("p=on"));
+		assertThat("request", body(takeRequest(server())), is("c=on"));
 	}
 
 	@Test
@@ -1129,7 +1129,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='radio' name='p'/>"
+			+ "<input type='radio' name='c'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1149,7 +1149,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='radio' name='p' value='x' checked/>"
+			+ "<input type='radio' name='c' value='x' checked/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1161,7 +1161,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("p=x"));
+		assertThat("request", body(takeRequest(server())), is("c=x"));
 	}
 	
 	@Test
@@ -1169,7 +1169,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='radio' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
@@ -1178,11 +1178,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
-			.setParameter("p", "x")
+			.setControlValue("c", "x")
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("p=x"));
+		assertThat("request", body(takeRequest(server())), is("c=x"));
 	}
 
 	@Test
@@ -1190,7 +1190,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='radio' name='c' value='x'/>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));

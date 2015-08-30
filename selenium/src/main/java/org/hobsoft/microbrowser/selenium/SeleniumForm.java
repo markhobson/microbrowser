@@ -74,12 +74,12 @@ class SeleniumForm implements Form
 		return newControl(elements.iterator().next());
 	}
 	
-	public String getParameter(String name)
+	public String getControlValue(String name)
 	{
 		return getControl(name).getValue();
 	}
 
-	public Form setParameter(String name, String value)
+	public Form setControlValue(String name, String value)
 	{
 		getControl(name).setValue(value);
 		

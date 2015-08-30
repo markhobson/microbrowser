@@ -76,14 +76,14 @@ class JsoupForm implements Form
 		return newControl(elements.first());
 	}
 
-	public String getParameter(String name)
+	public String getControlValue(String name)
 	{
 		checkNotNull(name, "name");
 		
 		return getControl(name).getValue();
 	}
 
-	public Form setParameter(String name, String value)
+	public Form setControlValue(String name, String value)
 	{
 		checkNotNull(name, "name");
 		checkNotNull(value, "value");

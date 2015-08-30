@@ -343,20 +343,20 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getFormRetainsSetParameterValues() throws IOException
+	public void getFormRetainsSetControlValues() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
-			+ "<input type='text' name='p'/>"
+			+ "<input type='text' name='c'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().start();
 		
 		MicrodataDocument document = newBrowser().get(url(server()));
 		document.getForm("f")
-			.setParameter("p", "x");
+			.setControlValue("c", "x");
 		
-		assertThat("form parameter value", document.getForm("f").getParameter("p"), is("x"));
+		assertThat("form control value", document.getForm("f").getControlValue("c"), is("x"));
 	}
 
 	@Test

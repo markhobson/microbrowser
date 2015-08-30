@@ -45,7 +45,7 @@ public interface Form extends Unwrappable
 	 * @throws ParameterNotFoundException
 	 *             if the form control cannot be found
 	 */
-	String getParameter(String name);
+	String getControlValue(String name);
 
 	/**
 	 * Sets the value of the specified form control.
@@ -60,7 +60,7 @@ public interface Form extends Unwrappable
 	 * @throws IllegalArgumentException
 	 *             if the form control is read-only or the value is invalid
 	 */
-	Form setParameter(String name, String value);
+	Form setControlValue(String name, String value);
 
 	/**
 	 * Submits this form.

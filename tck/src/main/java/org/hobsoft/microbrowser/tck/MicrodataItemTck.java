@@ -338,12 +338,12 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getFormRetainsSetParameterValues() throws IOException
+	public void getFormRetainsSetControlValues() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<form name='f'>"
-			+ "<input type='text' name='p'/>"
+			+ "<input type='text' name='c'/>"
 			+ "</form>"
 			+ "</div>"
 			+ "</body></html>"));
@@ -352,9 +352,9 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
 		item.getForm("f")
-			.setParameter("p", "x");
+			.setControlValue("c", "x");
 		
-		assertThat("form parameter value", item.getForm("f").getParameter("p"), is("x"));
+		assertThat("form control value", item.getForm("f").getControlValue("c"), is("x"));
 	}
 
 	@Test
