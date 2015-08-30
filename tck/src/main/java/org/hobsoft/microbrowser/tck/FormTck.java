@@ -76,6 +76,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, is("y"));
 	}
 
@@ -92,6 +93,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, is("y"));
 	}
 
@@ -108,6 +110,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, is("y"));
 	}
 
@@ -124,6 +127,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, is("on"));
 	}
 
@@ -140,6 +144,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, isEmptyString());
 	}
 	
@@ -156,6 +161,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, is("y"));
 	}
 	
@@ -172,6 +178,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, isEmptyString());
 	}
 	
@@ -188,6 +195,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, is("on"));
 	}
 
@@ -204,6 +212,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, isEmptyString());
 	}
 	
@@ -220,6 +229,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, is("y"));
 	}
 	
@@ -236,6 +246,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
 			.getParameter("x");
+		
 		assertThat("form parameter value", actual, isEmptyString());
 	}
 	
