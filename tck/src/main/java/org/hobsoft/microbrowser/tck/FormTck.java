@@ -176,6 +176,70 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void getParameterWithCheckedRadioControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='x' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, is("on"));
+	}
+
+	@Test
+	public void getParameterWithUncheckedRadioControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, isEmptyString());
+	}
+	
+	@Test
+	public void getParameterWithValuedCheckedRadioControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='x' value='y' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, is("y"));
+	}
+	
+	@Test
+	public void getParameterWithValuedUncheckedRadioControlReturnsInitialValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='x' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getParameter("x");
+		assertThat("form parameter value", actual, isEmptyString());
+	}
+	
+	@Test
 	public void getParameterWithUnknownNameThrowsException() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -342,6 +406,116 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='p' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid checkbox value: y");
+		
+		form.setParameter("p", "y");
+	}
+	
+	@Test
+	public void setParameterWithRadioControlAndCheckedSetsValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='p'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		form.setParameter("p", "on");
+		
+		assertThat("form parameter value", form.getParameter("p"), is("on"));
+	}
+
+	@Test
+	public void setParameterWithRadioControlAndUncheckedThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='p' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot uncheck radio control");
+		
+		form.setParameter("p", "");
+	}
+	
+	@Test
+	public void setParameterWithRadioControlAndInvalidValueThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='p'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid checkbox value: x");
+		
+		form.setParameter("p", "x");
+	}
+	
+	@Test
+	public void setParameterWithValuedRadioControlAndCheckedSetsValue() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='p' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		form.setParameter("p", "x");
+		
+		assertThat("form parameter value", form.getParameter("p"), is("x"));
+	}
+	
+	@Test
+	public void setParameterWithValuedRadioControlAndUncheckedThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='p' value='x' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot uncheck radio control");
+		
+		form.setParameter("p", "");
+	}
+	
+	@Test
+	public void setParameterWithValuedRadioControlAndInvalidValueThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='p' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		server().start();
@@ -793,6 +967,128 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void submitWhenGetSubmitsCheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='p' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+	}
+	
+	@Test
+	public void submitWhenGetSubmitsCheckedRadioControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "on")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=on")));
+	}
+
+	@Test
+	public void submitWhenGetDoesNotSubmitUncheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a")));
+	}
+	
+	@Test
+	public void submitWhenGetSubmitsValuedCheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='p' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+	}
+	
+	@Test
+	public void submitWhenGetSubmitsValuedCheckedRadioControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?p=x")));
+	}
+
+	@Test
+	public void submitWhenGetDoesNotSubmitValuedUncheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a")));
+	}
+	
+	@Test
 	public void submitWhenGetSetsCookie() throws IOException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -1153,6 +1449,128 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		newBrowser().get(url(server()))
 			.getForm("f")
 			.setParameter("p", "")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), isEmptyString());
+	}
+	
+	@Test
+	public void submitWhenPostSubmitsCheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='p' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("p=on"));
+	}
+	
+	@Test
+	public void submitWhenPostSubmitsCheckedRadioControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "on")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("p=on"));
+	}
+
+	@Test
+	public void submitWhenPostDoesNotSubmitUncheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='p'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), isEmptyString());
+	}
+	
+	@Test
+	public void submitWhenPostSubmitsValuedCheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='p' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("p=x"));
+	}
+	
+	@Test
+	public void submitWhenPostSubmitsValuedCheckedRadioControlSetValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setParameter("p", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("p=x"));
+	}
+
+	@Test
+	public void submitWhenPostDoesNotSubmitValuedUncheckedRadioControlInitialValue() throws Exception
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='p' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		server().start();
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
 			.submit();
 		
 		server().takeRequest();

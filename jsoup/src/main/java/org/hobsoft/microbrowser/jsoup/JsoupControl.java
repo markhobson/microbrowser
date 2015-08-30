@@ -59,7 +59,7 @@ class JsoupControl
 	{
 		String value;
 		
-		if (isCheckbox())
+		if (isCheckbox() || isRadio())
 		{
 			value = getCheckboxValue();
 		}
@@ -80,6 +80,12 @@ class JsoupControl
 		{
 			setCheckboxValue(value);
 		}
+		else if (isRadio())
+		{
+			checkArgument(!UNCHECKED_VALUE.equals(value), "Cannot uncheck radio control");
+			
+			setCheckboxValue(value);
+		}
 		else
 		{
 			element.val(value);
@@ -98,6 +104,11 @@ class JsoupControl
 	private boolean isCheckbox()
 	{
 		return "checkbox".equals(getType());
+	}
+	
+	private boolean isRadio()
+	{
+		return "radio".equals(getType());
 	}
 	
 	private String getType()

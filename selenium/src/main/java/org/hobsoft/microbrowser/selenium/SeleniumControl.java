@@ -57,7 +57,7 @@ class SeleniumControl
 	{
 		String value;
 		
-		if (isCheckbox())
+		if (isCheckbox() || isRadio())
 		{
 			value = getCheckboxValue();
 		}
@@ -76,6 +76,12 @@ class SeleniumControl
 		
 		if (isCheckbox())
 		{
+			setCheckboxValue(value);
+		}
+		else if (isRadio())
+		{
+			checkArgument(!UNCHECKED_VALUE.equals(value), "Cannot uncheck radio control");
+			
 			setCheckboxValue(value);
 		}
 		else
@@ -104,6 +110,11 @@ class SeleniumControl
 		return "checkbox".equals(getType());
 	}
 
+	private boolean isRadio()
+	{
+		return "radio".equals(getType());
+	}
+	
 	private String getCheckboxValue()
 	{
 		return element.isSelected() ? getCheckedValue() : UNCHECKED_VALUE;
