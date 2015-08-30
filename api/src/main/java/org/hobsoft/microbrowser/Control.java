@@ -18,9 +18,27 @@ package org.hobsoft.microbrowser;
  */
 public interface Control
 {
+	/**
+	 * Gets the name of this form control.
+	 * 
+	 * @return the form control name
+	 */
 	String getName();
 
+	/**
+	 * Gets the value of this form control.
+	 * 
+	 * @return the form control value
+	 */
 	String getValue();
 
+	/**
+	 * Sets the value of this form control.
+	 * 
+	 * @param value
+	 *            the form control value to set
+	 * @throws IllegalArgumentException
+	 *             if the form control is read-only or the value is invalid
+	 */
 	void setValue(String value);
 }
