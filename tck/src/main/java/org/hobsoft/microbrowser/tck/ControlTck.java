@@ -31,6 +31,28 @@ import static org.junit.Assert.assertThat;
 public abstract class ControlTck extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
+	// getName tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getNameReturnsName() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControl("x")
+			.getName();
+		
+		assertThat("form control name", actual, is("x"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// getValue tests
 	// ----------------------------------------------------------------------------------------------------------------
 
