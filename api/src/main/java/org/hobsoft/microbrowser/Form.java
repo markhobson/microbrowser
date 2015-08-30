@@ -26,6 +26,17 @@ public interface Form extends Unwrappable
 	String getName();
 	
 	/**
+	 * Gets the control in this form with the specified name.
+	 * 
+	 * @param name
+	 *            the name of the form control to get
+	 * @return the form control
+	 * @throws ParameterNotFoundException
+	 *             if the form control cannot be found
+	 */
+	Control getControl(String name);
+	
+	/**
 	 * Gets the value of the specified form control.
 	 * 
 	 * @param name

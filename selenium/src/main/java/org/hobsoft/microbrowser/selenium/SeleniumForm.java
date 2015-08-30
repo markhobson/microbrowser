@@ -62,6 +62,18 @@ class SeleniumForm implements Form
 		return element.getAttribute("name");
 	}
 	
+	public Control getControl(String name)
+	{
+		List<WebElement> elements = element.findElements(byControl(name));
+		
+		if (elements.isEmpty())
+		{
+			throw new ParameterNotFoundException(name);
+		}
+		
+		return newControl(elements.iterator().next());
+	}
+	
 	public String getParameter(String name)
 	{
 		return getControl(name).getValue();
@@ -109,18 +121,6 @@ class SeleniumForm implements Form
 		}
 		
 		return newUrlOrNull(action);
-	}
-	
-	private Control getControl(String name)
-	{
-		List<WebElement> elements = element.findElements(byControl(name));
-		
-		if (elements.isEmpty())
-		{
-			throw new ParameterNotFoundException(name);
-		}
-		
-		return newControl(elements.iterator().next());
 	}
 	
 	private static By byControl(String name)

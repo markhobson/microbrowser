@@ -64,6 +64,18 @@ class JsoupForm implements Form
 		return element.attr("name");
 	}
 	
+	public Control getControl(String name)
+	{
+		Elements elements = element.select(byControl(name));
+		
+		if (elements.isEmpty())
+		{
+			throw new ParameterNotFoundException(name);
+		}
+		
+		return newControl(elements.first());
+	}
+
 	public String getParameter(String name)
 	{
 		checkNotNull(name, "name");
@@ -115,18 +127,6 @@ class JsoupForm implements Form
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	private Control getControl(String name)
-	{
-		Elements elements = element.select(byControl(name));
-		
-		if (elements.isEmpty())
-		{
-			throw new ParameterNotFoundException(name);
-		}
-		
-		return newControl(elements.first());
-	}
-
 	private static String byControl(String name)
 	{
 		return String.format("input[name=%s]", name);
