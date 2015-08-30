@@ -19,12 +19,13 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.ControlTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Integration test that executes the {@code Control} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumControlIT extends ControlTck
+public class SeleniumControlIT extends ControlTck<WebElement>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -58,5 +59,15 @@ public class SeleniumControlIT extends ControlTck
 	protected Microbrowser newBrowser()
 	{
 		return new SeleniumMicrobrowser(driverRule.getDriver());
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// ControlTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<WebElement> getProviderType()
+	{
+		return WebElement.class;
 	}
 }

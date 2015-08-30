@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.jsoup;
 import org.hobsoft.microbrowser.Control;
 import org.jsoup.nodes.Element;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -45,6 +46,17 @@ abstract class AbstractJsoupControl implements Control
 	public final String getName()
 	{
 		return element.attr("name");
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// Unwrappable methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public <T> T unwrap(Class<T> type)
+	{
+		checkArgument(Element.class.equals(type), "Cannot unwrap to: %s", type);
+		
+		return type.cast(element);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

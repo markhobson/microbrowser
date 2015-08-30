@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.selenium;
 import org.hobsoft.microbrowser.Control;
 import org.openqa.selenium.WebElement;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -47,6 +48,17 @@ abstract class AbstractSeleniumControl implements Control
 		return element.getAttribute("name");
 	}
 
+	// ----------------------------------------------------------------------------------------------------------------
+	// Unwrappable methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public <T> T unwrap(Class<T> type)
+	{
+		checkArgument(WebElement.class.equals(type), "Cannot unwrap to: %s", type);
+		
+		return type.cast(element);
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------

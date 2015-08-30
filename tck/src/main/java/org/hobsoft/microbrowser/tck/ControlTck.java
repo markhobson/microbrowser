@@ -20,6 +20,7 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
@@ -27,8 +28,11 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code Control}.
+ * 
+ * @param <T>
+ *            the provider-specific control type
  */
-public abstract class ControlTck extends AbstractMicrobrowserTest
+public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getName tests
@@ -541,4 +545,52 @@ public abstract class ControlTck extends AbstractMicrobrowserTest
 		
 		control.setValue("y");
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapReturnsProvider() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		T actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControl("x")
+			.unwrap(getProviderType());
+		
+		assertThat("form control provider", actual, is(instanceOf(getProviderType())));
+	}
+
+	@Test
+	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		Control control = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControl("x");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Cannot unwrap to: class java.lang.Void");
+		
+		control.unwrap(Void.class);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract Class<T> getProviderType();
 }

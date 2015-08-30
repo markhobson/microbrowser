@@ -16,7 +16,7 @@ package org.hobsoft.microbrowser;
 /**
  * Defines an HTML form control.
  */
-public interface Control
+public interface Control extends Unwrappable
 {
 	/**
 	 * Gets the name of this form control.

@@ -15,11 +15,12 @@ package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.ControlTck;
+import org.jsoup.nodes.Element;
 
 /**
  * Integration test that executes the {@code Control} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupControlIT extends ControlTck
+public class JsoupControlIT extends ControlTck<Element>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
@@ -29,5 +30,15 @@ public class JsoupControlIT extends ControlTck
 	protected Microbrowser newBrowser()
 	{
 		return new JsoupMicrobrowser();
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// ControlTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Class<Element> getProviderType()
+	{
+		return Element.class;
 	}
 }
