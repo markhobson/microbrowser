@@ -19,122 +19,55 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Form control wrapper for a jsoup {@code Element}.
+ * Checkbox form control wrapper for a jsoup {@code Element}.
  */
-class JsoupControl
+class JsoupCheckboxControl extends AbstractJsoupControl
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constants
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static final String DEFAULT_CHECKED_VALUE = "on";
+	protected static final String DEFAULT_CHECKED_VALUE = "on";
 
-	private static final String UNCHECKED_VALUE = "";
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// fields
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private final Element element;
+	protected static final String UNCHECKED_VALUE = "";
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupControl(Element element)
+	public JsoupCheckboxControl(Element element)
 	{
-		this.element = checkNotNull(element, "element");
+		super(element);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// public methods
+	// Control methods
 	// ----------------------------------------------------------------------------------------------------------------
-
-	public String getName()
-	{
-		return element.attr("name");
-	}
 
 	public String getValue()
 	{
-		String value;
-		
-		if (isCheckbox() || isRadio())
-		{
-			value = getCheckboxValue();
-		}
-		else
-		{
-			value = element.val();
-		}
-		
-		return value;
+		return getElement().hasAttr("checked") ? getCheckedValue() : UNCHECKED_VALUE;
 	}
 
 	public void setValue(String value)
 	{
-		checkArgument(!isHidden(), "Cannot set hidden control value: %s", getName());
 		checkNotNull(value, "value");
+		checkArgument(isCheckboxValue(value), "Invalid checkbox value: %s", value);
 		
-		if (isCheckbox())
-		{
-			setCheckboxValue(value);
-		}
-		else if (isRadio())
-		{
-			checkArgument(!UNCHECKED_VALUE.equals(value), "Cannot uncheck radio control");
-			
-			setCheckboxValue(value);
-		}
-		else
-		{
-			element.val(value);
-		}
+		getElement().attr("checked", !UNCHECKED_VALUE.equals(value));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private boolean isHidden()
-	{
-		return "hidden".equals(getType());
-	}
-
-	private boolean isCheckbox()
-	{
-		return "checkbox".equals(getType());
-	}
-	
-	private boolean isRadio()
-	{
-		return "radio".equals(getType());
-	}
-	
-	private String getType()
-	{
-		return element.attr("type");
-	}
-
-	private String getCheckboxValue()
-	{
-		return element.hasAttr("checked") ? getCheckedValue() : UNCHECKED_VALUE;
-	}
-
 	private String getCheckedValue()
 	{
-		return element.hasAttr("value") ? element.attr("value") : DEFAULT_CHECKED_VALUE;
+		return getElement().hasAttr("value") ? getElement().attr("value") : DEFAULT_CHECKED_VALUE;
 	}
 
 	private boolean isCheckboxValue(String value)
 	{
 		return getCheckedValue().equals(value) || UNCHECKED_VALUE.equals(value);
-	}
-
-	private void setCheckboxValue(String value)
-	{
-		checkArgument(isCheckboxValue(value), "Invalid checkbox value: %s", value);
-		
-		element.attr("checked", !UNCHECKED_VALUE.equals(value));
 	}
 }

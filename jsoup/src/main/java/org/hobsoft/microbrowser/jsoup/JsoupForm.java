@@ -114,7 +114,7 @@ class JsoupForm implements Form
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	private JsoupControl getControl(String name)
+	private Control getControl(String name)
 	{
 		Elements elements = element.select(byControl(name));
 		
@@ -123,7 +123,7 @@ class JsoupForm implements Form
 			throw new ParameterNotFoundException(name);
 		}
 		
-		return new JsoupControl(elements.first());
+		return newControl(elements.first());
 	}
 
 	private static String byControl(String name)
@@ -131,6 +131,31 @@ class JsoupForm implements Form
 		return String.format("input[name=%s]", name);
 	}
 	
+	private static Control newControl(Element element)
+	{
+		Control control;
+		String type = element.attr("type");
+		
+		if ("hidden".equals(type))
+		{
+			control = new JsoupHiddenControl(element);
+		}
+		else if ("checkbox".equals(type))
+		{
+			control = new JsoupCheckboxControl(element);
+		}
+		else if ("radio".equals(type))
+		{
+			control = new JsoupRadioControl(element);
+		}
+		else
+		{
+			control = new JsoupTextControl(element);
+		}
+		
+		return control;
+	}
+
 	private Connection getConnection()
 	{
 		return element.submit()
