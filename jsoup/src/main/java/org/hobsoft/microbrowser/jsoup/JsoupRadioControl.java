@@ -26,7 +26,7 @@ class JsoupRadioControl extends JsoupCheckboxControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupRadioControl(Element element)
+	JsoupRadioControl(Element element)
 	{
 		super(element);
 	}

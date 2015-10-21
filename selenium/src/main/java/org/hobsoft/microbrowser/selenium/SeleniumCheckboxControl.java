@@ -33,7 +33,7 @@ class SeleniumCheckboxControl extends AbstractSeleniumControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumCheckboxControl(WebElement element)
+	SeleniumCheckboxControl(WebElement element)
 	{
 		super(element);
 	}

@@ -34,7 +34,7 @@ abstract class AbstractJsoupControl implements Control
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public AbstractJsoupControl(Element element)
+	AbstractJsoupControl(Element element)
 	{
 		this.element = checkNotNull(element, "element");
 	}

@@ -52,7 +52,7 @@ class SeleniumForm implements Form
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumForm(WebDriver driver, WebElement element)
+	SeleniumForm(WebDriver driver, WebElement element)
 	{
 		this.driver = checkNotNull(driver, "driver");
 		this.element = checkNotNull(element, "element");

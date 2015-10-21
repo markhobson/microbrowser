@@ -26,7 +26,7 @@ class SeleniumTextControl extends AbstractSeleniumControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumTextControl(WebElement element)
+	SeleniumTextControl(WebElement element)
 	{
 		super(element);
 	}

@@ -52,7 +52,7 @@ class SeleniumMicrodataItem extends AbstractHypermedia implements MicrodataItem
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumMicrodataItem(WebDriver driver, WebElement element)
+	SeleniumMicrodataItem(WebDriver driver, WebElement element)
 	{
 		this.driver = checkNotNull(driver, "driver");
 		this.element = checkNotNull(element, "element");

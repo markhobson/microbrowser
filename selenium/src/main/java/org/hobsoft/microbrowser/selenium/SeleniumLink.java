@@ -42,7 +42,7 @@ class SeleniumLink implements Link
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumLink(WebDriver driver, WebElement element)
+	SeleniumLink(WebDriver driver, WebElement element)
 	{
 		this.driver = checkNotNull(driver, "driver");
 		this.element = checkNotNull(element, "element");

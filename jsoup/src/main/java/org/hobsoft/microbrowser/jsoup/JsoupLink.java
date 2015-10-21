@@ -46,7 +46,7 @@ class JsoupLink implements Link
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupLink(JsoupMicrodataDocument document, Element element)
+	JsoupLink(JsoupMicrodataDocument document, Element element)
 	{
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");

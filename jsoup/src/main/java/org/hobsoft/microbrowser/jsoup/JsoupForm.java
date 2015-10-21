@@ -55,7 +55,7 @@ class JsoupForm implements Form
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupForm(JsoupMicrodataDocument document, FormElement element)
+	JsoupForm(JsoupMicrodataDocument document, FormElement element)
 	{
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");

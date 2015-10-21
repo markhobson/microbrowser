@@ -34,7 +34,7 @@ abstract class AbstractSeleniumControl implements Control
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public AbstractSeleniumControl(WebElement element)
+	AbstractSeleniumControl(WebElement element)
 	{
 		this.element = checkNotNull(element, "element");
 	}

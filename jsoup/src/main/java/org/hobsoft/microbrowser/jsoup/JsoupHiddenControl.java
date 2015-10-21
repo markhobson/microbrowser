@@ -24,7 +24,7 @@ class JsoupHiddenControl extends JsoupTextControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupHiddenControl(Element element)
+	JsoupHiddenControl(Element element)
 	{
 		super(element);
 	}

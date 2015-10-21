@@ -65,18 +65,18 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	public JsoupMicrodataDocument()
+	JsoupMicrodataDocument()
 	{
 		this(NO_COOKIES, new Document(DEFAULT_BASE_URI));
 	}
 
-	public JsoupMicrodataDocument(Map<String, String> cookies, Document document)
+	JsoupMicrodataDocument(Map<String, String> cookies, Document document)
 	{
 		this.cookies = checkNotNull(cookies, "cookies");
 		this.document = checkNotNull(document, "document");
 	}
 	
-	public JsoupMicrodataDocument(Map<String, String> cookies, Response response) throws IOException
+	JsoupMicrodataDocument(Map<String, String> cookies, Response response) throws IOException
 	{
 		this(union(cookies, response.cookies()), response.parse());
 	}

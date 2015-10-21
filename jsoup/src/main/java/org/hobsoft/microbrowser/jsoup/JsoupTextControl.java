@@ -26,7 +26,7 @@ class JsoupTextControl extends AbstractJsoupControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupTextControl(Element element)
+	JsoupTextControl(Element element)
 	{
 		super(element);
 	}

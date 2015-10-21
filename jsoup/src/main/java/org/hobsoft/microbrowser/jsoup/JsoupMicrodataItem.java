@@ -52,7 +52,7 @@ class JsoupMicrodataItem extends AbstractHypermedia implements MicrodataItem
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupMicrodataItem(JsoupMicrodataDocument document, Element element)
+	JsoupMicrodataItem(JsoupMicrodataDocument document, Element element)
 	{
 		this.document = checkNotNull(document, "document");
 		this.element = checkNotNull(element, "element");

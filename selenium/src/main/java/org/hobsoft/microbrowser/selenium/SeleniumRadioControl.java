@@ -26,7 +26,7 @@ class SeleniumRadioControl extends SeleniumCheckboxControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumRadioControl(WebElement element)
+	SeleniumRadioControl(WebElement element)
 	{
 		super(element);
 	}

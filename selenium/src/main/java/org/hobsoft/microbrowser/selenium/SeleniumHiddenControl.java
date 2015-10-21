@@ -24,7 +24,7 @@ class SeleniumHiddenControl extends SeleniumTextControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumHiddenControl(WebElement element)
+	SeleniumHiddenControl(WebElement element)
 	{
 		super(element);
 	}

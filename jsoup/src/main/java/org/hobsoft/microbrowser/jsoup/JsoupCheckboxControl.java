@@ -35,7 +35,7 @@ class JsoupCheckboxControl extends AbstractJsoupControl
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupCheckboxControl(Element element)
+	JsoupCheckboxControl(Element element)
 	{
 		super(element);
 	}

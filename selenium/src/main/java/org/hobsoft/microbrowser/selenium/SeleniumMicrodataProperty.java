@@ -34,7 +34,7 @@ class SeleniumMicrodataProperty extends AbstractMicrodataProperty
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumMicrodataProperty(WebElement element)
+	SeleniumMicrodataProperty(WebElement element)
 	{
 		this.element = checkNotNull(element, "element");
 	}

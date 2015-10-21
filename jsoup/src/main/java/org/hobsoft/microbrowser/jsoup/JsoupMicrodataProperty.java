@@ -34,7 +34,7 @@ class JsoupMicrodataProperty extends AbstractMicrodataProperty
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public JsoupMicrodataProperty(Element element)
+	JsoupMicrodataProperty(Element element)
 	{
 		this.element = checkNotNull(element, "element");
 	}

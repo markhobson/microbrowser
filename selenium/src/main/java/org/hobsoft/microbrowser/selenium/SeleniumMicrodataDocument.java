@@ -50,7 +50,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public SeleniumMicrodataDocument(WebDriver driver)
+	SeleniumMicrodataDocument(WebDriver driver)
 	{
 		this.driver = checkNotNull(driver, "driver");
 	}
