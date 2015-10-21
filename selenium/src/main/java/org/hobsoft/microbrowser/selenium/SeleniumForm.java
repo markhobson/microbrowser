@@ -76,7 +76,7 @@ class SeleniumForm implements Form
 			throw new ControlNotFoundException(name);
 		}
 		
-		return newControl(elements.iterator().next());
+		return newControl(elements.get(0));
 	}
 	
 	public String getControlValue(String name)
@@ -188,7 +188,7 @@ class SeleniumForm implements Form
 		List<WebElement> elements = element.findElements(bySubmit());
 		checkState(!elements.isEmpty(), "Missing form submit button");
 		
-		return elements.iterator().next();
+		return elements.get(0);
 	}
 
 	private static By bySubmit()

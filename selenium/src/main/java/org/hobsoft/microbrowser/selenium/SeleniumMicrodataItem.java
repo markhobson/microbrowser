@@ -81,7 +81,7 @@ class SeleniumMicrodataItem extends AbstractHypermedia implements MicrodataItem
 			throw new MicrodataPropertyNotFoundException(name);
 		}
 		
-		return new SeleniumMicrodataProperty(elements.iterator().next());
+		return new SeleniumMicrodataProperty(elements.get(0));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ class SeleniumMicrodataItem extends AbstractHypermedia implements MicrodataItem
 			throw new FormNotFoundException(name);
 		}
 		
-		return new SeleniumForm(driver, elements.iterator().next());
+		return new SeleniumForm(driver, elements.get(0));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

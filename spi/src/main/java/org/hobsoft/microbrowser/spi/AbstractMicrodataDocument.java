@@ -39,6 +39,6 @@ public abstract class AbstractMicrodataDocument extends AbstractHypermedia imple
 			throw new MicrodataItemNotFoundException(newUrl(type));
 		}
 		
-		return items.iterator().next();
+		return items.get(0);
 	}
 }

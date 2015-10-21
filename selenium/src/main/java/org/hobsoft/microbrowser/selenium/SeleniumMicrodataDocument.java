@@ -110,7 +110,7 @@ class SeleniumMicrodataDocument extends AbstractMicrodataDocument
 			throw new FormNotFoundException(name);
 		}
 		
-		return new SeleniumForm(driver, elements.iterator().next());
+		return new SeleniumForm(driver, elements.get(0));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
