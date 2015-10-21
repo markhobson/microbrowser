@@ -17,12 +17,17 @@ import java.net.URL;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlGroup;
 import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.spi.DefaultControlGroup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 import static org.hobsoft.microbrowser.spi.Urls.newUrlOrNull;
 
@@ -85,6 +90,18 @@ class SeleniumForm implements Form
 		
 		return this;
 	}
+	
+	public ControlGroup getControlGroup(String name)
+	{
+		List<WebElement> elements = element.findElements(byControl(name));
+		
+		if (elements.isEmpty())
+		{
+			throw new ControlNotFoundException(name);
+		}
+		
+		return newControlGroup(elements);
+	}
 
 	public MicrodataDocument submit()
 	{
@@ -128,6 +145,19 @@ class SeleniumForm implements Form
 		return By.cssSelector(String.format("input[name='%s']", name));
 	}
 
+	private static ControlGroup newControlGroup(List<WebElement> elements)
+	{
+		List<Control> controls = Lists.transform(elements, new Function<WebElement, Control>()
+		{
+			public Control apply(WebElement element)
+			{
+				return newControl(element);
+			}
+		});
+		
+		return new DefaultControlGroup(controls);
+	}
+	
 	private static Control newControl(WebElement element)
 	{
 		Control control;

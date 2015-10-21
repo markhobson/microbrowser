@@ -15,16 +15,22 @@ package org.hobsoft.microbrowser.jsoup;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlGroup;
 import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.spi.DefaultControlGroup;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.FormElement;
 import org.jsoup.select.Elements;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 import static org.hobsoft.microbrowser.spi.Urls.newUrlOrNull;
 
@@ -92,6 +98,18 @@ class JsoupForm implements Form
 		
 		return this;
 	}
+	
+	public ControlGroup getControlGroup(String name)
+	{
+		Elements elements = element.select(byControl(name));
+		
+		if (elements.isEmpty())
+		{
+			throw new ControlNotFoundException(name);
+		}
+		
+		return newControlGroup(elements);
+	}
 
 	public MicrodataDocument submit()
 	{
@@ -130,6 +148,19 @@ class JsoupForm implements Form
 	private static String byControl(String name)
 	{
 		return String.format("input[name=%s]", name);
+	}
+	
+	private static ControlGroup newControlGroup(Elements elements)
+	{
+		List<Control> controls = Lists.transform(elements, new Function<Element, Control>()
+		{
+			public Control apply(Element element)
+			{
+				return newControl(element);
+			}
+		});
+		
+		return new DefaultControlGroup(controls);
 	}
 	
 	private static Control newControl(Element element)

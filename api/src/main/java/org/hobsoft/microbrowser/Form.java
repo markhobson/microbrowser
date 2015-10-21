@@ -63,6 +63,17 @@ public interface Form extends Unwrappable
 	Form setControlValue(String name, String value);
 
 	/**
+	 * Gets the control group in this form with the specified name.
+	 * 
+	 * @param name
+	 *            the name of the form control group to get
+	 * @return the form control group
+	 * @throws ControlNotFoundException
+	 *             if the form control group cannot be found
+	 */
+	ControlGroup getControlGroup(String name);
+
+	/**
 	 * Submits this form.
 	 * 
 	 * @return the response as a microdata document

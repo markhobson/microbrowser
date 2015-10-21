@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.tck;
 import java.io.IOException;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlGroup;
 import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
@@ -172,6 +173,45 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		thrown().expectMessage("x");
 		
 		form.setControlValue("x", "y");
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// getControlGroup tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getControlGroupReturnsControlGroup() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='x'/>"
+			+ "<input type='text' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().start();
+		
+		ControlGroup actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("x");
+		
+		assertThat("form control group", actual.getName(), is("x"));
+	}
+	
+	@Test
+	public void getControlGroupWithUnknownNameThrowsException() throws IOException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'/>"
+			+ "</body></html>"));
+		server().start();
+		
+		Form form = newBrowser().get(url(server()))
+			.getForm("f");
+		
+		thrown().expect(ControlNotFoundException.class);
+		thrown().expectMessage("x");
+		
+		form.getControlGroup("x");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
