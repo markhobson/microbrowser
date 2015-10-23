@@ -20,9 +20,9 @@ import java.util.List;
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
 import org.hobsoft.microbrowser.ControlNotFoundException;
-import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrobrowserException;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.spi.AbstractForm;
 import org.hobsoft.microbrowser.spi.DefaultControlGroup;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Element;
@@ -41,7 +41,7 @@ import static com.google.common.base.Preconditions.checkState;
 /**
  * {@code Form} adapter to a jsoup {@code Element}.
  */
-class JsoupForm implements Form
+class JsoupForm extends AbstractForm
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -82,23 +82,6 @@ class JsoupForm implements Form
 		return newControl(elements.first());
 	}
 
-	public String getControlValue(String name)
-	{
-		checkNotNull(name, "name");
-		
-		return getControl(name).getValue();
-	}
-
-	public Form setControlValue(String name, String value)
-	{
-		checkNotNull(name, "name");
-		checkNotNull(value, "value");
-		
-		getControl(name).setValue(value);
-		
-		return this;
-	}
-	
 	public ControlGroup getControlGroup(String name)
 	{
 		Elements elements = element.select(byControl(name));

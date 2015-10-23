@@ -19,8 +19,8 @@ import java.util.List;
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
 import org.hobsoft.microbrowser.ControlNotFoundException;
-import org.hobsoft.microbrowser.Form;
 import org.hobsoft.microbrowser.MicrodataDocument;
+import org.hobsoft.microbrowser.spi.AbstractForm;
 import org.hobsoft.microbrowser.spi.DefaultControlGroup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -38,7 +38,7 @@ import static com.google.common.base.Preconditions.checkState;
 /**
  * {@code Form} adapter to a Selenium {@code WebElement}.
  */
-class SeleniumForm implements Form
+class SeleniumForm extends AbstractForm
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -77,18 +77,6 @@ class SeleniumForm implements Form
 		}
 		
 		return newControl(elements.get(0));
-	}
-	
-	public String getControlValue(String name)
-	{
-		return getControl(name).getValue();
-	}
-
-	public Form setControlValue(String name, String value)
-	{
-		getControl(name).setValue(value);
-		
-		return this;
 	}
 	
 	public ControlGroup getControlGroup(String name)
