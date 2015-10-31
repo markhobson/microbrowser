@@ -13,11 +13,16 @@
  */
 package org.hobsoft.microbrowser.tck;
 
+import java.util.List;
+
+import org.hobsoft.microbrowser.Control;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
+import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.control;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -45,5 +50,49 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 			.getName();
 		
 		assertThat("form control group name", actual, is("x"));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getControls tests
+	// ----------------------------------------------------------------------------------------------------------------
+	
+	@Test
+	public void getControlsReturnsControl()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<Control> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("x")
+			.getControls();
+		
+		assertThat("form control group control", actual, contains(control("x")));
+	}
+	
+	@Test
+	public void getControlsReturnsControls()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='x' value='y1'/>"
+			+ "<input type='text' name='x' value='y2'/>"
+			+ "<input type='text' name='x' value='y3'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<Control> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("x")
+			.getControls();
+		
+		assertThat("form control group controls", actual, contains(
+			control("x", "y1"),
+			control("x", "y2"),
+			control("x", "y3")
+		));
 	}
 }

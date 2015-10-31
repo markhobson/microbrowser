@@ -13,6 +13,8 @@
  */
 package org.hobsoft.microbrowser;
 
+import java.util.List;
+
 /**
  * Defines an HTML form control group.
  */
@@ -24,4 +26,11 @@ public interface ControlGroup
 	 * @return the form control group name
 	 */
 	String getName();
+
+	/**
+	 * Gets all the controls within this form control group.
+	 * 
+	 * @return the controls
+	 */
+	List<Control> getControls();
 }

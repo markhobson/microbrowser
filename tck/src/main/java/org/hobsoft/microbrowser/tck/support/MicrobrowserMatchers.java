@@ -18,9 +18,11 @@ import java.net.URL;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 
+import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasProperty;
 
@@ -61,5 +63,16 @@ public final class MicrobrowserMatchers
 	{
 		return Matchers.<Link>both(hasProperty("rel", is(expectedRel)))
 			.and(hasProperty("href", is(expectedHref)));
+	}
+	
+	public static Matcher<Control> control(String expectedName)
+	{
+		return hasProperty("name", is(expectedName));
+	}
+	
+	public static Matcher<Control> control(String expectedName, String expectedValue)
+	{
+		return both(control(expectedName))
+			.and(hasProperty("value", is(expectedValue)));
 	}
 }

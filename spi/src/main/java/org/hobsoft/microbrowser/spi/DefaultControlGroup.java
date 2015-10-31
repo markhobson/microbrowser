@@ -18,6 +18,8 @@ import java.util.List;
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
 
+import static java.util.Collections.unmodifiableList;
+
 /**
  * Default {@code ControlGroup} implementation.
  */
@@ -35,7 +37,7 @@ public class DefaultControlGroup implements ControlGroup
 
 	public DefaultControlGroup(List<Control> controls)
 	{
-		this.controls = controls;
+		this.controls = unmodifiableList(controls);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -45,5 +47,10 @@ public class DefaultControlGroup implements ControlGroup
 	public String getName()
 	{
 		return controls.get(0).getName();
+	}
+	
+	public List<Control> getControls()
+	{
+		return controls;
 	}
 }

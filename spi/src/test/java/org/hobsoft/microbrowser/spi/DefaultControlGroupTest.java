@@ -13,14 +13,18 @@
  */
 package org.hobsoft.microbrowser.spi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static java.util.Arrays.asList;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,6 +34,22 @@ import static org.mockito.Mockito.when;
  */
 public class DefaultControlGroupTest
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// fields
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private ExpectedException thrown = ExpectedException.none();
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// test case methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Rule
+	public ExpectedException getThrown()
+	{
+		return thrown;
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
@@ -41,6 +61,29 @@ public class DefaultControlGroupTest
 		DefaultControlGroup group = new DefaultControlGroup(controls);
 		
 		assertThat(group.getName(), is("x"));
+	}
+	
+	@Test
+	public void getControlsReturnsControls()
+	{
+		Control[] controls = new Control[] {newControl("x"), newControl("y"), newControl("z")};
+		DefaultControlGroup group = new DefaultControlGroup(asList(controls));
+		
+		assertThat(group.getControls(), contains(controls[0], controls[1], controls[2]));
+	}
+	
+	@Test
+	public void getControlsReturnsImmutableList()
+	{
+		List<Control> controls = new ArrayList<Control>();
+		controls.add(newControl("x"));
+		controls.add(newControl("y"));
+		controls.add(newControl("z"));
+		DefaultControlGroup group = new DefaultControlGroup(controls);
+		
+		thrown.expect(UnsupportedOperationException.class);
+		
+		group.getControls().clear();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
