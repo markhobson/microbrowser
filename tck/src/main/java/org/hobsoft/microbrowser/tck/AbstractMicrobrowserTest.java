@@ -13,18 +13,30 @@
  */
 package org.hobsoft.microbrowser.tck;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerRule;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.rule.MockWebServerRule;
 
 /**
  * Base test for Microbrowser TCKs.
  */
 public abstract class AbstractMicrobrowserTest
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// initializer
+	// ----------------------------------------------------------------------------------------------------------------
+
+	static
+	{
+		Logger.getLogger("com.squareup.okhttp.mockwebserver").setLevel(Level.WARNING);
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
@@ -55,7 +67,7 @@ public abstract class AbstractMicrobrowserTest
 	
 	protected final MockWebServer server()
 	{
-		return serverRule.getServer();
+		return serverRule.get();
 	}
 
 	protected abstract Microbrowser newBrowser();

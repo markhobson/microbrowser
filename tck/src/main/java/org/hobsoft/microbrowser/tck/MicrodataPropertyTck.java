@@ -13,8 +13,6 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
-
 import org.hobsoft.microbrowser.MicrodataProperty;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,14 +39,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getNameReturnsName() throws IOException
+	public void getNameReturnsName()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -63,14 +60,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getValueWhenMetaReturnsContent() throws IOException
+	public void getValueWhenMetaReturnsContent()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<meta itemprop='p' content='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -81,14 +77,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenMetaAndNoContentReturnsEmpty() throws IOException
+	public void getValueWhenMetaAndNoContentReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<meta itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -99,14 +94,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenAudioAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenAudioAndAbsoluteSrcReturnsSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<audio itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -117,7 +111,7 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenAudioAndRelativeSrcReturnsAbsoluteSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -125,7 +119,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 			+ "</div>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -136,14 +129,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenAudioAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenAudioAndNoSrcReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<audio itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -154,14 +146,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenEmbedAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenEmbedAndAbsoluteSrcReturnsSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<embed itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -172,7 +163,7 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenEmbedAndRelativeSrcReturnsAbsoluteSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -180,7 +171,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 			+ "</div>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -191,14 +181,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenEmbedAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenEmbedAndNoSrcReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<embed itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -209,14 +198,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenIframeAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenIframeAndAbsoluteSrcReturnsSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<iframe itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -227,7 +215,7 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenIframeAndRelativeSrcReturnsAbsoluteSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -235,7 +223,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 			+ "</div>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -246,14 +233,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenIframeAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenIframeAndNoSrcReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<iframe itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -264,14 +250,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenImgAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenImgAndAbsoluteSrcReturnsSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<img itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -282,7 +267,7 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenImgAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenImgAndRelativeSrcReturnsAbsoluteSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -290,7 +275,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 			+ "</div>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -301,14 +285,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenImgAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenImgAndNoSrcReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<img itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -319,14 +302,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenSourceAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenSourceAndAbsoluteSrcReturnsSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<source itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -337,7 +319,7 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenSourceAndRelativeSrcReturnsAbsoluteSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -345,7 +327,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 			+ "</div>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -356,14 +337,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenSourceAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenSourceAndNoSrcReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<source itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -374,14 +354,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenTrackAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenTrackAndAbsoluteSrcReturnsSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<track itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -394,7 +373,7 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// TODO: fix for Selenium
 	@Ignore
 	@Test
-	public void getValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenTrackAndRelativeSrcReturnsAbsoluteSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -402,7 +381,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 			+ "</div>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -413,14 +391,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenTrackAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenTrackAndNoSrcReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<track itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -431,14 +408,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenVideoAndAbsoluteSrcReturnsSrc() throws IOException
+	public void getValueWhenVideoAndAbsoluteSrcReturnsSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<video itemprop='p' src='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -449,7 +425,7 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc() throws IOException
+	public void getValueWhenVideoAndRelativeSrcReturnsAbsoluteSrc()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -457,7 +433,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 			+ "</div>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -468,14 +443,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenVideoAndNoSrcReturnsEmpty() throws IOException
+	public void getValueWhenVideoAndNoSrcReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<video itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -486,14 +460,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getValueWhenAnchorAndAbsoluteHrefReturnsUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<a itemprop='p' href='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -504,14 +477,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenAnchorAndRelativeHrefReturnsAbsoluteUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<a itemprop='p' href='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -522,14 +494,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenAnchorAndNoHrefReturnsEmpty() throws IOException
+	public void getValueWhenAnchorAndNoHrefReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<a itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -540,14 +511,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenAreaAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getValueWhenAreaAndAbsoluteHrefReturnsUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<area itemprop='p' href='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -558,14 +528,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenAreaAndRelativeHrefReturnsAbsoluteUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<area itemprop='p' href='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -576,14 +545,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenAreaAndNoHrefReturnsEmpty() throws IOException
+	public void getValueWhenAreaAndNoHrefReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<area itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -594,14 +562,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getValueWhenLinkAndAbsoluteHrefReturnsUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<link itemprop='p' href='http://x/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -612,14 +579,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenLinkAndRelativeHrefReturnsAbsoluteUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<link itemprop='p' href='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -630,14 +596,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenLinkAndNoHrefReturnsEmpty() throws IOException
+	public void getValueWhenLinkAndNoHrefReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<link itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -650,14 +615,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// TODO: fix for Selenium
 	@Ignore
 	@Test
-	public void getValueWhenObjectReturnsAbsoluteUrl() throws IOException
+	public void getValueWhenObjectReturnsAbsoluteUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<object itemprop='p' data='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -668,14 +632,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenObjectAndNoDataReturnsEmpty() throws IOException
+	public void getValueWhenObjectAndNoDataReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<object itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -686,14 +649,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenDataReturnsValue() throws IOException
+	public void getValueWhenDataReturnsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<data itemprop='p' value='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -704,14 +666,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenDataAndNoValueReturnsEmpty() throws IOException
+	public void getValueWhenDataAndNoValueReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<data itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -722,14 +683,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenMeterReturnsValue() throws IOException
+	public void getValueWhenMeterReturnsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<meter itemprop='p' value='1'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -740,14 +700,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenMeterAndNoValueReturnsZero() throws IOException
+	public void getValueWhenMeterAndNoValueReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<meter itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -758,14 +717,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenTimeReturnsDatetime() throws IOException
+	public void getValueWhenTimeReturnsDatetime()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<time itemprop='p' datetime='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -776,14 +734,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenTimeAndNoDatetimeReturnsText() throws IOException
+	public void getValueWhenTimeAndNoDatetimeReturnsText()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<time itemprop='p'>x</time>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -794,14 +751,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenTimeAndNoTextReturnsEmpty() throws IOException
+	public void getValueWhenTimeAndNoTextReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<time itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -812,14 +768,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenUnknownReturnsText() throws IOException
+	public void getValueWhenUnknownReturnsText()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -830,14 +785,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenUnknownAndNoTextReturnsEmpty() throws IOException
+	public void getValueWhenUnknownAndNoTextReturnsEmpty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -852,14 +806,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getBooleanValueWhenTrueReturnsTrue() throws IOException
+	public void getBooleanValueWhenTrueReturnsTrue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>true</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		boolean actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -870,14 +823,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getBooleanValueWhenFalseReturnsFalse() throws IOException
+	public void getBooleanValueWhenFalseReturnsFalse()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>false</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		boolean actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -888,14 +840,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getBooleanValueWhenEmptyReturnsFalse() throws IOException
+	public void getBooleanValueWhenEmptyReturnsFalse()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		boolean actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -906,14 +857,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getBooleanValueWhenInvalidReturnsFalse() throws IOException
+	public void getBooleanValueWhenInvalidReturnsFalse()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		boolean actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -928,14 +878,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getIntValueReturnsInteger() throws IOException
+	public void getIntValueReturnsInteger()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>1</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		int actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -946,14 +895,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getIntValueWhenEmptyReturnsZero() throws IOException
+	public void getIntValueWhenEmptyReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		int actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -964,14 +912,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getIntValueWhenInvalidReturnsZero() throws IOException
+	public void getIntValueWhenInvalidReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		int actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -986,14 +933,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getLongValueReturnsLong() throws IOException
+	public void getLongValueReturnsLong()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>1</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		long actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1004,14 +950,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getLongValueWhenEmptyReturnsZero() throws IOException
+	public void getLongValueWhenEmptyReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		long actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1022,14 +967,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getLongValueWhenInvalidReturnsZero() throws IOException
+	public void getLongValueWhenInvalidReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		long actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1044,14 +988,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getFloatValueReturnsFloat() throws IOException
+	public void getFloatValueReturnsFloat()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>1</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		float actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1062,14 +1005,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getFloatValueWhenEmptyReturnsZero() throws IOException
+	public void getFloatValueWhenEmptyReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		float actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1080,14 +1022,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getFloatValueWhenInvalidReturnsZero() throws IOException
+	public void getFloatValueWhenInvalidReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		float actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1102,14 +1043,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getDoubleValueReturnsDouble() throws IOException
+	public void getDoubleValueReturnsDouble()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>1</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		double actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1120,14 +1060,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getDoubleValueWhenEmptyReturnsZero() throws IOException
+	public void getDoubleValueWhenEmptyReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		double actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1138,14 +1077,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getDoubleValueWhenInvalidReturnsZero() throws IOException
+	public void getDoubleValueWhenInvalidReturnsZero()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='p'>x</p>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		double actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1160,14 +1098,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider() throws IOException
+	public void unwrapReturnsProvider()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		T actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -1178,14 +1115,13 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataProperty property = newBrowser().get(url(server()))
 			.getItem("http://i")

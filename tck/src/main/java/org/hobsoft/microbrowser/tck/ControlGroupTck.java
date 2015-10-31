@@ -13,8 +13,6 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -33,14 +31,13 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getNameReturnsName() throws IOException
+	public void getNameReturnsName()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")

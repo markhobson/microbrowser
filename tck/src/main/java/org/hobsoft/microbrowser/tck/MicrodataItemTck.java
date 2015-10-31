@@ -13,7 +13,7 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -50,12 +50,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getIdReturnsId() throws IOException
+	public void getIdReturnsId() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -65,12 +64,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getIdReturnsTrimmedId() throws IOException
+	public void getIdReturnsTrimmedId() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y' itemid=' http://x '/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -80,12 +78,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getIdWhenInvalidReturnsNull() throws IOException
+	public void getIdWhenInvalidReturnsNull()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y' itemid='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -95,12 +92,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getIdWhenNotFoundReturnsNull() throws IOException
+	public void getIdWhenNotFoundReturnsNull()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://y'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://y")
@@ -114,12 +110,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	@Test
-	public void getTypeReturnsType() throws IOException
+	public void getTypeReturnsType() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getItem("http://x")
@@ -133,14 +128,13 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getPropertyReturnsProperty() throws IOException
+	public void getPropertyReturnsProperty()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<p itemprop='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataProperty actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -150,12 +144,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getPropertyWithUnknownNameThrowsException() throws IOException
+	public void getPropertyWithUnknownNameThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
@@ -171,14 +164,13 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getLinkWhenAnchorReturnsLink() throws IOException
+	public void getLinkWhenAnchorReturnsLink() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<a rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -188,14 +180,13 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinkWhenLinkReturnsLink() throws IOException
+	public void getLinkWhenLinkReturnsLink() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<link rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		Link actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -205,12 +196,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinkWithUnknownRelThrowsException() throws IOException
+	public void getLinkWithUnknownRelThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
@@ -226,14 +216,13 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getLinksWhenAnchorReturnsLink() throws IOException
+	public void getLinksWhenAnchorReturnsLink() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<a rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -243,7 +232,7 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getLinksWhenAnchorsReturnsLinks() throws IOException
+	public void getLinksWhenAnchorsReturnsLinks() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -251,7 +240,6 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 			+ "<a rel='x' href='http://z/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -264,14 +252,13 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinksWhenLinkReturnsLink() throws IOException
+	public void getLinksWhenLinkReturnsLink() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<link rel='x' href='http://y/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -281,7 +268,7 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getLinksWhenLinksReturnsLinks() throws IOException
+	public void getLinksWhenLinksReturnsLinks() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -289,7 +276,6 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 			+ "<link rel='x' href='http://z/'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -302,12 +288,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getLinksWithUnknownRelReturnsEmptyList() throws IOException
+	public void getLinksWithUnknownRelReturnsEmptyList()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		List<Link> actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -321,14 +306,13 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getFormReturnsForm() throws IOException
+	public void getFormReturnsForm()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
 			+ "<form name='x'/>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -338,7 +322,7 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getFormRetainsSetControlValues() throws IOException
+	public void getFormRetainsSetControlValues()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'>"
@@ -347,7 +331,6 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</div>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
@@ -358,12 +341,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getFormWhenNotFoundThrowsException() throws IOException
+	public void getFormWhenNotFoundThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");
@@ -379,12 +361,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider() throws IOException
+	public void unwrapReturnsProvider()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		T actual = newBrowser().get(url(server()))
 			.getItem("http://i")
@@ -394,12 +375,11 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataItem item = newBrowser().get(url(server()))
 			.getItem("http://i");

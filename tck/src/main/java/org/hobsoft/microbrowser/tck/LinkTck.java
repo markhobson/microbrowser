@@ -13,7 +13,7 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.hobsoft.microbrowser.Link;
@@ -43,12 +43,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getRelWhenAnchorReturnsRelationship() throws IOException
+	public void getRelWhenAnchorReturnsRelationship()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -58,12 +57,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getRelWhenLinkReturnsRelationship() throws IOException
+	public void getRelWhenLinkReturnsRelationship()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<link rel='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -77,12 +75,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getHrefWhenAnchorAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getHrefWhenAnchorAndAbsoluteHrefReturnsUrl() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='http://x/'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -92,12 +89,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getHrefWhenAnchorAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getHrefWhenAnchorAndRelativeHrefReturnsAbsoluteUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -107,12 +103,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getHrefWhenAnchorAndNoHrefReturnsNull() throws IOException
+	public void getHrefWhenAnchorAndNoHrefReturnsNull()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -122,12 +117,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getHrefWhenLinkAndAbsoluteHrefReturnsUrl() throws IOException
+	public void getHrefWhenLinkAndAbsoluteHrefReturnsUrl() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='http://x/'/>"
 			+ "</head></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -137,12 +131,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getHrefWhenLinkAndRelativeHrefReturnsAbsoluteUrl() throws IOException
+	public void getHrefWhenLinkAndRelativeHrefReturnsAbsoluteUrl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='x' href='x'/>"
 			+ "</head></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -152,12 +145,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getHrefWhenLinkAndNoHrefReturnsNull() throws IOException
+	public void getHrefWhenLinkAndNoHrefReturnsNull()
 	{
 		server().enqueue(new MockResponse().setBody("<html><head>"
 			+ "<link rel='r'/>"
 			+ "</head></html>"));
-		server().start();
 		
 		URL actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -171,13 +163,12 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void followWhenAnchorSubmitsRequest() throws Exception
+	public void followWhenAnchorSubmitsRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/x'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -188,13 +179,12 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void followWhenAnchorSetsCookie() throws IOException
+	public void followWhenAnchorSetsCookie()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -205,13 +195,12 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void followWhenAnchorSendsCookie() throws Exception
+	public void followWhenAnchorSendsCookie() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -222,7 +211,7 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void followWhenAnchorSendsPreviousCookie() throws Exception
+	public void followWhenAnchorSendsPreviousCookie() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r1' href='/a'>a</a>"
@@ -231,7 +220,6 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 			+ "<a rel='r2' href='/a'>a</a>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r1")
@@ -244,7 +232,7 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void followWhenAnchorReturnsResponse() throws IOException
+	public void followWhenAnchorReturnsResponse() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
@@ -252,7 +240,6 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getLink("r")
@@ -262,12 +249,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void followWhenInvalidUrlThrowsException() throws IOException
+	public void followWhenInvalidUrlThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='r' href='x:/a'>a</a>"
 			+ "</body></html>"));
-		server().start();
 		
 		Link link = newBrowser().get(url(server()))
 			.getLink("r");
@@ -283,12 +269,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider() throws IOException
+	public void unwrapReturnsProvider()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		T actual = newBrowser().get(url(server()))
 			.getLink("x")
@@ -298,12 +283,11 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<a rel='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		Link link = newBrowser().get(url(server()))
 			.getLink("x");

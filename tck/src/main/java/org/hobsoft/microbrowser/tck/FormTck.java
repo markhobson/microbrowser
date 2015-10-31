@@ -13,7 +13,7 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
@@ -47,12 +47,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// getName tests
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public void getNameReturnsName() throws IOException
+	public void getNameReturnsName()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("x")
@@ -66,14 +65,13 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getControlReturnsControl() throws IOException
+	public void getControlReturnsControl()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -83,12 +81,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getControlWithUnknownNameThrowsException() throws IOException
+	public void getControlWithUnknownNameThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -104,14 +101,13 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getControlValueReturnsInitialValue() throws IOException
+	public void getControlValueReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='x' value='y'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -121,12 +117,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getControlValueWithUnknownNameThrowsException() throws IOException
+	public void getControlValueWithUnknownNameThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -142,14 +137,13 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void setControlValueSetsValue() throws IOException
+	public void setControlValueSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='x' value='y'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -159,12 +153,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setControlValueWithUnknownNameThrowsException() throws IOException
+	public void setControlValueWithUnknownNameThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -180,7 +173,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getControlGroupReturnsControlGroup() throws IOException
+	public void getControlGroupReturnsControlGroup()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -188,7 +181,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "<input type='text' name='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		ControlGroup actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -198,12 +190,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getControlGroupWithUnknownNameThrowsException() throws IOException
+	public void getControlGroupWithUnknownNameThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -219,7 +210,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void submitWhenSubmitInputSubmitsRequest() throws Exception
+	public void submitWhenSubmitInputSubmitsRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -227,7 +218,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -238,7 +228,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenSubmitButtonSubmitsRequest() throws Exception
+	public void submitWhenSubmitButtonSubmitsRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -246,7 +236,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -257,7 +246,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenDefaultButtonSubmitsRequest() throws Exception
+	public void submitWhenDefaultButtonSubmitsRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -265,7 +254,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -276,12 +264,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenNoSubmitButtonThrowsException() throws IOException
+	public void submitWhenNoSubmitButtonThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -293,7 +280,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenNoMethodSubmitsGetRequest() throws Exception
+	public void submitWhenNoMethodSubmitsGetRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='/x'>"
@@ -301,7 +288,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -312,7 +298,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenNoActionSubmitsRequest() throws Exception
+	public void submitWhenNoActionSubmitsRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -320,7 +306,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server(), "/x"))
 			.getForm("f")
@@ -331,14 +316,13 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenInvalidActionThrowsException() throws IOException
+	public void submitWhenInvalidActionThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' action='x:/a'>"
 			+ "<input type='submit'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("f");
@@ -350,7 +334,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsGetRequest() throws Exception
+	public void submitWhenGetSubmitsGetRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/x'>"
@@ -358,7 +342,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -369,7 +352,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsHiddenControlInitialValue() throws Exception
+	public void submitWhenGetSubmitsHiddenControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -378,7 +361,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -389,7 +371,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsTextControlInitialValue() throws Exception
+	public void submitWhenGetSubmitsTextControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -398,7 +380,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -409,7 +390,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsTextControlSetValue() throws Exception
+	public void submitWhenGetSubmitsTextControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -418,7 +399,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -430,7 +410,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsPasswordControlInitialValue() throws Exception
+	public void submitWhenGetSubmitsPasswordControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -439,7 +419,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -450,7 +429,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsPasswordControlSetValue() throws Exception
+	public void submitWhenGetSubmitsPasswordControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -459,7 +438,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -471,7 +449,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsCheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenGetSubmitsCheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -480,7 +458,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -491,7 +468,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetSubmitsCheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenGetSubmitsCheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -500,7 +477,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -512,7 +488,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -521,7 +497,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -532,7 +507,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -541,7 +516,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -553,7 +527,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSubmitsValuedCheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenGetSubmitsValuedCheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -562,7 +536,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -573,7 +546,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetSubmitsValuedCheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenGetSubmitsValuedCheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -582,7 +555,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -594,7 +566,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -603,7 +575,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -614,7 +585,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -623,7 +594,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -635,7 +605,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetSubmitsCheckedRadioControlInitialValue() throws Exception
+	public void submitWhenGetSubmitsCheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -644,7 +614,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -655,7 +624,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetSubmitsCheckedRadioControlSetValue() throws Exception
+	public void submitWhenGetSubmitsCheckedRadioControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -664,7 +633,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -676,7 +644,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetDoesNotSubmitUncheckedRadioControlInitialValue() throws Exception
+	public void submitWhenGetDoesNotSubmitUncheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -685,7 +653,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -696,7 +663,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetSubmitsValuedCheckedRadioControlInitialValue() throws Exception
+	public void submitWhenGetSubmitsValuedCheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -705,7 +672,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -716,7 +682,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetSubmitsValuedCheckedRadioControlSetValue() throws Exception
+	public void submitWhenGetSubmitsValuedCheckedRadioControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -725,7 +691,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -737,7 +702,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetDoesNotSubmitValuedUncheckedRadioControlInitialValue() throws Exception
+	public void submitWhenGetDoesNotSubmitValuedUncheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -746,7 +711,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -757,7 +721,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenGetSetsCookie() throws IOException
+	public void submitWhenGetSetsCookie()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -765,7 +729,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -776,7 +739,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSendsCookie() throws Exception
+	public void submitWhenGetSendsCookie() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -784,7 +747,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -795,7 +757,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetSendsPreviousCookie() throws Exception
+	public void submitWhenGetSendsPreviousCookie() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
@@ -806,7 +768,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -819,7 +780,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenGetReturnsResponse() throws IOException
+	public void submitWhenGetReturnsResponse() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='get' action='/a'>"
@@ -829,7 +790,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -839,7 +799,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsPostRequest() throws Exception
+	public void submitWhenPostSubmitsPostRequest() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/x'>"
@@ -847,7 +807,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -858,7 +817,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsHiddenControlInitialValue() throws Exception
+	public void submitWhenPostSubmitsHiddenControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -867,7 +826,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -878,7 +836,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsTextControlInitialValue() throws Exception
+	public void submitWhenPostSubmitsTextControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -887,7 +845,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -898,7 +855,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsTextControlSetValue() throws Exception
+	public void submitWhenPostSubmitsTextControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -907,7 +864,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -919,7 +875,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsPasswordControlInitialValue() throws Exception
+	public void submitWhenPostSubmitsPasswordControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -928,7 +884,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -939,7 +894,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsPasswordControlSetValue() throws Exception
+	public void submitWhenPostSubmitsPasswordControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -948,7 +903,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -960,7 +914,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsCheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenPostSubmitsCheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -969,7 +923,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -980,7 +933,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsCheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenPostSubmitsCheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -989,7 +942,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1001,7 +953,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostDoesNotSubmitUncheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenPostDoesNotSubmitUncheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1010,7 +962,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1021,7 +972,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostDoesNotSubmitUncheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenPostDoesNotSubmitUncheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1030,7 +981,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1042,7 +992,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSubmitsValuedCheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenPostSubmitsValuedCheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1051,7 +1001,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1062,7 +1011,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostSubmitsValuedCheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenPostSubmitsValuedCheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1071,7 +1020,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1083,7 +1031,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws Exception
+	public void submitWhenPostDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1092,7 +1040,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1103,7 +1050,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws Exception
+	public void submitWhenPostDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1112,7 +1059,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1124,7 +1070,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostSubmitsCheckedRadioControlInitialValue() throws Exception
+	public void submitWhenPostSubmitsCheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1133,7 +1079,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1144,7 +1089,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostSubmitsCheckedRadioControlSetValue() throws Exception
+	public void submitWhenPostSubmitsCheckedRadioControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1153,7 +1098,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1165,7 +1109,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostDoesNotSubmitUncheckedRadioControlInitialValue() throws Exception
+	public void submitWhenPostDoesNotSubmitUncheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1174,7 +1118,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1185,7 +1128,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostSubmitsValuedCheckedRadioControlInitialValue() throws Exception
+	public void submitWhenPostSubmitsValuedCheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1194,7 +1137,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1205,7 +1147,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostSubmitsValuedCheckedRadioControlSetValue() throws Exception
+	public void submitWhenPostSubmitsValuedCheckedRadioControlSetValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1214,7 +1156,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1226,7 +1167,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostDoesNotSubmitValuedUncheckedRadioControlInitialValue() throws Exception
+	public void submitWhenPostDoesNotSubmitValuedUncheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1235,7 +1176,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1246,7 +1186,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void submitWhenPostSetsCookie() throws IOException
+	public void submitWhenPostSetsCookie()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1254,7 +1194,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -1265,7 +1204,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSendsCookie() throws Exception
+	public void submitWhenPostSendsCookie() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1273,7 +1212,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getForm("f")
@@ -1284,7 +1222,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostSendsPreviousCookie() throws Exception
+	public void submitWhenPostSendsPreviousCookie() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
 			+ "<a rel='r' href='/a'>a</a>"
@@ -1295,7 +1233,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 			+ "</form>"
 			+ "</body></html>"));
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server()))
 			.getLink("r")
@@ -1308,7 +1245,7 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void submitWhenPostReturnsResponse() throws IOException
+	public void submitWhenPostReturnsResponse() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f' method='post' action='/a'>"
@@ -1318,7 +1255,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -1332,12 +1268,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider() throws IOException
+	public void unwrapReturnsProvider()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		T actual = newBrowser().get(url(server()))
 			.getForm("x")
@@ -1347,12 +1282,11 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		Form form = newBrowser().get(url(server()))
 			.getForm("x");

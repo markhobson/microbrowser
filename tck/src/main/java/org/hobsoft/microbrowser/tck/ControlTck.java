@@ -13,8 +13,6 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
-
 import org.hobsoft.microbrowser.Control;
 import org.junit.Test;
 
@@ -39,14 +37,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getNameReturnsName() throws IOException
+	public void getNameReturnsName()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -61,14 +58,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getValueWhenHiddenControlReturnsInitialValue() throws IOException
+	public void getValueWhenHiddenControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='hidden' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -79,14 +75,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenTextControlReturnsInitialValue() throws IOException
+	public void getValueWhenTextControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -97,14 +92,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenPasswordControlReturnsInitialValue() throws IOException
+	public void getValueWhenPasswordControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='password' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -115,14 +109,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenCheckedCheckboxControlReturnsInitialValue() throws IOException
+	public void getValueWhenCheckedCheckboxControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -133,14 +126,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenUncheckedCheckboxControlReturnsInitialValue() throws IOException
+	public void getValueWhenUncheckedCheckboxControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -151,14 +143,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenValuedCheckedCheckboxControlReturnsInitialValue() throws IOException
+	public void getValueWhenValuedCheckedCheckboxControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c' value='x' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -169,14 +160,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenValuedUncheckedCheckboxControlReturnsInitialValue() throws IOException
+	public void getValueWhenValuedUncheckedCheckboxControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -187,14 +177,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenCheckedRadioControlReturnsInitialValue() throws IOException
+	public void getValueWhenCheckedRadioControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -205,14 +194,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getValueWhenUncheckedRadioControlReturnsInitialValue() throws IOException
+	public void getValueWhenUncheckedRadioControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -223,14 +211,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenValuedCheckedRadioControlReturnsInitialValue() throws IOException
+	public void getValueWhenValuedCheckedRadioControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c' value='x' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -241,14 +228,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValueWhenValuedUncheckedRadioControlReturnsInitialValue() throws IOException
+	public void getValueWhenValuedUncheckedRadioControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -263,14 +249,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void setValueWhenHiddenControlThrowsException() throws IOException
+	public void setValueWhenHiddenControlThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='hidden' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -283,14 +268,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenTextControlSetsValue() throws IOException
+	public void setValueWhenTextControlSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -301,14 +285,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setValueWhenPasswordControlSetsValue() throws IOException
+	public void setValueWhenPasswordControlSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='password' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -319,14 +302,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setValueWhenCheckboxControlWithCheckedSetsValue() throws IOException
+	public void setValueWhenCheckboxControlWithCheckedSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -337,14 +319,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setValueWhenCheckboxControlWithUncheckedSetsValue() throws IOException
+	public void setValueWhenCheckboxControlWithUncheckedSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -355,14 +336,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenCheckboxControlWithInvalidValueThrowsException() throws IOException
+	public void setValueWhenCheckboxControlWithInvalidValueThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -375,14 +355,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenValuedCheckboxControlWithCheckedSetsValue() throws IOException
+	public void setValueWhenValuedCheckboxControlWithCheckedSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -393,14 +372,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenValuedCheckboxControlWithUncheckedSetsValue() throws IOException
+	public void setValueWhenValuedCheckboxControlWithUncheckedSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c' value='x' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -411,14 +389,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenValuedCheckboxControlWithInvalidValueThrowsException() throws IOException
+	public void setValueWhenValuedCheckboxControlWithInvalidValueThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='checkbox' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -431,14 +408,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenRadioControlWithCheckedSetsValue() throws IOException
+	public void setValueWhenRadioControlWithCheckedSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -449,14 +425,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setValueWhenRadioControlWithUncheckedThrowsException() throws IOException
+	public void setValueWhenRadioControlWithUncheckedThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -469,14 +444,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenRadioControlWithInvalidValueThrowsException() throws IOException
+	public void setValueWhenRadioControlWithInvalidValueThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -489,14 +463,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenValuedRadioControlWithCheckedSetsValue() throws IOException
+	public void setValueWhenValuedRadioControlWithCheckedSetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -507,14 +480,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenValuedRadioControlWithUncheckedThrowsException() throws IOException
+	public void setValueWhenValuedRadioControlWithUncheckedThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c' value='x' checked/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -527,14 +499,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenValuedRadioControlWithInvalidValueThrowsException() throws IOException
+	public void setValueWhenValuedRadioControlWithInvalidValueThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='radio' name='c' value='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")
@@ -551,14 +522,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider() throws IOException
+	public void unwrapReturnsProvider()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		T actual = newBrowser().get(url(server()))
 			.getForm("f")
@@ -569,14 +539,13 @@ public abstract class ControlTck<T> extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void unwrapWithUnknownTypeThrowsException() throws IOException
+	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
 			+ "<input type='text' name='x'/>"
 			+ "</form>"
 			+ "</body></html>"));
-		server().start();
 		
 		Control control = newBrowser().get(url(server()))
 			.getForm("f")

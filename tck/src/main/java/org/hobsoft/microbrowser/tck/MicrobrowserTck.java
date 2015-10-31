@@ -13,7 +13,7 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.Test;
@@ -35,10 +35,9 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getRequestsPath() throws Exception
+	public void getRequestsPath() throws InterruptedException
 	{
 		server().enqueue(new MockResponse());
-		server().start();
 		
 		newBrowser().get(url(server(), "/x"));
 		
@@ -46,10 +45,9 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getSetsCookie() throws IOException
+	public void getSetsCookie()
 	{
 		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		server().start();
 		
 		String actual = newBrowser().get(url(server()))
 			.getCookie("x");
@@ -58,12 +56,11 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void getReturnsResponse() throws IOException
+	public void getReturnsResponse() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		
@@ -80,12 +77,11 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getWhenNotFoundReturnsResponse() throws IOException
+	public void getWhenNotFoundReturnsResponse() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setResponseCode(404).setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		
@@ -93,12 +89,11 @@ public abstract class MicrobrowserTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getWhenInternalErrorReturnsResponse() throws IOException
+	public void getWhenInternalErrorReturnsResponse() throws MalformedURLException
 	{
 		server().enqueue(new MockResponse().setResponseCode(500).setBody("<html><body>"
 			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
 			+ "</body></html>"));
-		server().start();
 		
 		MicrodataDocument actual = newBrowser().get(url(server()));
 		
