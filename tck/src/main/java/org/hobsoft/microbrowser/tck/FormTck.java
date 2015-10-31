@@ -27,7 +27,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
-import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
+import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.get;

@@ -17,25 +17,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.hobsoft.microbrowser.Link;
 import org.hobsoft.microbrowser.MicrodataItem;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasProperty;
 
 /**
- * Hamcrest matcher for a {@code MicrodataItem}.
+ * Hamcrest matchers for Microbrowser API.
  */
-public final class MicrodataItemMatcher
+public final class MicrobrowserMatchers
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private MicrodataItemMatcher()
+	private MicrobrowserMatchers()
 	{
 		throw new AssertionError();
 	}
-	
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -44,9 +46,20 @@ public final class MicrodataItemMatcher
 	{
 		return item(new URL(expectedId));
 	}
-	
+
 	public static Matcher<MicrodataItem> item(URL expectedId)
 	{
 		return hasProperty("id", is(expectedId));
+	}
+
+	public static Matcher<Link> link(String expectedRel, String expectedHref) throws MalformedURLException
+	{
+		return link(expectedRel, new URL(expectedHref));
+	}
+
+	public static Matcher<Link> link(String expectedRel, URL expectedHref)
+	{
+		return Matchers.<Link>both(hasProperty("rel", is(expectedRel)))
+			.and(hasProperty("href", is(expectedHref)));
 	}
 }

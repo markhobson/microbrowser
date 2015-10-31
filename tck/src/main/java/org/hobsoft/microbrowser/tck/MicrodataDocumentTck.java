@@ -32,8 +32,8 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
-import static org.hobsoft.microbrowser.tck.support.LinkMatcher.link;
-import static org.hobsoft.microbrowser.tck.support.MicrodataItemMatcher.item;
+import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
+import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.link;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
