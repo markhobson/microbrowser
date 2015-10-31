@@ -78,9 +78,8 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
-			+ "<input type='text' name='x' value='y1'/>"
-			+ "<input type='text' name='x' value='y2'/>"
-			+ "<input type='text' name='x' value='y3'/>"
+			+ "<input type='text' name='x' value='y'/>"
+			+ "<input type='text' name='x' value='z'/>"
 			+ "</form>"
 			+ "</body></html>"));
 		
@@ -90,9 +89,8 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 			.getControls();
 		
 		assertThat("form control group controls", actual, contains(
-			control("x", "y1"),
-			control("x", "y2"),
-			control("x", "y3")
+			control("x", "y"),
+			control("x", "z")
 		));
 	}
 }
