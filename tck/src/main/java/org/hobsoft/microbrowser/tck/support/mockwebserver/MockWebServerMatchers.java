@@ -22,15 +22,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasProperty;
 
 /**
- * Hamcrest matcher for {@code RecordedRequest}.
+ * Hamcrest matchers for MockWebServer.
  */
-public final class RecordedRequestMatcher
+public final class MockWebServerMatchers
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private RecordedRequestMatcher()
+	private MockWebServerMatchers()
 	{
 		throw new AssertionError();
 	}

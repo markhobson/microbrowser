@@ -28,10 +28,10 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerMatchers.get;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerMatchers.post;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
-import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.get;
-import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestMatcher.post;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestUtils.body;
 import static org.junit.Assert.assertThat;
 
