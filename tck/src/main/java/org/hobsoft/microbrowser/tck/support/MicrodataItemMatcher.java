@@ -16,62 +16,37 @@ package org.hobsoft.microbrowser.tck.support;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.Matcher;
 import org.hobsoft.microbrowser.MicrodataItem;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 
 /**
  * Hamcrest matcher for a {@code MicrodataItem}.
  */
-public final class MicrodataItemMatcher extends TypeSafeMatcher<MicrodataItem>
+public final class MicrodataItemMatcher
 {
-	// ----------------------------------------------------------------------------------------------------------------
-	// fields
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private final URL expectedId;
-	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private MicrodataItemMatcher(URL expectedId)
+	private MicrodataItemMatcher()
 	{
-		this.expectedId = checkNotNull(expectedId, "expectedId");
+		throw new AssertionError();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public static MicrodataItemMatcher item(String expectedId) throws MalformedURLException
+	public static Matcher<MicrodataItem> item(String expectedId) throws MalformedURLException
 	{
 		return item(new URL(expectedId));
 	}
 	
-	public static MicrodataItemMatcher item(URL expectedId)
+	public static Matcher<MicrodataItem> item(URL expectedId)
 	{
-		return new MicrodataItemMatcher(expectedId);
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// TypeSafeMatcher methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected boolean matchesSafely(MicrodataItem item)
-	{
-		return expectedId.equals(item.getId());
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// SelfDescribing methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	public void describeTo(Description description)
-	{
-		description.appendText("id=").appendValue(expectedId);
+		return hasProperty("id", is(expectedId));
 	}
 }

@@ -16,67 +16,39 @@ package org.hobsoft.microbrowser.tck.support;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hobsoft.microbrowser.Link;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 
 /**
  * Hamcrest matcher for a {@code Link}.
  */
-public final class LinkMatcher extends TypeSafeMatcher<Link>
+public final class LinkMatcher
 {
-	// ----------------------------------------------------------------------------------------------------------------
-	// fields
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private final String expectedRel;
-	
-	private final URL expectedHref;
-
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private LinkMatcher(String expectedRel, URL expectedHref)
+	private LinkMatcher()
 	{
-		this.expectedRel = checkNotNull(expectedRel, "expectedRel");
-		this.expectedHref = checkNotNull(expectedHref, "expectedHref");
+		throw new AssertionError();
 	}
-	
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public static LinkMatcher link(String expectedRel, String expectedHref) throws MalformedURLException
+	public static Matcher<Link> link(String expectedRel, String expectedHref) throws MalformedURLException
 	{
 		return link(expectedRel, new URL(expectedHref));
 	}
-	
-	public static LinkMatcher link(String expectedRel, URL expectedHref)
+
+	public static Matcher<Link> link(String expectedRel, URL expectedHref)
 	{
-		return new LinkMatcher(expectedRel, expectedHref);
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// TypeSafeMatcher methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected boolean matchesSafely(Link link)
-	{
-		return expectedRel.equals(link.getRel())
-			&& expectedHref.equals(link.getHref());
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// SelfDescribing methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	public void describeTo(Description description)
-	{
-		description.appendText("rel=").appendValue(expectedRel).appendText(" ");
-		description.appendText("href=").appendValue(expectedHref);
+		return Matchers.<Link>both(hasProperty("rel", is(expectedRel)))
+			.and(hasProperty("href", is(expectedHref)));
 	}
 }
