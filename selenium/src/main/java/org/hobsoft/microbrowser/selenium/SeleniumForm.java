@@ -67,11 +67,6 @@ class SeleniumForm extends AbstractForm
 		return element.getAttribute("name");
 	}
 	
-	public Control getControl(String name)
-	{
-		return getControlGroup(name).getControls().get(0);
-	}
-	
 	public ControlGroup getControlGroup(String name)
 	{
 		List<WebElement> elements = element.findElements(byControl(name));

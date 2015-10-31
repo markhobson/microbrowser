@@ -70,11 +70,6 @@ class JsoupForm extends AbstractForm
 		return element.attr("name");
 	}
 	
-	public Control getControl(String name)
-	{
-		return getControlGroup(name).getControls().get(0);
-	}
-
 	public ControlGroup getControlGroup(String name)
 	{
 		Elements elements = element.select(byControl(name));

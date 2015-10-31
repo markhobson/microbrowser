@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.spi;
 
+import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.Form;
 
 /**
@@ -24,6 +25,11 @@ public abstract class AbstractForm implements Form
 	// Form methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	public final Control getControl(String name)
+	{
+		return getControlGroup(name).getControls().get(0);
+	}
+	
 	public final String getControlValue(String name)
 	{
 		return getControl(name).getValue();

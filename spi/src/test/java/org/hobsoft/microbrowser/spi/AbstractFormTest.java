@@ -13,9 +13,15 @@
  */
 package org.hobsoft.microbrowser.spi;
 
+import java.util.Collections;
+
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlGroup;
 import org.hobsoft.microbrowser.Form;
 import org.junit.Test;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -34,11 +40,23 @@ public class AbstractFormTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
+	public void getControlReturnsFirstControl()
+	{
+		AbstractForm form = mock(AbstractForm.class);
+		Control control = newControl("y");
+		ControlGroup group = newControlGroup(control, newControl("z"));
+		when(form.getControlGroup("x")).thenReturn(group);
+		
+		assertThat(form.getControl("x"), is(control));
+	}
+
+	@Test
 	public void getControlValueReturnsControlValue()
 	{
 		AbstractForm form = mock(AbstractForm.class);
 		Control control = newControl("y");
-		when(form.getControl("x")).thenReturn(control);
+		ControlGroup group = newControlGroup(control);
+		when(form.getControlGroup("x")).thenReturn(group);
 		
 		assertThat(form.getControlValue("x"), is("y"));
 	}
@@ -48,7 +66,8 @@ public class AbstractFormTest
 	{
 		AbstractForm form = mock(AbstractForm.class);
 		Control control = mock(Control.class);
-		when(form.getControl("x")).thenReturn(control);
+		ControlGroup group = newControlGroup(control);
+		when(form.getControlGroup("x")).thenReturn(group);
 		
 		form.setControlValue("x", "y");
 		
@@ -59,7 +78,8 @@ public class AbstractFormTest
 	public void setControlValueReturnsForm()
 	{
 		AbstractForm form = mock(AbstractForm.class);
-		when(form.getControl(anyString())).thenReturn(mock(Control.class));
+		ControlGroup group = newControlGroup(mock(Control.class));
+		when(form.getControlGroup(anyString())).thenReturn(group);
 		
 		Form actual = form.setControlValue("x", "y");
 		
@@ -75,5 +95,12 @@ public class AbstractFormTest
 		Control control = mock(Control.class);
 		when(control.getValue()).thenReturn(value);
 		return control;
+	}
+
+	private static ControlGroup newControlGroup(Control... controls)
+	{
+		ControlGroup group = mock(ControlGroup.class);
+		when(group.getControls()).thenReturn(asList(controls));
+		return group;
 	}
 }
