@@ -13,55 +13,26 @@
  */
 package org.hobsoft.microbrowser.tck.support.mockwebserver;
 
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.Matchers;
 
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 
 /**
  * Hamcrest matcher for {@code RecordedRequest}.
  */
-public class RecordedRequestMatcher extends TypeSafeMatcher<RecordedRequest>
+public final class RecordedRequestMatcher
 {
-	// ----------------------------------------------------------------------------------------------------------------
-	// fields
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private final String expectedMethod;
-	
-	private final String expectedPath;
-	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public RecordedRequestMatcher(String expectedMethod, String expectedPath)
+	private RecordedRequestMatcher()
 	{
-		this.expectedMethod = expectedMethod;
-		this.expectedPath = expectedPath;
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// SelfDescribing methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	public void describeTo(Description description)
-	{
-		description.appendValue(expectedMethod)
-			.appendText(" ")
-			.appendValue(expectedPath);
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// TypeSafeMatcher methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected boolean matchesSafely(RecordedRequest actual)
-	{
-		return expectedMethod.equals(actual.getMethod())
-			&& expectedPath.equals(actual.getPath());
+		throw new AssertionError();
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -70,11 +41,21 @@ public class RecordedRequestMatcher extends TypeSafeMatcher<RecordedRequest>
 
 	public static Matcher<RecordedRequest> get(String expectedPath)
 	{
-		return new RecordedRequestMatcher("GET", expectedPath);
+		return recordedRequest("GET", expectedPath);
 	}
 
 	public static Matcher<RecordedRequest> post(String expectedPath)
 	{
-		return new RecordedRequestMatcher("POST", expectedPath);
+		return recordedRequest("POST", expectedPath);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static Matcher<RecordedRequest> recordedRequest(String expectedMethod, String expectedPath)
+	{
+		return Matchers.<RecordedRequest>both(hasProperty("method", is(expectedMethod)))
+			.and(hasProperty("path", is(expectedPath)));
 	}
 }
