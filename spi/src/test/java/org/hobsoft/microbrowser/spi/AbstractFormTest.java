@@ -13,15 +13,12 @@
  */
 package org.hobsoft.microbrowser.spi;
 
-import java.util.Collections;
-
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
 import org.hobsoft.microbrowser.Form;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

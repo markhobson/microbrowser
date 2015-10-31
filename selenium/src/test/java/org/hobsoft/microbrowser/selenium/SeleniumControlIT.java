@@ -19,13 +19,21 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.ControlTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test that executes the {@code Control} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumControlIT extends ControlTck<WebElement>
+public class SeleniumControlIT extends ControlTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -52,6 +60,27 @@ public class SeleniumControlIT extends ControlTck<WebElement>
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapWithWebElementTypeReturnsWebElement()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		WebElement actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControl("x")
+			.unwrap(WebElement.class);
+		
+		assertThat("form control provider", actual, is(instanceOf(WebElement.class)));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -59,15 +88,5 @@ public class SeleniumControlIT extends ControlTck<WebElement>
 	protected Microbrowser newBrowser()
 	{
 		return new SeleniumMicrobrowser(driverRule.getDriver());
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// ControlTck methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected Class<WebElement> getProviderType()
-	{
-		return WebElement.class;
 	}
 }
