@@ -19,13 +19,21 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.FormTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test that executes the {@code Form} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumFormIT extends FormTck<WebElement>
+public class SeleniumFormIT extends FormTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -52,6 +60,24 @@ public class SeleniumFormIT extends FormTck<WebElement>
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapWithWebElementTypeReturnsWebElement()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='x'/>"
+			+ "</body></html>"));
+		
+		WebElement actual = newBrowser().get(url(server()))
+			.getForm("x")
+			.unwrap(WebElement.class);
+		
+		assertThat("form provider", actual, is(instanceOf(WebElement.class)));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -59,15 +85,5 @@ public class SeleniumFormIT extends FormTck<WebElement>
 	protected Microbrowser newBrowser()
 	{
 		return new SeleniumMicrobrowser(driverRule.getDriver());
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// FormTck methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected Class<WebElement> getProviderType()
-	{
-		return WebElement.class;
 	}
 }

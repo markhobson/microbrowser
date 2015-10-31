@@ -16,12 +16,38 @@ package org.hobsoft.microbrowser.jsoup;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.FormTck;
 import org.jsoup.nodes.Element;
+import org.junit.Test;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test that executes the {@code Form} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupFormIT extends FormTck<Element>
+public class JsoupFormIT extends FormTck
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapWithElementTypeReturnsElement()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='x'/>"
+			+ "</body></html>"));
+		
+		Element actual = newBrowser().get(url(server()))
+			.getForm("x")
+			.unwrap(Element.class);
+		
+		assertThat("form provider", actual, is(instanceOf(Element.class)));
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -30,15 +56,5 @@ public class JsoupFormIT extends FormTck<Element>
 	protected Microbrowser newBrowser()
 	{
 		return new JsoupMicrobrowser();
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// FormTck methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected Class<Element> getProviderType()
-	{
-		return Element.class;
 	}
 }

@@ -24,7 +24,6 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
@@ -37,11 +36,8 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code Form}.
- * 
- * @param <T>
- *            the provider-specific form type
  */
-public abstract class FormTck<T> extends AbstractMicrobrowserTest
+public abstract class FormTck extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getName tests
@@ -1268,20 +1264,6 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider()
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='x'/>"
-			+ "</body></html>"));
-		
-		T actual = newBrowser().get(url(server()))
-			.getForm("x")
-			.unwrap(getProviderType());
-		
-		assertThat("form provider", actual, is(instanceOf(getProviderType())));
-	}
-
-	@Test
 	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -1296,10 +1278,4 @@ public abstract class FormTck<T> extends AbstractMicrobrowserTest
 		
 		form.unwrap(Void.class);
 	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	protected abstract Class<T> getProviderType();
 }
