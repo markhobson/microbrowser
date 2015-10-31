@@ -19,7 +19,6 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.isEmptyString;
@@ -28,11 +27,8 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code MicrodataProperty}.
- * 
- * @param <T>
- *            the provider-specific property type
  */
-public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
+public abstract class MicrodataPropertyTck extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getName tests
@@ -1098,23 +1094,6 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider()
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='http://i'>"
-			+ "<p itemprop='x'/>"
-			+ "</div>"
-			+ "</body></html>"));
-		
-		T actual = newBrowser().get(url(server()))
-			.getItem("http://i")
-			.getProperty("x")
-			.unwrap(getProviderType());
-		
-		assertThat("item property provider", actual, is(instanceOf(getProviderType())));
-	}
-
-	@Test
 	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -1132,10 +1111,4 @@ public abstract class MicrodataPropertyTck<T> extends AbstractMicrobrowserTest
 		
 		property.unwrap(Void.class);
 	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	protected abstract Class<T> getProviderType();
 }

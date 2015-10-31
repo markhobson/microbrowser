@@ -16,11 +16,19 @@ package org.hobsoft.microbrowser.jsoup;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.MicrodataPropertyTck;
 import org.jsoup.nodes.Element;
+import org.junit.Test;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test that executes the {@code MicrodataProperty} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupMicrodataPropertyIT extends MicrodataPropertyTck<Element>
+public class JsoupMicrodataPropertyIT extends MicrodataPropertyTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
@@ -33,12 +41,23 @@ public class JsoupMicrodataPropertyIT extends MicrodataPropertyTck<Element>
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataPropertyTck methods
+	// unwrap tests
 	// ----------------------------------------------------------------------------------------------------------------
 
-	@Override
-	protected Class<Element> getProviderType()
+	@Test
+	public void unwrapWithElementTypeReturnsElement()
 	{
-		return Element.class;
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'>"
+			+ "<p itemprop='x'/>"
+			+ "</div>"
+			+ "</body></html>"));
+		
+		Element actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.getProperty("x")
+			.unwrap(Element.class);
+		
+		assertThat("item property provider", actual, is(instanceOf(Element.class)));
 	}
 }
