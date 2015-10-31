@@ -69,14 +69,7 @@ class SeleniumForm extends AbstractForm
 	
 	public Control getControl(String name)
 	{
-		List<WebElement> elements = element.findElements(byControl(name));
-		
-		if (elements.isEmpty())
-		{
-			throw new ControlNotFoundException(name);
-		}
-		
-		return newControl(elements.get(0));
+		return getControlGroup(name).getControls().get(0);
 	}
 	
 	public ControlGroup getControlGroup(String name)
