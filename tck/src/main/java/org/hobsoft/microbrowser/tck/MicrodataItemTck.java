@@ -28,7 +28,6 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.contains;
@@ -39,11 +38,8 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code MicrodataItem}.
- * 
- * @param <T>
- *            the provider-specific item type
  */
-public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
+public abstract class MicrodataItemTck extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getId tests
@@ -361,20 +357,6 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider()
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='http://i'/>"
-			+ "</body></html>"));
-		
-		T actual = newBrowser().get(url(server()))
-			.getItem("http://i")
-			.unwrap(getProviderType());
-		
-		assertThat("item provider", actual, is(instanceOf(getProviderType())));
-	}
-
-	@Test
 	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -389,10 +371,4 @@ public abstract class MicrodataItemTck<T> extends AbstractMicrobrowserTest
 		
 		item.unwrap(Void.class);
 	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	protected abstract Class<T> getProviderType();
 }

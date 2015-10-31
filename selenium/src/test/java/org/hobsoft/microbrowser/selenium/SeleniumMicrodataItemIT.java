@@ -19,13 +19,21 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.MicrodataItemTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test that executes the {@code MicrodataItem} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumMicrodataItemIT extends MicrodataItemTck<WebElement>
+public class SeleniumMicrodataItemIT extends MicrodataItemTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -62,12 +70,20 @@ public class SeleniumMicrodataItemIT extends MicrodataItemTck<WebElement>
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataItemTck methods
+	// unwrap tests
 	// ----------------------------------------------------------------------------------------------------------------
 
-	@Override
-	protected Class<WebElement> getProviderType()
+	@Test
+	public void unwrapWithWebElementTypeReturnsWebElement()
 	{
-		return WebElement.class;
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<div itemscope='itemscope' itemtype='http://i'/>"
+			+ "</body></html>"));
+		
+		WebElement actual = newBrowser().get(url(server()))
+			.getItem("http://i")
+			.unwrap(WebElement.class);
+		
+		assertThat("item provider", actual, is(instanceOf(WebElement.class)));
 	}
 }
