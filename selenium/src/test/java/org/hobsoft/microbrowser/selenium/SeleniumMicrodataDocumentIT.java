@@ -19,13 +19,21 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.MicrodataDocumentTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test that executes the {@code MicrodataDocument} TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumMicrodataDocumentIT extends MicrodataDocumentTck<WebDriver>
+public class SeleniumMicrodataDocumentIT extends MicrodataDocumentTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -52,6 +60,21 @@ public class SeleniumMicrodataDocumentIT extends MicrodataDocumentTck<WebDriver>
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// unwrap tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void unwrapWithWebDriverTypeReturnsWebDriver()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		
+		WebDriver actual = newBrowser().get(url(server()))
+			.unwrap(WebDriver.class);
+		
+		assertThat("document provider", actual, is(instanceOf(WebDriver.class)));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
 
@@ -59,15 +82,5 @@ public class SeleniumMicrodataDocumentIT extends MicrodataDocumentTck<WebDriver>
 	protected Microbrowser newBrowser()
 	{
 		return new SeleniumMicrobrowser(driverRule.getDriver());
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataDocumentTck methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Override
-	protected Class<WebDriver> getProviderType()
-	{
-		return WebDriver.class;
 	}
 }

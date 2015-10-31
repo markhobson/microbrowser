@@ -28,7 +28,6 @@ import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
@@ -39,11 +38,8 @@ import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code MicrodataDocument}.
- * 
- * @param <T>
- *            the provider-specific document type
  */
-public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
+public abstract class MicrodataDocumentTck extends AbstractMicrobrowserTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// getItem tests
@@ -385,17 +381,6 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void unwrapReturnsProvider()
-	{
-		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
-		
-		T actual = newBrowser().get(url(server()))
-			.unwrap(getProviderType());
-		
-		assertThat("document provider", actual, is(instanceOf(getProviderType())));
-	}
-
-	@Test
 	public void unwrapWithUnknownTypeThrowsException()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
@@ -407,10 +392,4 @@ public abstract class MicrodataDocumentTck<T> extends AbstractMicrobrowserTest
 		
 		document.unwrap(Void.class);
 	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// protected methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	protected abstract Class<T> getProviderType();
 }

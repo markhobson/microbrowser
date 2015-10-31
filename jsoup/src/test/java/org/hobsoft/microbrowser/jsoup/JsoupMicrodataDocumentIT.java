@@ -16,11 +16,19 @@ package org.hobsoft.microbrowser.jsoup;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.tck.MicrodataDocumentTck;
 import org.jsoup.nodes.Document;
+import org.junit.Test;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
 
 /**
  * Integration test that executes the {@code MicrodataDocument} TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupMicrodataDocumentIT extends MicrodataDocumentTck<Document>
+public class JsoupMicrodataDocumentIT extends MicrodataDocumentTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods
@@ -33,12 +41,17 @@ public class JsoupMicrodataDocumentIT extends MicrodataDocumentTck<Document>
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// MicrodataDocumentTck methods
+	// unwrap tests
 	// ----------------------------------------------------------------------------------------------------------------
 
-	@Override
-	protected Class<Document> getProviderType()
+	@Test
+	public void unwrapWithDocumentTypeReturnsDocument()
 	{
-		return Document.class;
+		server().enqueue(new MockResponse().setBody("<html><body/></html>"));
+		
+		Document actual = newBrowser().get(url(server()))
+			.unwrap(Document.class);
+		
+		assertThat("document provider", actual, is(instanceOf(Document.class)));
 	}
 }
