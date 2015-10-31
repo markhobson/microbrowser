@@ -99,7 +99,7 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 			.getLink("r")
 			.getHref();
 		
-		assertThat("link href", actual, is(server().getUrl("/x")));
+		assertThat("link href", actual, is(server().url("/x").url()));
 	}
 
 	@Test
@@ -141,7 +141,7 @@ public abstract class LinkTck<T> extends AbstractMicrobrowserTest
 			.getLink("x")
 			.getHref();
 		
-		assertThat("link href", actual, is(server().getUrl("/x")));
+		assertThat("link href", actual, is(server().url("/x").url()));
 	}
 
 	@Test

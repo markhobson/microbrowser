@@ -41,7 +41,7 @@ public final class MockWebServerUtils
 	
 	public static String url(MockWebServer server, String path)
 	{
-		return server.getUrl(path).toString();
+		return server.url(path).toString();
 	}
 	
 	/**

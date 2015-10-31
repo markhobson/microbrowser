@@ -21,7 +21,6 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.rule.MockWebServerRule;
 
 /**
  * Base test for Microbrowser TCKs.
@@ -41,7 +40,7 @@ public abstract class AbstractMicrobrowserTest
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private MockWebServerRule serverRule = new MockWebServerRule();
+	private MockWebServer serverRule = new MockWebServer();
 	
 	private ExpectedException thrown = ExpectedException.none();
 	
@@ -50,7 +49,7 @@ public abstract class AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Rule
-	public final MockWebServerRule getServerRule()
+	public final MockWebServer getServerRule()
 	{
 		return serverRule;
 	}
@@ -67,7 +66,7 @@ public abstract class AbstractMicrobrowserTest
 	
 	protected final MockWebServer server()
 	{
-		return serverRule.get();
+		return serverRule;
 	}
 
 	protected abstract Microbrowser newBrowser();
