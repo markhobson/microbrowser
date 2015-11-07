@@ -62,8 +62,11 @@ public class DefaultControlGroupTest
 	@Test
 	public void getNameReturnsFirstControlName()
 	{
-		List<Control> controls = asList(mockControl("x"), mockControl("y"), mockControl("z"));
-		DefaultControlGroup group = new DefaultControlGroup(controls);
+		DefaultControlGroup group = new DefaultControlGroup(asList(
+			mockControl("x"),
+			mockControl("y"),
+			mockControl("z")
+		));
 		
 		assertThat(group.getName(), is("x"));
 	}
@@ -71,10 +74,10 @@ public class DefaultControlGroupTest
 	@Test
 	public void getControlsReturnsControls()
 	{
-		Control[] controls = new Control[] {mockControl("x"), mockControl("y"), mockControl("z")};
-		DefaultControlGroup group = new DefaultControlGroup(asList(controls));
+		List<Control> controls = asList(mockControl("x"), mockControl("y"), mockControl("z"));
+		DefaultControlGroup group = new DefaultControlGroup(controls);
 		
-		assertThat(group.getControls(), contains(controls[0], controls[1], controls[2]));
+		assertThat(group.getControls(), contains(controls.get(0), controls.get(1), controls.get(2)));
 	}
 	
 	@Test
