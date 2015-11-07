@@ -16,6 +16,7 @@ package org.hobsoft.microbrowser.tck;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlGroup;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -132,5 +133,45 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 			.getValues();
 		
 		assertThat("form control group values", actual, contains("x", "y"));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// setValues tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void setValuesWhenValuedCheckboxControlsWithCheckedValueSetsValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "<input type='checkbox' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		group.setValues("x");
+		
+		assertThat("form control group values", group.getValues(), contains("x"));
+	}
+	
+	@Test
+	public void setValuesWhenValuedCheckboxControlsWithCheckedValuesSetsValues()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "<input type='checkbox' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		group.setValues("x", "y");
+		
+		assertThat("form control group values", group.getValues(), contains("x", "y"));
 	}
 }

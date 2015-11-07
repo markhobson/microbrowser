@@ -40,4 +40,12 @@ public interface ControlGroup
 	 * @return the form control values
 	 */
 	List<String> getValues();
+
+	/**
+	 * Sets the values of all the controls within this form control group.
+	 * 
+	 * @param values
+	 *            the form control values to set
+	 */
+	void setValues(String... values);
 }

@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.jsoup;
 
+import org.hobsoft.microbrowser.spi.CheckableControl;
 import org.jsoup.nodes.Element;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -21,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Checkbox form control wrapper for a jsoup {@code Element}.
  */
-class JsoupCheckboxControl extends AbstractJsoupControl
+class JsoupCheckboxControl extends AbstractJsoupControl implements CheckableControl
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constants
@@ -58,13 +59,17 @@ class JsoupCheckboxControl extends AbstractJsoupControl
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
+	// CheckableControl methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private String getCheckedValue()
+	public String getCheckedValue()
 	{
 		return getElement().hasAttr("value") ? getElement().attr("value") : DEFAULT_CHECKED_VALUE;
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
 
 	private boolean isCheckboxValue(String value)
 	{

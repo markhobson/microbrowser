@@ -28,7 +28,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -115,6 +118,56 @@ public class DefaultControlGroupTest
 		
 		assertThat(group.getValues(), contains("x", "y", "z"));
 	}
+
+	@Test
+	public void setValuesWithValueSetsControlValue()
+	{
+		Control control = mockCheckableControl("c", "x");
+		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
+		
+		group.setValues("x");
+		
+		verify(control).setValue("x");
+	}
+	
+	@Test
+	public void setValuesWithDifferentValueUnsetsControlValue()
+	{
+		Control control = mockCheckableControl("c", "x");
+		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
+		
+		group.setValues("y");
+		
+		verify(control).setValue("");
+	}
+	
+	@Test
+	public void setValuesWhenUncheckableDoesNotSetControlValue()
+	{
+		Control control = mockControl("c");
+		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
+		
+		group.setValues("x");
+		
+		verify(control, never()).setValue(anyString());
+	}
+	
+	@Test
+	public void setValuesWithValuesSetsControlValues()
+	{
+		List<Control> controls = asList(
+			mockCheckableControl("c", "x"),
+			mockCheckableControl("c", "y"),
+			mockCheckableControl("c", "z")
+		);
+		DefaultControlGroup group = new DefaultControlGroup(controls);
+		
+		group.setValues("x", "y", "z");
+		
+		verify(controls.get(0)).setValue("x");
+		verify(controls.get(1)).setValue("y");
+		verify(controls.get(2)).setValue("z");
+	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
@@ -131,6 +184,14 @@ public class DefaultControlGroupTest
 	{
 		Control control = mockControl(name);
 		when(control.getValue()).thenReturn(value);
+		return control;
+	}
+
+	private static Control mockCheckableControl(String name, String checkedValue)
+	{
+		CheckableControl control = mock(CheckableControl.class);
+		when(control.getName()).thenReturn(name);
+		when(control.getCheckedValue()).thenReturn(checkedValue);
 		return control;
 	}
 }

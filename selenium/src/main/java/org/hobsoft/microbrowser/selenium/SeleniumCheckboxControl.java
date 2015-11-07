@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import org.hobsoft.microbrowser.spi.CheckableControl;
 import org.openqa.selenium.WebElement;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -21,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Checkbox form control wrapper for a Selenium {@code WebElement}.
  */
-class SeleniumCheckboxControl extends AbstractSeleniumControl
+class SeleniumCheckboxControl extends AbstractSeleniumControl implements CheckableControl
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constants
@@ -61,13 +62,17 @@ class SeleniumCheckboxControl extends AbstractSeleniumControl
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
+	// CheckableControl methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private String getCheckedValue()
+	public String getCheckedValue()
 	{
 		return getElement().getAttribute("value");
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
 
 	private boolean isCheckboxValue(String value)
 	{

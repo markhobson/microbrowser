@@ -19,6 +19,7 @@ import java.util.List;
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 
 /**
@@ -26,6 +27,12 @@ import static java.util.Collections.unmodifiableList;
  */
 public class DefaultControlGroup implements ControlGroup
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static final String UNCHECKED_VALUE = "";
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
@@ -70,5 +77,22 @@ public class DefaultControlGroup implements ControlGroup
 		}
 		
 		return values;
+	}
+	
+	public void setValues(String... values)
+	{
+		List<String> valuesList = asList(values);
+		
+		for (Control control : controls)
+		{
+			if (control instanceof CheckableControl)
+			{
+				String checkedValue = ((CheckableControl) control).getCheckedValue();
+				boolean checked = valuesList.contains(checkedValue);
+				String value = checked ? checkedValue : UNCHECKED_VALUE;
+				
+				control.setValue(value);
+			}
+		}
 	}
 }
