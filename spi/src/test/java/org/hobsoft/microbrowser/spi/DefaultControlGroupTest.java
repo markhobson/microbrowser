@@ -57,7 +57,7 @@ public class DefaultControlGroupTest
 	@Test
 	public void getNameReturnsFirstControlName()
 	{
-		List<Control> controls = asList(newControl("x"), newControl("y"), newControl("z"));
+		List<Control> controls = asList(mockControl("x"), mockControl("y"), mockControl("z"));
 		DefaultControlGroup group = new DefaultControlGroup(controls);
 		
 		assertThat(group.getName(), is("x"));
@@ -66,7 +66,7 @@ public class DefaultControlGroupTest
 	@Test
 	public void getControlsReturnsControls()
 	{
-		Control[] controls = new Control[] {newControl("x"), newControl("y"), newControl("z")};
+		Control[] controls = new Control[] {mockControl("x"), mockControl("y"), mockControl("z")};
 		DefaultControlGroup group = new DefaultControlGroup(asList(controls));
 		
 		assertThat(group.getControls(), contains(controls[0], controls[1], controls[2]));
@@ -76,9 +76,9 @@ public class DefaultControlGroupTest
 	public void getControlsReturnsImmutableList()
 	{
 		List<Control> controls = new ArrayList<Control>();
-		controls.add(newControl("x"));
-		controls.add(newControl("y"));
-		controls.add(newControl("z"));
+		controls.add(mockControl("x"));
+		controls.add(mockControl("y"));
+		controls.add(mockControl("z"));
 		DefaultControlGroup group = new DefaultControlGroup(controls);
 		
 		thrown.expect(UnsupportedOperationException.class);
@@ -90,7 +90,7 @@ public class DefaultControlGroupTest
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static Control newControl(String name)
+	private static Control mockControl(String name)
 	{
 		Control control = mock(Control.class);
 		when(control.getName()).thenReturn(name);
