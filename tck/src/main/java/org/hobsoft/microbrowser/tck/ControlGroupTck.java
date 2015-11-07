@@ -93,4 +93,44 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 			control("x", "z")
 		));
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getValues tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getValuesWhenValuedCheckedCheckboxControlReturnsValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
+			+ "<input type='checkbox' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<String> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getValues();
+		
+		assertThat("form control group values", actual, contains("x"));
+	}
+	
+	@Test
+	public void getValuesWhenValuedCheckedCheckboxControlsReturnsValues()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
+			+ "<input type='checkbox' name='c' value='y' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<String> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getValues();
+		
+		assertThat("form control group values", actual, contains("x", "y"));
+	}
 }

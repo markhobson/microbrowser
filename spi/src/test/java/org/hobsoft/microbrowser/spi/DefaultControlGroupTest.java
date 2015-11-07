@@ -22,9 +22,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -86,6 +88,34 @@ public class DefaultControlGroupTest
 		group.getControls().clear();
 	}
 	
+	@Test
+	public void getValuesWhenValueReturnsValue()
+	{
+		DefaultControlGroup group = new DefaultControlGroup(singletonList(mockControl("c", "x")));
+		
+		assertThat(group.getValues(), contains("x"));
+	}
+	
+	@Test
+	public void getValuesWhenNoValueDoesNotReturnValue()
+	{
+		DefaultControlGroup group = new DefaultControlGroup(singletonList(mockControl("c", "")));
+		
+		assertThat(group.getValues(), is(empty()));
+	}
+	
+	@Test
+	public void getValuesWhenValuesReturnsValues()
+	{
+		DefaultControlGroup group = new DefaultControlGroup(asList(
+			mockControl("c", "x"),
+			mockControl("c", "y"),
+			mockControl("c", "z")
+		));
+		
+		assertThat(group.getValues(), contains("x", "y", "z"));
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -94,6 +124,13 @@ public class DefaultControlGroupTest
 	{
 		Control control = mock(Control.class);
 		when(control.getName()).thenReturn(name);
+		return control;
+	}
+	
+	private static Control mockControl(String name, String value)
+	{
+		Control control = mockControl(name);
+		when(control.getValue()).thenReturn(value);
 		return control;
 	}
 }

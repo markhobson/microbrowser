@@ -33,4 +33,11 @@ public interface ControlGroup
 	 * @return the controls
 	 */
 	List<Control> getControls();
+
+	/**
+	 * Gets the values of all the controls within this form control group.
+	 * 
+	 * @return the form control values
+	 */
+	List<String> getValues();
 }

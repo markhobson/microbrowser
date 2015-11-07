@@ -13,6 +13,7 @@
  */
 package org.hobsoft.microbrowser.spi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
@@ -52,5 +53,22 @@ public class DefaultControlGroup implements ControlGroup
 	public List<Control> getControls()
 	{
 		return controls;
+	}
+	
+	public List<String> getValues()
+	{
+		List<String> values = new ArrayList<String>();
+		
+		for (Control control : controls)
+		{
+			String value = control.getValue();
+			
+			if (!value.isEmpty())
+			{
+				values.add(value);
+			}
+		}
+		
+		return values;
 	}
 }
