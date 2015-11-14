@@ -18,6 +18,7 @@ import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -36,10 +37,16 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class SeleniumMicrobrowserITSuite
 {
 	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
+	static final Class<? extends WebDriver> WEB_DRIVER_CLASS = FirefoxDriver.class;
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static WebDriverRule driverRule = WebDriverRule.get(FirefoxDriver.class);
+	private static WebDriverRule driverRule = WebDriverRule.get(WEB_DRIVER_CLASS);
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// test suite methods

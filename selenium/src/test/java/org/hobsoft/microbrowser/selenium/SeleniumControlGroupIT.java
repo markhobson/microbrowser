@@ -19,7 +19,8 @@ import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
 import org.hobsoft.microbrowser.tck.ControlGroupTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.openqa.selenium.firefox.FirefoxDriver;
+
+import static org.hobsoft.microbrowser.selenium.SeleniumMicrobrowserITSuite.WEB_DRIVER_CLASS;
 
 /**
  * Integration test that executes the {@code ControlGroup} TCK against {@code SeleniumMicrobrowser}.
@@ -30,7 +31,7 @@ public class SeleniumControlGroupIT extends ControlGroupTck
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static WebDriverRule driverRule = WebDriverRule.get(FirefoxDriver.class);
+	private static WebDriverRule driverRule = WebDriverRule.get(WEB_DRIVER_CLASS);
 	
 	private WebDriverCookieRule driverCookieRule = new WebDriverCookieRule(driverRule.getDriver());
 

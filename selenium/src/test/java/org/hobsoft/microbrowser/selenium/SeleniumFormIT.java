@@ -21,12 +21,12 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.selenium.SeleniumMicrobrowserITSuite.WEB_DRIVER_CLASS;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -39,7 +39,7 @@ public class SeleniumFormIT extends FormTck
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static WebDriverRule driverRule = WebDriverRule.get(FirefoxDriver.class);
+	private static WebDriverRule driverRule = WebDriverRule.get(WEB_DRIVER_CLASS);
 	
 	private WebDriverCookieRule driverCookieRule = new WebDriverCookieRule(driverRule.getDriver());
 
