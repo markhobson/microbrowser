@@ -111,7 +111,7 @@ public class DefaultControlGroup implements ControlGroup
 		
 		if (!valuesList.isEmpty())
 		{
-			throw new IllegalArgumentException("Invalid checkbox values: " + valuesList);
+			throw new IllegalArgumentException("Invalid control values: " + valuesList);
 		}
 	}
 	

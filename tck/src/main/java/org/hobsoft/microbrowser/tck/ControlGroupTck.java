@@ -390,7 +390,7 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 			.getControlGroup("c");
 
 		thrown().expect(IllegalArgumentException.class);
-		thrown().expectMessage("Invalid checkbox values: [z]");
+		thrown().expectMessage("Invalid control values: [z]");
 		
 		group.setValues("z");
 	}
@@ -410,7 +410,7 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 			.getControlGroup("c");
 		
 		thrown().expect(IllegalArgumentException.class);
-		thrown().expectMessage("Invalid checkbox values: [p, q]");
+		thrown().expectMessage("Invalid control values: [p, q]");
 		
 		group.setValues("p", "q");
 	}

@@ -181,7 +181,7 @@ public class DefaultControlGroupTest
 		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
 		
 		thrown.expect(IllegalArgumentException.class);
-		thrown.expectMessage("Invalid checkbox values: [y]");
+		thrown.expectMessage("Invalid control values: [y]");
 		
 		group.setValues("y");
 	}
