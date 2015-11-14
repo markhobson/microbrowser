@@ -102,8 +102,8 @@ public class DefaultControlGroup implements ControlGroup
 			if (control instanceof CheckableControl)
 			{
 				String checkedValue = ((CheckableControl) control).getCheckedValue();
-				boolean checked = valuesList.remove(checkedValue);
-				String value = checked ? checkedValue : UNCHECKED_VALUE;
+				boolean check = valuesList.remove(checkedValue);
+				String value = check ? checkedValue : UNCHECKED_VALUE;
 				
 				control.setValue(value);
 			}
