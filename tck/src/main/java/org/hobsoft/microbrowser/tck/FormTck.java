@@ -640,6 +640,26 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void submitWhenGetSubmitsCheckedRadioControlsLastValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='c' checked/>"
+			+ "<input type='radio' name='c' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?c=on")));
+	}
+	
+	@Test
 	public void submitWhenGetDoesNotSubmitUncheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -697,6 +717,26 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
 	}
 
+	@Test
+	public void submitWhenGetSubmitsValuedCheckedRadioControlsLastValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<input type='radio' name='c' value='x' checked/>"
+			+ "<input type='radio' name='c' value='y' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?c=y")));
+	}
+	
 	@Test
 	public void submitWhenGetDoesNotSubmitValuedUncheckedRadioControlInitialValue() throws InterruptedException
 	{
@@ -1105,6 +1145,26 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
+	public void submitWhenPostSubmitsCheckedRadioControlsLastValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='c' checked/>"
+			+ "<input type='radio' name='c' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("c=on"));
+	}
+	
+	@Test
 	public void submitWhenPostDoesNotSubmitUncheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -1160,6 +1220,26 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		
 		server().takeRequest();
 		assertThat("request", body(takeRequest(server())), is("c=x"));
+	}
+
+	@Test
+	public void submitWhenPostSubmitsValuedCheckedRadioControlsLastValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<input type='radio' name='c' value='x' checked/>"
+			+ "<input type='radio' name='c' value='y' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", body(takeRequest(server())), is("c=y"));
 	}
 
 	@Test

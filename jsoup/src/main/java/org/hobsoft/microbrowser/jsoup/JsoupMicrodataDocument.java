@@ -178,20 +178,22 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	 */
 	private static void sanitizeRadioControls(FormElement form)
 	{
-		Elements controls = form.elements().select("[type=radio][checked]");
-		
 		Map<String, Element> controlsByName = new HashMap<String, Element>();
 		
-		for (Element control : controls)
+		for (Element control : form.elements())
 		{
-			String name = control.attr("name");
-			
-			if (controlsByName.containsKey(name))
+			// cannot use Element.select since Element.hashCode collapses like elements
+			if ("radio".equals(control.attr("type")) && control.hasAttr("checked"))
 			{
-				controlsByName.get(name).attr("checked", false);
+				String name = control.attr("name");
+				
+				if (controlsByName.containsKey(name))
+				{
+					controlsByName.get(name).attr("checked", false);
+				}
+				
+				controlsByName.put(name, control);
 			}
-			
-			controlsByName.put(name, control);
 		}
 	}
 
