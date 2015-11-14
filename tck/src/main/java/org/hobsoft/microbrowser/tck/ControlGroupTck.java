@@ -119,6 +119,24 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void getValuesWhenValuedUncheckedCheckboxControlReturnsInitialValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "<input type='checkbox' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<String> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getValues();
+		
+		assertThat("form control group values", actual, is(empty()));
+	}
+	
+	@Test
 	public void getValuesWhenValuedCheckedCheckboxControlsReturnsInitialValues()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
