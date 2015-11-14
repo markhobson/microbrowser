@@ -187,7 +187,18 @@ public class DefaultControlGroupTest
 	}
 	
 	@Test
-	public void setValuesWhenUncheckableDoesNotSetControlValue()
+	public void setValuesWhenUncheckableDoesNotUnsetControlValue()
+	{
+		Control control = mockUncheckableControl("c", "x");
+		DefaultControlGroup group = new DefaultControlGroup(asList(control, mockUncheckableControl("c", "y")));
+		
+		group.setValues("y");
+		
+		verify(control, never()).setValue("");
+	}
+	
+	@Test
+	public void setValuesWhenNotCheckableDoesNotSetControlValue()
 	{
 		Control control = mockControl("c");
 		DefaultControlGroup group = new DefaultControlGroup(asList(control, mockCheckableControl("c", "x")));
@@ -234,9 +245,20 @@ public class DefaultControlGroupTest
 
 	private static Control mockCheckableControl(String name, String checkedValue)
 	{
+		return mockCheckableControl(name, checkedValue, true);
+	}
+	
+	private static Control mockUncheckableControl(String name, String checkedValue)
+	{
+		return mockCheckableControl(name, checkedValue, false);
+	}
+	
+	private static Control mockCheckableControl(String name, String checkedValue, boolean uncheckable)
+	{
 		CheckableControl control = mock(CheckableControl.class);
 		when(control.getName()).thenReturn(name);
 		when(control.getCheckedValue()).thenReturn(checkedValue);
+		when(control.isUncheckable()).thenReturn(uncheckable);
 		return control;
 	}
 }

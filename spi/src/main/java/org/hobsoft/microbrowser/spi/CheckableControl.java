@@ -26,4 +26,11 @@ public interface CheckableControl extends Control
 	 * @return the form control checked value
 	 */
 	String getCheckedValue();
+
+	/**
+	 * Gets whether this control can be unchecked.
+	 * 
+	 * @return {@code true} if this control can be unchecked
+	 */
+	boolean isUncheckable();
 }

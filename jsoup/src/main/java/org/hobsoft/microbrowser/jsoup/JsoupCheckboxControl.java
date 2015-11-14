@@ -67,6 +67,11 @@ class JsoupCheckboxControl extends AbstractJsoupControl implements CheckableCont
 		return getElement().hasAttr("value") ? getElement().attr("value") : DEFAULT_CHECKED_VALUE;
 	}
 	
+	public boolean isUncheckable()
+	{
+		return true;
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------

@@ -42,4 +42,14 @@ class SeleniumRadioControl extends SeleniumCheckboxControl
 
 		super.setValue(value);
 	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// CheckableControl methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	public boolean isUncheckable()
+	{
+		return false;
+	}
 }

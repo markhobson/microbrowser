@@ -70,6 +70,11 @@ class SeleniumCheckboxControl extends AbstractSeleniumControl implements Checkab
 		return getElement().getAttribute("value");
 	}
 	
+	public boolean isUncheckable()
+	{
+		return true;
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------

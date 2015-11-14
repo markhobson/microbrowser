@@ -414,4 +414,98 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 		
 		group.setValues("p", "q");
 	}
+
+	@Test
+	public void setValuesWhenValuedRadioControlsWithCheckedValueSetsValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x'/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		group.setValues("x");
+		
+		assertThat("form control group values", group.getValues(), contains("x"));
+	}
+
+	@Test
+	public void setValuesWhenValuedRadioControlsWithCheckedValuesSetsValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x'/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		group.setValues("x", "y");
+		
+		assertThat("form control group values", group.getValues(), contains("y"));
+	}
+	
+	@Test
+	public void setValuesWhenValuedRadioControlsWithUncheckedValuePreservesValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x' checked/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		group.setValues();
+		
+		assertThat("form control group values", group.getValues(), contains("x"));
+	}
+	
+	@Test
+	public void setValuesWhenValuedRadioControlsWithInvalidValueThrowsException()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x'/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid control values: [z]");
+		
+		group.setValues("z");
+	}
+	
+	@Test
+	public void setValuesWhenValuedRadioControlsWithInvalidValuesThrowsException()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x'/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid control values: [p, q]");
+		
+		group.setValues("p", "q");
+	}
 }
