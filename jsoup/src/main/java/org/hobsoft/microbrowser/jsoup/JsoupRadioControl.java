@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -40,6 +41,22 @@ class JsoupRadioControl extends JsoupCheckboxControl
 	{
 		checkArgument(!UNCHECKED_VALUE.equals(value), "Cannot uncheck radio control");
 		
+		getForm().elements().select(byControlGroup()).removeAttr("checked");
+		
 		super.setValue(value);
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private FormElement getForm()
+	{
+		return (FormElement) getElement().parents().select("form").first();
+	}
+
+	private String byControlGroup()
+	{
+		return String.format("[type=radio][name=%s]", getName());
 	}
 }

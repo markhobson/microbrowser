@@ -14,6 +14,7 @@
 package org.hobsoft.microbrowser.tck;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlGroup;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -473,6 +474,25 @@ public abstract class ControlTck extends AbstractMicrobrowserTest
 		control.setValue("x");
 		
 		assertThat("form control value", control.getValue(), is("x"));
+	}
+	
+	@Test
+	public void setValueWhenValuedRadioControlWithCheckedUnsetsOtherValues()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x' checked/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		group.getControl("y")
+			.setValue("y");
+		
+		assertThat("form control value", group.getControl("x").getValue(), isEmptyString());
 	}
 	
 	@Test
