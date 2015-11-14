@@ -73,7 +73,7 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	JsoupMicrodataDocument(Map<String, String> cookies, Document document)
 	{
 		this.cookies = checkNotNull(cookies, "cookies");
-		this.document = checkNotNull(document, "document");
+		this.document = sanitize(checkNotNull(document, "document"));
 	}
 	
 	JsoupMicrodataDocument(Map<String, String> cookies, Response response) throws IOException
@@ -162,6 +162,38 @@ class JsoupMicrodataDocument extends AbstractMicrodataDocument
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
+
+	private static Document sanitize(Document document)
+	{
+		for (FormElement form : document.getAllElements().forms())
+		{
+			sanitizeRadioControls(form);
+		}
+		
+		return document;
+	}
+
+	/**
+	 * Ensures that radio controls are mutually exclusive within control groups.
+	 */
+	private static void sanitizeRadioControls(FormElement form)
+	{
+		Elements controls = form.elements().select("[type=radio][checked]");
+		
+		Map<String, Element> controlsByName = new HashMap<String, Element>();
+		
+		for (Element control : controls)
+		{
+			String name = control.attr("name");
+			
+			if (controlsByName.containsKey(name))
+			{
+				controlsByName.get(name).attr("checked", false);
+			}
+			
+			controlsByName.put(name, control);
+		}
+	}
 
 	private static <K, V> Map<K, V> union(Map<K, V> map1, Map<K, V> map2)
 	{

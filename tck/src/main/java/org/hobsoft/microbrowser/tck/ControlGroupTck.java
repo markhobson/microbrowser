@@ -154,6 +154,60 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 		assertThat("form control group values", actual, contains("x", "y"));
 	}
 	
+	@Test
+	public void getValuesWhenValuedCheckedRadioControlReturnsInitialValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x' checked/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<String> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getValues();
+		
+		assertThat("form control group values", actual, contains("x"));
+	}
+	
+	@Test
+	public void getValuesWhenValuedUncheckedRadioControlReturnsInitialValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x'/>"
+			+ "<input type='radio' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<String> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getValues();
+		
+		assertThat("form control group values", actual, is(empty()));
+	}
+	
+	@Test
+	public void getValuesWhenValuedCheckedRadioControlsReturnsInitialValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x' checked/>"
+			+ "<input type='radio' name='c' value='y' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		List<String> actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getValues();
+		
+		assertThat("form control group values", actual, contains("y"));
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// setValues tests
 	// ----------------------------------------------------------------------------------------------------------------
