@@ -101,7 +101,7 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void getValuesWhenValuedCheckedCheckboxControlReturnsValue()
+	public void getValuesWhenValuedCheckedCheckboxControlReturnsInitialValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -119,7 +119,7 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void getValuesWhenValuedCheckedCheckboxControlsReturnsValues()
+	public void getValuesWhenValuedCheckedCheckboxControlsReturnsInitialValues()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
