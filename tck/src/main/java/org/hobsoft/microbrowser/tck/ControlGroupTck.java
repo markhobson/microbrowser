@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
+import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -94,6 +95,114 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 			control("x", "y"),
 			control("x", "z")
 		));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// getControl tests
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void getControlReturnsControl()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='c' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		Control actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getControl("x");
+		
+		assertThat("form control group control", actual, is(control("c", "x")));
+	}
+	
+	@Test
+	public void getControlWhenValuedCheckedCheckboxControlReturnsControl()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		Control actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getControl("x");
+		
+		assertThat("form control group control", actual, is(control("c")));
+	}
+	
+	@Test
+	public void getControlWhenValuedUncheckedCheckboxControlReturnsControl()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		Control actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getControl("x");
+		
+		assertThat("form control group control", actual, is(control("c")));
+	}
+	
+	@Test
+	public void getControlWhenValuedCheckedRadioControlReturnsControl()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		Control actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getControl("x");
+		
+		assertThat("form control group control", actual, is(control("c")));
+	}
+	
+	@Test
+	public void getControlWhenValuedUncheckedRadioControlReturnsControl()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='radio' name='c' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		Control actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c")
+			.getControl("x");
+		
+		assertThat("form control group control", actual, is(control("c")));
+	}
+	
+	@Test
+	public void getControlWithInvalidValueThrowsException()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='text' name='c' value='x'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		
+		thrown().expect(ControlNotFoundException.class);
+		thrown().expectMessage("c=y");
+		
+		group.getControl("y");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
+import org.hobsoft.microbrowser.ControlNotFoundException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -92,6 +93,35 @@ public class DefaultControlGroupTest
 		thrown.expect(UnsupportedOperationException.class);
 		
 		group.getControls().clear();
+	}
+	
+	@Test
+	public void getControlReturnsControl()
+	{
+		Control control = mockControl("c", "y");
+		DefaultControlGroup group = new DefaultControlGroup(asList(mockControl("c", "x"), control));
+		
+		assertThat(group.getControl("y"), is(control));
+	}
+	
+	@Test
+	public void getControlWhenCheckableReturnsControl()
+	{
+		Control control = mockCheckableControl("c", "y");
+		DefaultControlGroup group = new DefaultControlGroup(asList(mockControl("c", "x"), control));
+		
+		assertThat(group.getControl("y"), is(control));
+	}
+	
+	@Test
+	public void getControlWithInvalidValueThrowsException()
+	{
+		DefaultControlGroup group = new DefaultControlGroup(asList(mockControl("c", "x")));
+		
+		thrown.expect(ControlNotFoundException.class);
+		thrown.expectMessage("c=y");
+		
+		group.getControl("y");
 	}
 	
 	@Test

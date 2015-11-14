@@ -26,4 +26,9 @@ public final class ControlNotFoundException extends MicrobrowserException
 	{
 		super(name.toString());
 	}
+	
+	public ControlNotFoundException(String name, String value)
+	{
+		super(name + "=" + value);
+	}
 }

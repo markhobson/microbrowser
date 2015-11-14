@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.hobsoft.microbrowser.Control;
 import org.hobsoft.microbrowser.ControlGroup;
+import org.hobsoft.microbrowser.ControlNotFoundException;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
@@ -62,6 +63,19 @@ public class DefaultControlGroup implements ControlGroup
 		return controls;
 	}
 	
+	public Control getControl(String value)
+	{
+		for (Control control : controls)
+		{
+			if (value.equals(getCheckedValue(control)))
+			{
+				return control;
+			}
+		}
+		
+		throw new ControlNotFoundException(getName(), value);
+	}
+	
 	public List<String> getValues()
 	{
 		List<String> values = new ArrayList<String>();
@@ -99,5 +113,19 @@ public class DefaultControlGroup implements ControlGroup
 		{
 			throw new IllegalArgumentException("Invalid checkbox values: " + valuesList);
 		}
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static String getCheckedValue(Control control)
+	{
+		if (control instanceof CheckableControl)
+		{
+			return ((CheckableControl) control).getCheckedValue();
+		}
+		
+		return control.getValue();
 	}
 }

@@ -35,6 +35,17 @@ public interface ControlGroup
 	List<Control> getControls();
 
 	/**
+	 * Gets the control with the specified value within this form control group.
+	 * 
+	 * @param value
+	 *            the value of the required control
+	 * @return the control
+	 * @throws ControlNotFoundException
+	 *             if the form control cannot be found
+	 */
+	Control getControl(String value);
+
+	/**
 	 * Gets the values of all the controls within this form control group.
 	 * 
 	 * @return the form control values
