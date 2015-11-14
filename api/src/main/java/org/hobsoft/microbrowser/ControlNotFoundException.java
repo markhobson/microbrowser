@@ -24,7 +24,7 @@ public final class ControlNotFoundException extends MicrobrowserException
 
 	public ControlNotFoundException(String name)
 	{
-		super(name.toString());
+		super(name);
 	}
 	
 	public ControlNotFoundException(String name, String value)
