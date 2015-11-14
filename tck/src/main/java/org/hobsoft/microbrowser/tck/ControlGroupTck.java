@@ -23,6 +23,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
 import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.control;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
@@ -173,5 +174,23 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 		group.setValues("x", "y");
 		
 		assertThat("form control group values", group.getValues(), contains("x", "y"));
+	}
+
+	@Test
+	public void setValuesWhenValuedCheckboxControlsWithUncheckedValueSetsValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
+			+ "<input type='checkbox' name='c' value='y' checked/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		group.setValues();
+		
+		assertThat("form control group values", group.getValues(), is(empty()));
 	}
 }
