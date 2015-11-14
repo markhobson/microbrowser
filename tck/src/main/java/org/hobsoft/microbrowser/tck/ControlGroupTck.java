@@ -193,4 +193,44 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 		
 		assertThat("form control group values", group.getValues(), is(empty()));
 	}
+	
+	@Test
+	public void setValuesWhenValuedCheckboxControlsWithInvalidValueThrowsException()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "<input type='checkbox' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid checkbox values: [z]");
+		
+		group.setValues("z");
+	}
+	
+	@Test
+	public void setValuesWhenValuedCheckboxControlsWithInvalidValuesThrowsException()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "<input type='checkbox' name='c' value='y'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		ControlGroup group = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControlGroup("c");
+		
+		thrown().expect(IllegalArgumentException.class);
+		thrown().expectMessage("Invalid checkbox values: [p, q]");
+		
+		group.setValues("p", "q");
+	}
 }

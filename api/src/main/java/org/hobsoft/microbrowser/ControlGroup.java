@@ -46,6 +46,8 @@ public interface ControlGroup
 	 * 
 	 * @param values
 	 *            the form control values to set
+	 * @throws IllegalArgumentException
+	 *             if any of the values are invalid
 	 */
 	void setValues(String... values);
 }

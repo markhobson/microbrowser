@@ -123,7 +123,7 @@ public class DefaultControlGroupTest
 	}
 
 	@Test
-	public void setValuesWithValueSetsControlValue()
+	public void setValuesWithCheckedValueSetsControlValue()
 	{
 		Control control = mockCheckableControl("c", "x");
 		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
@@ -137,7 +137,7 @@ public class DefaultControlGroupTest
 	public void setValuesWithDifferentValueUnsetsControlValue()
 	{
 		Control control = mockCheckableControl("c", "x");
-		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
+		DefaultControlGroup group = new DefaultControlGroup(asList(control, mockCheckableControl("c", "y")));
 		
 		group.setValues("y");
 		
@@ -145,10 +145,22 @@ public class DefaultControlGroupTest
 	}
 	
 	@Test
+	public void setValuesWithInvalidValueThrowsException()
+	{
+		Control control = mockCheckableControl("c", "x");
+		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
+		
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Invalid checkbox values: [y]");
+		
+		group.setValues("y");
+	}
+	
+	@Test
 	public void setValuesWhenUncheckableDoesNotSetControlValue()
 	{
 		Control control = mockControl("c");
-		DefaultControlGroup group = new DefaultControlGroup(singletonList(control));
+		DefaultControlGroup group = new DefaultControlGroup(asList(control, mockCheckableControl("c", "x")));
 		
 		group.setValues("x");
 		

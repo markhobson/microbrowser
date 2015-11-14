@@ -81,18 +81,23 @@ public class DefaultControlGroup implements ControlGroup
 	
 	public void setValues(String... values)
 	{
-		List<String> valuesList = asList(values);
+		List<String> valuesList = new ArrayList<String>(asList(values));
 		
 		for (Control control : controls)
 		{
 			if (control instanceof CheckableControl)
 			{
 				String checkedValue = ((CheckableControl) control).getCheckedValue();
-				boolean checked = valuesList.contains(checkedValue);
+				boolean checked = valuesList.remove(checkedValue);
 				String value = checked ? checkedValue : UNCHECKED_VALUE;
 				
 				control.setValue(value);
 			}
+		}
+		
+		if (!valuesList.isEmpty())
+		{
+			throw new IllegalArgumentException("Invalid checkbox values: " + valuesList);
 		}
 	}
 }
