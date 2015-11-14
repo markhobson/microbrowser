@@ -358,7 +358,7 @@ public abstract class ControlGroupTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setValuesWhenValuedCheckboxControlsWithUncheckedValueSetsValue()
+	public void setValuesWhenValuedCheckboxControlsWithUncheckedValueUnsetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"

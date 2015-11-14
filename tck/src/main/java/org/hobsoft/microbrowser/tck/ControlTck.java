@@ -315,7 +315,7 @@ public abstract class ControlTck extends AbstractMicrobrowserTest
 	}
 
 	@Test
-	public void setValueWhenCheckboxControlWithUncheckedSetsValue()
+	public void setValueWhenCheckboxControlWithUncheckedUnsetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
@@ -368,7 +368,7 @@ public abstract class ControlTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
-	public void setValueWhenValuedCheckboxControlWithUncheckedSetsValue()
+	public void setValueWhenValuedCheckboxControlWithUncheckedUnsetsValue()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
 			+ "<form name='f'>"
