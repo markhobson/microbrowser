@@ -13,50 +13,51 @@
  */
 package org.hobsoft.microbrowser.selenium;
 
+import org.hobsoft.microbrowser.Microbrowser;
+import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverCookieRule;
 import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
+import org.hobsoft.microbrowser.tck.FormPostTck;
 import org.junit.ClassRule;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.junit.Rule;
+
+import static org.hobsoft.microbrowser.selenium.SeleniumMicrobrowserITSuite.WEB_DRIVER_CLASS;
 
 /**
- * Integration test suite that executes the {@code Microbrowser} TCK against {@code SeleniumMicrobrowser}.
+ * Integration test that executes the {@code Form.submit} POST method TCK against {@code SeleniumMicrobrowser}.
  */
-// SUPPRESS CHECKSTYLE HideUtilityClassConstructor
-@RunWith(Suite.class)
-@SuiteClasses({
-	SeleniumMicrobrowserIT.class,
-	SeleniumMicrodataDocumentIT.class,
-	SeleniumMicrodataItemIT.class,
-	SeleniumMicrodataPropertyIT.class,
-	SeleniumLinkIT.class,
-	SeleniumFormIT.class,
-	SeleniumFormGetIT.class,
-	SeleniumFormPostIT.class
-})
-public class SeleniumMicrobrowserITSuite
+public class SeleniumFormPostIT extends FormPostTck
 {
-	// ----------------------------------------------------------------------------------------------------------------
-	// constants
-	// ----------------------------------------------------------------------------------------------------------------
-
-	static final Class<? extends WebDriver> WEB_DRIVER_CLASS = FirefoxDriver.class;
-	
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
 	private static WebDriverRule driverRule = WebDriverRule.get(WEB_DRIVER_CLASS);
 	
+	private WebDriverCookieRule driverCookieRule = new WebDriverCookieRule(driverRule.getDriver());
+
 	// ----------------------------------------------------------------------------------------------------------------
-	// test suite methods
+	// test case methods
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@ClassRule
 	public static WebDriverRule getDriverRule()
 	{
 		return driverRule;
+	}
+	
+	@Rule
+	public WebDriverCookieRule getDriverCookieRule()
+	{
+		return driverCookieRule;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// AbstractMicrobrowserTest methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Microbrowser newBrowser()
+	{
+		return new SeleniumMicrobrowser(driverRule.getDriver());
 	}
 }

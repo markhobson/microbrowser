@@ -14,12 +14,12 @@
 package org.hobsoft.microbrowser.jsoup;
 
 import org.hobsoft.microbrowser.Microbrowser;
-import org.hobsoft.microbrowser.tck.FormMethodTck;
+import org.hobsoft.microbrowser.tck.FormGetTck;
 
 /**
- * Integration test that executes the {@code Form.submit} method TCK against {@code JsoupMicrobrowser}.
+ * Integration test that executes the {@code Form.submit} GET method TCK against {@code JsoupMicrobrowser}.
  */
-public class JsoupFormMethodIT extends FormMethodTck
+public class JsoupFormGetIT extends FormGetTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// AbstractMicrobrowserTest methods

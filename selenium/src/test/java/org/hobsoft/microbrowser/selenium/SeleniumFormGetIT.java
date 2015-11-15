@@ -16,16 +16,16 @@ package org.hobsoft.microbrowser.selenium;
 import org.hobsoft.microbrowser.Microbrowser;
 import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverCookieRule;
 import org.hobsoft.microbrowser.selenium.support.selenium.WebDriverRule;
-import org.hobsoft.microbrowser.tck.FormMethodTck;
+import org.hobsoft.microbrowser.tck.FormGetTck;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 import static org.hobsoft.microbrowser.selenium.SeleniumMicrobrowserITSuite.WEB_DRIVER_CLASS;
 
 /**
- * Integration test that executes the {@code Form.submit} method TCK against {@code SeleniumMicrobrowser}.
+ * Integration test that executes the {@code Form.submit} GET method TCK against {@code SeleniumMicrobrowser}.
  */
-public class SeleniumFormMethodIT extends FormMethodTck
+public class SeleniumFormGetIT extends FormGetTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields

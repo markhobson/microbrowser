@@ -11,14 +11,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.hobsoft.microbrowser.tck;
+package org.hobsoft.microbrowser.jsoup;
+
+import org.hobsoft.microbrowser.Microbrowser;
+import org.hobsoft.microbrowser.tck.FormPostTck;
 
 /**
- * TCK for {@code Form.submit} using a specific HTTP method.
+ * Integration test that executes the {@code Form.submit} POST method TCK against {@code JsoupMicrobrowser}.
  */
-public abstract class FormMethodTck extends AbstractMicrobrowserTest
+public class JsoupFormPostIT extends FormPostTck
 {
 	// ----------------------------------------------------------------------------------------------------------------
-	// submit tests
+	// AbstractMicrobrowserTest methods
 	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected Microbrowser newBrowser()
+	{
+		return new JsoupMicrobrowser();
+	}
 }
