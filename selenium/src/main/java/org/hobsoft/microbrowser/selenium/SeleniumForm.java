@@ -118,7 +118,7 @@ class SeleniumForm extends AbstractForm
 	
 	private static By byControl(String name)
 	{
-		return By.cssSelector(String.format("input[name='%s']", name));
+		return By.cssSelector(String.format("input[name='%1$s'], textarea[name='%1$s']", name));
 	}
 
 	private static ControlGroup newControlGroup(List<WebElement> elements)

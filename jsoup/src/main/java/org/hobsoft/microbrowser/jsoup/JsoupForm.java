@@ -118,7 +118,7 @@ class JsoupForm extends AbstractForm
 	
 	private static String byControl(String name)
 	{
-		return String.format("input[name=%s]", name);
+		return String.format("input[name=%1$s], textarea[name=%1$s]", name);
 	}
 	
 	private static ControlGroup newControlGroup(Elements elements)

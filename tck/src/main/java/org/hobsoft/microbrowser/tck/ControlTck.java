@@ -241,6 +241,23 @@ public abstract class ControlTck extends AbstractMicrobrowserTest
 		assertThat("form control value", actual, isEmptyString());
 	}
 	
+	@Test
+	public void getValueWhenTextAreaControlReturnsInitialValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<textarea name='c'>x</textarea>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControl("c")
+			.getValue();
+		
+		assertThat("form control value", actual, is("x"));
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// setValue tests
 	// ----------------------------------------------------------------------------------------------------------------
@@ -533,6 +550,23 @@ public abstract class ControlTck extends AbstractMicrobrowserTest
 		control.setValue("y");
 	}
 	
+	@Test
+	public void setValueWhenTextAreaControlSetsValue()
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f'>"
+			+ "<textarea name='c'>x</textarea>"
+			+ "</form>"
+			+ "</body></html>"));
+		
+		Control control = newBrowser().get(url(server()))
+			.getForm("f")
+			.getControl("c");
+		control.setValue("y");
+		
+		assertThat("form control value", control.getValue(), is("y"));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// unwrap tests
 	// ----------------------------------------------------------------------------------------------------------------

@@ -757,6 +757,45 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 	}
 	
 	@Test
+	public void submitWhenGetSubmitsTextAreaControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<textarea name='c'>x</textarea>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
+	}
+
+	@Test
+	public void submitWhenGetSubmitsTextAreaControlSetValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='get' action='/a'>"
+			+ "<textarea name='c'></textarea>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setControlValue("c", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
+	}
+
+	@Test
 	public void submitWhenGetSetsCookie()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -1261,6 +1300,45 @@ public abstract class FormTck extends AbstractMicrobrowserTest
 		assertThat("request", body(takeRequest(server())), isEmptyString());
 	}
 	
+	@Test
+	public void submitWhenPostSubmitsTextAreaControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<textarea name='c'>x</textarea>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request body", body(takeRequest(server())), is("c=x"));
+	}
+
+	@Test
+	public void submitWhenPostSubmitsTextAreaControlSetValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody("<html><body>"
+			+ "<form name='f' method='post' action='/a'>"
+			+ "<textarea name='c'></textarea>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setControlValue("c", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request body", body(takeRequest(server())), is("c=x"));
+	}
+
 	@Test
 	public void submitWhenPostSetsCookie()
 	{
