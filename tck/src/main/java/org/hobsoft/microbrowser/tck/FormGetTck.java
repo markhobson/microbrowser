@@ -39,25 +39,6 @@ public abstract class FormGetTck extends FormMethodTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void submitWhenGetSubmitsHiddenControlInitialValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='hidden' name='c' value='x'/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
-	}
-
-	@Test
 	public void submitWhenGetSubmitsTextControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -578,5 +559,11 @@ public abstract class FormGetTck extends FormMethodTck
 	protected Matcher<RecordedRequest> method(String expectedPath)
 	{
 		return get(expectedPath);
+	}
+	
+	@Override
+	protected Matcher<RecordedRequest> method(String expectedPath, String expectedData)
+	{
+		return get(expectedPath + "?" + expectedData);
 	}
 }

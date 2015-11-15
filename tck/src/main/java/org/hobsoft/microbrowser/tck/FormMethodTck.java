@@ -51,6 +51,25 @@ public abstract class FormMethodTck extends AbstractMicrobrowserTest
 		assertThat("request", takeRequest(server()), is(method("/x")));
 	}
 	
+	@Test
+	public void submitSubmitsHiddenControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='hidden' name='c' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------
@@ -58,4 +77,6 @@ public abstract class FormMethodTck extends AbstractMicrobrowserTest
 	protected abstract String getMethod();
 	
 	protected abstract Matcher<RecordedRequest> method(String expectedPath);
+	
+	protected abstract Matcher<RecordedRequest> method(String expectedPath, String expectedData);
 }
