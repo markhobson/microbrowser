@@ -18,6 +18,7 @@ import java.nio.charset.Charset;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.CombinableMatcher;
 
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
@@ -42,17 +43,32 @@ public final class MockWebServerMatchers
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public static Matcher<RecordedRequest> get(String expectedPath)
+	public static CombinableMatcher<RecordedRequest> get(String expectedPath)
 	{
 		return recordedRequest("GET", expectedPath);
 	}
 
-	public static Matcher<RecordedRequest> post(String expectedPath)
+	public static CombinableMatcher<RecordedRequest> post(String expectedPath)
 	{
 		return recordedRequest("POST", expectedPath);
 	}
 	
-	public static Matcher<RecordedRequest> body(String expectedBody)
+	public static CombinableMatcher<RecordedRequest> post(String expectedPath, String expectedBody)
+	{
+		return post(expectedPath).and(body(expectedBody));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static CombinableMatcher<RecordedRequest> recordedRequest(String expectedMethod, String expectedPath)
+	{
+		return Matchers.<RecordedRequest>both(hasProperty("method", is(expectedMethod)))
+			.and(hasProperty("path", is(expectedPath)));
+	}
+	
+	private static Matcher<RecordedRequest> body(String expectedBody)
 	{
 		return new FeatureMatcher<RecordedRequest, String>(is(expectedBody), "body", "body")
 		{
@@ -62,15 +78,5 @@ public final class MockWebServerMatchers
 				return request.getBody().readString(Charset.forName("ISO-8859-1"));
 			}
 		};
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private static Matcher<RecordedRequest> recordedRequest(String expectedMethod, String expectedPath)
-	{
-		return Matchers.<RecordedRequest>both(hasProperty("method", is(expectedMethod)))
-			.and(hasProperty("path", is(expectedPath)));
 	}
 }
