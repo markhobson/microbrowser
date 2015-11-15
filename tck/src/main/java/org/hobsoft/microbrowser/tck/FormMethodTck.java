@@ -13,6 +13,17 @@
  */
 package org.hobsoft.microbrowser.tck;
 
+import org.hamcrest.Matcher;
+import org.junit.Test;
+
+import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
+import static org.junit.Assert.assertThat;
+
 /**
  * TCK for {@code Form.submit} using a specific HTTP method.
  */
@@ -21,4 +32,30 @@ public abstract class FormMethodTck extends AbstractMicrobrowserTest
 	// ----------------------------------------------------------------------------------------------------------------
 	// submit tests
 	// ----------------------------------------------------------------------------------------------------------------
+
+	@Test
+	public void submitSubmitsRequest() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/x'>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/x")));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// protected methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	protected abstract String getMethod();
+	
+	protected abstract Matcher<RecordedRequest> method(String expectedPath);
 }

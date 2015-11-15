@@ -15,10 +15,12 @@ package org.hobsoft.microbrowser.tck;
 
 import java.net.MalformedURLException;
 
+import org.hamcrest.Matcher;
 import org.hobsoft.microbrowser.MicrodataDocument;
 import org.junit.Test;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
@@ -35,24 +37,6 @@ public abstract class FormGetTck extends FormMethodTck
 	// ----------------------------------------------------------------------------------------------------------------
 	// submit tests
 	// ----------------------------------------------------------------------------------------------------------------
-
-	@Test
-	public void submitWhenGetSubmitsGetRequest() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/x'>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/x")));
-	}
 
 	@Test
 	public void submitWhenGetSubmitsHiddenControlInitialValue() throws InterruptedException
@@ -578,5 +562,21 @@ public abstract class FormGetTck extends FormMethodTck
 			.submit();
 		
 		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// FormMethodTck methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	@Override
+	protected String getMethod()
+	{
+		return "get";
+	}
+	
+	@Override
+	protected Matcher<RecordedRequest> method(String expectedPath)
+	{
+		return get(expectedPath);
 	}
 }
