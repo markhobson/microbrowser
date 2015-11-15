@@ -25,7 +25,6 @@ import com.squareup.okhttp.mockwebserver.RecordedRequest;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerMatchers.get;
-import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
 import static org.junit.Assert.assertThat;
 
@@ -37,65 +36,6 @@ public abstract class FormGetTck extends FormMethodTck
 	// ----------------------------------------------------------------------------------------------------------------
 	// submit tests
 	// ----------------------------------------------------------------------------------------------------------------
-
-	@Test
-	public void submitWhenGetSetsCookie()
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
-		
-		String actual = newBrowser().get(url(server()))
-			.getForm("f")
-			.submit()
-			.getCookie("x");
-		
-		assertThat("cookie", actual, is("y"));
-	}
-
-	@Test
-	public void submitWhenGetSendsCookie() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
-	}
-
-	@Test
-	public void submitWhenGetSendsPreviousCookie() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
-			+ "<a rel='r' href='/a'>a</a>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getLink("r")
-			.follow()
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
-	}
 
 	@Test
 	public void submitWhenGetReturnsResponse() throws MalformedURLException

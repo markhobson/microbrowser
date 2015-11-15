@@ -499,6 +499,65 @@ public abstract class FormMethodTck extends AbstractMicrobrowserTest
 		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
 	}
 
+	@Test
+	public void submitSetsCookie()
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y"));
+		
+		String actual = newBrowser().get(url(server()))
+			.getForm("f")
+			.submit()
+			.getCookie("x");
+		
+		assertThat("cookie", actual, is("y"));
+	}
+
+	@Test
+	public void submitSendsCookie() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
+	}
+
+	@Test
+	public void submitSendsPreviousCookie() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().addHeader("Set-Cookie", "x=y").setBody("<html><body>"
+			+ "<a rel='r' href='/a'>a</a>"
+			+ "</body></html>"));
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getLink("r")
+			.follow()
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("cookie", takeRequest(server()).getHeader("Cookie"), is("x=y"));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------
