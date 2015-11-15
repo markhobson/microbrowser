@@ -148,6 +148,162 @@ public abstract class FormMethodTck extends AbstractMicrobrowserTest
 		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
 	}
 
+	@Test
+	public void submitSubmitsCheckedCheckboxControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "c=on")));
+	}
+	
+	@Test
+	public void submitSubmitsCheckedCheckboxControlSetValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setControlValue("c", "on")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "c=on")));
+	}
+
+	@Test
+	public void submitDoesNotSubmitUncheckedCheckboxControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "")));
+	}
+	
+	@Test
+	public void submitDoesNotSubmitUncheckedCheckboxControlSetValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setControlValue("c", "")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "")));
+	}
+
+	@Test
+	public void submitSubmitsValuedCheckedCheckboxControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
+	}
+	
+	@Test
+	public void submitSubmitsValuedCheckedCheckboxControlSetValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setControlValue("c", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
+	}
+
+	@Test
+	public void submitDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "")));
+	}
+	
+	@Test
+	public void submitDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='checkbox' name='c' value='x' checked/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setControlValue("c", "")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "")));
+	}
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------

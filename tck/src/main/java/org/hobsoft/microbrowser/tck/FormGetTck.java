@@ -39,162 +39,6 @@ public abstract class FormGetTck extends FormMethodTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void submitWhenGetSubmitsCheckedCheckboxControlInitialValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c' checked/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?c=on")));
-	}
-	
-	@Test
-	public void submitWhenGetSubmitsCheckedCheckboxControlSetValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c'/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.setControlValue("c", "on")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?c=on")));
-	}
-
-	@Test
-	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlInitialValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c'/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a")));
-	}
-	
-	@Test
-	public void submitWhenGetDoesNotSubmitUncheckedCheckboxControlSetValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c' checked/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.setControlValue("c", "")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a")));
-	}
-
-	@Test
-	public void submitWhenGetSubmitsValuedCheckedCheckboxControlInitialValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c' value='x' checked/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
-	}
-	
-	@Test
-	public void submitWhenGetSubmitsValuedCheckedCheckboxControlSetValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c' value='x'/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.setControlValue("c", "x")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
-	}
-
-	@Test
-	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlInitialValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c' value='x'/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a")));
-	}
-	
-	@Test
-	public void submitWhenGetDoesNotSubmitValuedUncheckedCheckboxControlSetValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='checkbox' name='c' value='x' checked/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.setControlValue("c", "")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a")));
-	}
-	
-	@Test
 	public void submitWhenGetSubmitsCheckedRadioControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
@@ -486,6 +330,11 @@ public abstract class FormGetTck extends FormMethodTck
 	@Override
 	protected Matcher<RecordedRequest> method(String expectedPath, String expectedData)
 	{
+		if (expectedData.isEmpty())
+		{
+			return get(expectedPath);
+		}
+		
 		return get(expectedPath + "?" + expectedData);
 	}
 }
