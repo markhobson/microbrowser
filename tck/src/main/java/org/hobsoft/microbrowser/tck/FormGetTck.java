@@ -13,49 +13,17 @@
  */
 package org.hobsoft.microbrowser.tck;
 
-import java.net.MalformedURLException;
-
 import org.hamcrest.Matcher;
-import org.hobsoft.microbrowser.MicrodataDocument;
-import org.junit.Test;
 
-import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerMatchers.get;
-import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
-import static org.junit.Assert.assertThat;
 
 /**
  * TCK for {@code Form.submit} using the GET method.
  */
 public abstract class FormGetTck extends FormMethodTck
 {
-	// ----------------------------------------------------------------------------------------------------------------
-	// submit tests
-	// ----------------------------------------------------------------------------------------------------------------
-
-	@Test
-	public void submitWhenGetReturnsResponse() throws MalformedURLException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<div itemscope='itemscope' itemtype='http://i' itemid='http://x'/>"
-			+ "</body></html>"));
-		
-		MicrodataDocument actual = newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		assertThat("response", actual.getItem("http://i"), is(item("http://x")));
-	}
-	
 	// ----------------------------------------------------------------------------------------------------------------
 	// FormMethodTck methods
 	// ----------------------------------------------------------------------------------------------------------------
