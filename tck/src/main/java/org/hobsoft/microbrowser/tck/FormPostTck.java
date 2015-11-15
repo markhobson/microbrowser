@@ -39,45 +39,6 @@ public abstract class FormPostTck extends FormMethodTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void submitWhenPostSubmitsPasswordControlInitialValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='password' name='c' value='x'/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(post("/a", "c=x")));
-	}
-
-	@Test
-	public void submitWhenPostSubmitsPasswordControlSetValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='post' action='/a'>"
-			+ "<input type='password' name='c'/>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.setControlValue("c", "x")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(post("/a", "c=x")));
-	}
-
-	@Test
 	public void submitWhenPostSubmitsCheckedCheckboxControlInitialValue() throws InterruptedException
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
