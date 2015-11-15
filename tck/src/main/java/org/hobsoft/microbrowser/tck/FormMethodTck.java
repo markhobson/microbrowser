@@ -70,6 +70,45 @@ public abstract class FormMethodTck extends AbstractMicrobrowserTest
 		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
 	}
 
+	@Test
+	public void submitSubmitsTextControlInitialValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='text' name='c' value='x'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
+	}
+
+	@Test
+	public void submitSubmitsTextControlSetValue() throws InterruptedException
+	{
+		server().enqueue(new MockResponse().setBody(String.format("<html><body>"
+			+ "<form name='f' method='%s' action='/a'>"
+			+ "<input type='text' name='c'/>"
+			+ "<input type='submit'/>"
+			+ "</form>"
+			+ "</body></html>", getMethod())));
+		server().enqueue(new MockResponse());
+		
+		newBrowser().get(url(server()))
+			.getForm("f")
+			.setControlValue("c", "x")
+			.submit();
+		
+		server().takeRequest();
+		assertThat("request", takeRequest(server()), is(method("/a", "c=x")));
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// protected methods
 	// ----------------------------------------------------------------------------------------------------------------
