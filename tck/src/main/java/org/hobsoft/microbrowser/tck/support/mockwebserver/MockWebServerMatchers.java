@@ -13,6 +13,9 @@
  */
 package org.hobsoft.microbrowser.tck.support.mockwebserver;
 
+import java.nio.charset.Charset;
+
+import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
@@ -47,6 +50,18 @@ public final class MockWebServerMatchers
 	public static Matcher<RecordedRequest> post(String expectedPath)
 	{
 		return recordedRequest("POST", expectedPath);
+	}
+	
+	public static Matcher<RecordedRequest> body(String expectedBody)
+	{
+		return new FeatureMatcher<RecordedRequest, String>(is(expectedBody), "body", "body")
+		{
+			@Override
+			protected String featureValueOf(RecordedRequest request)
+			{
+				return request.getBody().readString(Charset.forName("ISO-8859-1"));
+			}
+		};
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

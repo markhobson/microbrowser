@@ -23,12 +23,11 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.isEmptyString;
 import static org.hobsoft.microbrowser.tck.support.MicrobrowserMatchers.item;
+import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerMatchers.body;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerMatchers.post;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.takeRequest;
 import static org.hobsoft.microbrowser.tck.support.mockwebserver.MockWebServerUtils.url;
-import static org.hobsoft.microbrowser.tck.support.mockwebserver.RecordedRequestUtils.body;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -56,7 +55,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -75,7 +74,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -95,7 +94,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -114,7 +113,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -134,7 +133,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -153,7 +152,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=on"));
+		assertThat("request", takeRequest(server()), is(body("c=on")));
 	}
 
 	@Test
@@ -173,7 +172,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=on"));
+		assertThat("request", takeRequest(server()), is(body("c=on")));
 	}
 
 	@Test
@@ -192,7 +191,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), isEmptyString());
+		assertThat("request", takeRequest(server()), is(body("")));
 	}
 	
 	@Test
@@ -212,7 +211,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), isEmptyString());
+		assertThat("request", takeRequest(server()), is(body("")));
 	}
 
 	@Test
@@ -231,7 +230,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 	
 	@Test
@@ -251,7 +250,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -270,7 +269,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), isEmptyString());
+		assertThat("request", takeRequest(server()), is(body("")));
 	}
 	
 	@Test
@@ -290,7 +289,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), isEmptyString());
+		assertThat("request", takeRequest(server()), is(body("")));
 	}
 	
 	@Test
@@ -309,7 +308,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=on"));
+		assertThat("request", takeRequest(server()), is(body("c=on")));
 	}
 	
 	@Test
@@ -329,7 +328,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=on"));
+		assertThat("request", takeRequest(server()), is(body("c=on")));
 	}
 
 	@Test
@@ -349,7 +348,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=on"));
+		assertThat("request", takeRequest(server()), is(body("c=on")));
 	}
 	
 	@Test
@@ -368,7 +367,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), isEmptyString());
+		assertThat("request", takeRequest(server()), is(body("")));
 	}
 	
 	@Test
@@ -387,7 +386,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 	
 	@Test
@@ -407,7 +406,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -427,7 +426,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), is("c=y"));
+		assertThat("request", takeRequest(server()), is(body("c=y")));
 	}
 
 	@Test
@@ -446,7 +445,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request", body(takeRequest(server())), isEmptyString());
+		assertThat("request", takeRequest(server()), is(body("")));
 	}
 	
 	@Test
@@ -465,7 +464,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
@@ -485,7 +484,7 @@ public abstract class FormPostTck extends FormMethodTck
 			.submit();
 		
 		server().takeRequest();
-		assertThat("request body", body(takeRequest(server())), is("c=x"));
+		assertThat("request", takeRequest(server()), is(body("c=x")));
 	}
 
 	@Test
