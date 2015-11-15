@@ -39,45 +39,6 @@ public abstract class FormGetTck extends FormMethodTck
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void submitWhenGetSubmitsTextAreaControlInitialValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<textarea name='c'>x</textarea>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
-	}
-
-	@Test
-	public void submitWhenGetSubmitsTextAreaControlSetValue() throws InterruptedException
-	{
-		server().enqueue(new MockResponse().setBody("<html><body>"
-			+ "<form name='f' method='get' action='/a'>"
-			+ "<textarea name='c'></textarea>"
-			+ "<input type='submit'/>"
-			+ "</form>"
-			+ "</body></html>"));
-		server().enqueue(new MockResponse());
-		
-		newBrowser().get(url(server()))
-			.getForm("f")
-			.setControlValue("c", "x")
-			.submit();
-		
-		server().takeRequest();
-		assertThat("request", takeRequest(server()), is(get("/a?c=x")));
-	}
-
-	@Test
 	public void submitWhenGetSetsCookie()
 	{
 		server().enqueue(new MockResponse().setBody("<html><body>"
